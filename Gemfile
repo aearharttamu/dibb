@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.2.1'
 
 # Core
 gem 'rails', '4.2.4'
@@ -27,7 +27,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-datatables-rails'
-gem 'mediaelement_rails'
 
 # Testing
 gem 'factory_girl_rails'
