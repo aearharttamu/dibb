@@ -1,0 +1,17 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ */
+
+// Variables for controlling the look and feel
+@import "skin";
+
+// Libraries
+@import "jquery-ui";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+
+// Application Folder
+@import "dibb/*";
