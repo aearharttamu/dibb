@@ -1,10 +1,11 @@
-var DiBB = {};
 
+// application namespace
+var DiBB = {};
 
 // application main
 $(document).ready(function() {
   
-  var biblioListView = new DiBB.BiblioListView();
-  biblioListView.render();
+  var routes = new DiBB.Routes();
+  Backbone.history.start();
   
 });
