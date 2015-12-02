@@ -8,11 +8,17 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render partial: 'layouts/header' %>
+  <% if user_signed_in? %>
+    <%= render partial: 'layouts/header' %>
+  <% end %>
   <div class="content">
     <div class="flash-messages">
-      <p class="bg-info"><%= notice %></p>
-      <p class="bg-danger"><%= alert %></p>
+      <% unless notice.nil? %>
+        <div class="alert alert-info" role="alert"><%= notice %></div>
+      <% end %>
+      <% unless alert.nil? %>
+        <div class="alert alert-danger" role="alert"><%= alert %></div>
+      <% end %>
     </div>
     <%= yield %>
   </div>
