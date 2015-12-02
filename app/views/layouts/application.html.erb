@@ -10,8 +10,10 @@
 <body>
   <%= render partial: 'layouts/header' %>
   <div class="content">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="flash-messages">
+      <p class="bg-info"><%= notice %></p>
+      <p class="bg-danger"><%= alert %></p>
+    </div>
     <%= yield %>
   </div>
 </body>
