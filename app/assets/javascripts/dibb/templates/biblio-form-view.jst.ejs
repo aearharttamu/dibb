@@ -2,10 +2,47 @@
   
   <h1>Edit Bibliography</h1>
   
-  <p>Title</p>
-  <p>Genre</p>
-  <p>Date</p>
-  <p>Provenance</p>
-  <p>PubNumber</p>
+  <div class="form-wrapper">
+    <form class="form-horizontal">
+      <div class="form-group">   
+           
+        <label for="bib-title" class="control-label col-sm-2">Title:</label>
+        <div class="col-sm-10 field-wrapper">
+          <input type="text" class="form-control" id="bib-title">
+          <div class="instructions">Transcribe the title as appears on title page.</div>
+        </div>
+
+        <label for="bib-genre" class="control-label col-sm-2">Genre:</label>
+        <div class="col-sm-10 field-wrapper">
+          <input type="text" class="form-control" id="bib-genre">
+        </div>
+
+        <label for="bib-date" class="control-label col-sm-2">Date:</label>
+        <div class="col-sm-10 field-wrapper">
+          <input type="text" class="form-control" id="bib-date">
+          <div class="instructions">Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980).</div>
+        </div>
+
+        <label for="bib-provenance" class="control-label col-sm-2">Provenance:</label>
+        <div class="col-sm-10 field-wrapper">
+          <input type="text" class="form-control" id="bib-provenance">
+          <div class="instructions">Indicate who owns the materials you are examining (ex: owned by Cushing; borrowed from Princeton University Library).</div>
+        </div>
+      
+        <label for="bib-pubnumber" class="control-label col-sm-2">Publication Number:</label>
+        <div class="col-sm-10 field-wrapper">
+          <input type="text" class="form-control" id="bib-pubnumber">
+          <div class="instructions">Consult the item to see whether an ISSN or ISBN is included.</div>
+        </div>
+
+      </div>
+      
+      <div class="actions">
+        <button type="submit" class="btn btn-primary save-button">Save</button>
+        <a href="#" class="btn btn-default cancel-button">Cancel</a>
+      </div>
+    
+    </form>
+  </div>
   
 </div>
