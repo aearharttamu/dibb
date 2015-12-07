@@ -16,7 +16,7 @@ DiBB.BiblioListView = Backbone.View.extend({
     
    $(".dibb-app").html(this.template()); 
    
-   $('#example').DataTable();
+   $('#biblio-table').DataTable();
     
   }
   

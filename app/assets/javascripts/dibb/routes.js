@@ -2,7 +2,8 @@ DiBB.Routes = Backbone.Router.extend({
 
   routes: {
     "": "biblioList",  
-    "bilbio/:id/edit": "biblioEdit"  
+    "biblio/:id/edit": "biblioEdit",  
+    "biblio/:id/new": "biblioEdit"  
   },
 
   biblioList: function() {
