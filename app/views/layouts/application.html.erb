@@ -5,6 +5,11 @@
   <title>The Digital Black Bibliographic Project</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
+
+  <!-- Load directly from CDN until asset pipeline gem is updated to 1.10.10 -->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+
   <%= csrf_meta_tags %>
 </head>
 <body>

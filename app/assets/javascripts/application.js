@@ -15,8 +15,6 @@
 //= require underscore
 //= require backbone
 //= require bootstrap-sprockets
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require_tree ./lib
 //= require_tree ./dibb
 //= require_tree .
