@@ -1,4 +1,12 @@
+body {
+  background: gray;
+}
+
 .signin-panel {
+
+  margin-top: 100px;
+  margin-left: 33%;
+  width: 400px;
 
   .form-signin {
     max-width: 330px;
@@ -24,6 +32,19 @@
   
   .form-signin .form-control:focus {
     z-index: 2;
+  }
+  
+  .links {
+    
+    margin-top: 15px;
+    
+    .signup {
+      float: left;
+    }
+    
+    .forgot-password {
+      float: right;
+    }
   }
   
   #user_email {
