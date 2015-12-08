@@ -23,7 +23,6 @@ DiBB.BiblioFormView = Backbone.View.extend({
       this.mode = "edit";
     } else {
       this.biblio = new DiBB.Biblio();
-      this.biblios.add(this.biblio);
       this.mode = "new";
     }    
     
@@ -36,7 +35,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
     };
     
     var onError = function(model, response, options) {
-      // TODO show error messages, stay on this page.     
+      // TODO show error messages, stay on this page.   
+      alert(response);  
     };
     
     this.biblio.set( {
@@ -47,6 +47,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
       pubnumber: this.$('#bib-pubnumber').val()
     });
     
+    this.biblios.add(this.biblio);    
     this.biblio.save(null, { success: onSuccess, error: onError });
   },
   
