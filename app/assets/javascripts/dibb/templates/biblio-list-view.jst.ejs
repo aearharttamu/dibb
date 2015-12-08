@@ -17,7 +17,7 @@
     </thead>
     <tbody>
       <% _.each( biblios, function( biblio ) { %>        
-        <tr>
+        <tr id="bibid-<%= biblio.id %>">
             <td><a href="#biblio/<%= biblio.id %>/edit"><%= biblio.title %></a></td>
             <td><%= biblio.genre %></td>
             <td><%= biblio.date %></td>

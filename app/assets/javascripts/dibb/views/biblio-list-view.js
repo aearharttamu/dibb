@@ -5,6 +5,8 @@ DiBB.BiblioListView = Backbone.View.extend({
   id: 'biblio-list-view',
   className: 'biblio-list',
   
+  trIDTemplate: _.template("#bibid-<%= id %>"),
+  
   events: {
     'click .delete-button': 'onDelete'    
   },
@@ -14,12 +16,22 @@ DiBB.BiblioListView = Backbone.View.extend({
   },
   
   onDelete: function(event) {
-    alert("delete item");    
+    var deleteButton = $(event.currentTarget);
+    var bibID = parseInt(deleteButton.attr("data-bibid"));
+    var deletedBiblio = this.biblios.get(bibID);
+
+    if( deletedBiblio ) {
+      deleteButton.attr("disabled", true);  
+      deletedBiblio.destroy( { success: _.bind( function(){
+        var tableRow = this.$(this.trIDTemplate({id: bibID}));
+        this.dataTable.row(tableRow).remove().draw();        
+      }, this) });
+    }          
   },
   
   render: function() {
     this.$el.html(this.template( { biblios: this.biblios.toJSON() } ));
-    this.$('#biblio-table').DataTable();    
+    this.dataTable = this.$('#biblio-table').DataTable();    
     $(".dibb-app").html(this.$el);
   }
   
