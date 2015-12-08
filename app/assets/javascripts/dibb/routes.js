@@ -1,3 +1,4 @@
+
 DiBB.Routes = Backbone.Router.extend({
 
   routes: {
@@ -5,13 +6,17 @@ DiBB.Routes = Backbone.Router.extend({
     "biblio/:id/edit": "biblioEdit",  
     "biblio/:id/new": "biblioEdit"  
   },
+  
+  initialize: function() {
+    this.biblios = new DiBB.BiblioCollection();
+  },
 
   biblioList: function() {
-    new DiBB.BiblioListView();
+    new DiBB.BiblioListView( { biblios: this.biblios });
   },
 
   biblioEdit: function(biblioID) {
-    new DiBB.BiblioFormView( { biblioID: biblioID } );
+    new DiBB.BiblioFormView( { biblios: this.biblios, biblioID: biblioID } );
   }
 
 });

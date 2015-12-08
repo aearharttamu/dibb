@@ -17,7 +17,7 @@ DiBB.BiblioListView = Backbone.View.extend({
       alert(response);
     };
     
-    this.biblios = new DiBB.BiblioCollection();
+    this.biblios = options.biblios;
     this.biblios.fetch( { success: this.render, error: errorHandler } );
 
   },
