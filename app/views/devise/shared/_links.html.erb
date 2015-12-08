@@ -7,7 +7,8 @@
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <div class="forgot-password"><%= link_to "Forgot your password?", new_password_path(resource_name) %></div>
+  <div class="forgot-password"><%= link_to "Forgot your password?", "javascript: void(0)" %></div>
+  <!-- <div class="forgot-password"><%= link_to "Forgot your password?", new_password_path(resource_name) %></div> -->
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
