@@ -7,13 +7,11 @@ DiBB.Routes = Backbone.Router.extend({
   },
 
   biblioList: function() {
-    var biblioListView = new DiBB.BiblioListView();
-    biblioListView.render();
+    new DiBB.BiblioListView();
   },
 
   biblioEdit: function(biblioID) {
-    var biblioFormView = new DiBB.BiblioFormView( { biblioID: biblioID } );
-    biblioFormView.render();
+    new DiBB.BiblioFormView( { biblioID: biblioID } );
   }
 
 });

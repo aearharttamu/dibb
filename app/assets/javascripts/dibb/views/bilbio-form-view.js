@@ -10,19 +10,18 @@ DiBB.BiblioFormView = Backbone.View.extend({
 	},
 	
 	initialize: function(options) {
+    // TODO can either edit and existing record or create a new one
   
+    this.render();
   },
   
   onSave: function(e) {
     alert("save it");
-    
-    return false;
-    
   },
   
   render: function() {
     
-   this.$el.html(this.template( { title: "New Bibliography"})); 
+   this.$el.html(this.template( { pageTitle: "New Bibliography"})); 
     
    $(".dibb-app").html(this.$el);
    
