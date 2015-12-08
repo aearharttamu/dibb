@@ -9,17 +9,8 @@ DiBB.BiblioListView = Backbone.View.extend({
     'click .delete-button': 'onDelete'    
   },
     
-	initialize: function(options) {
-    _.bindAll(this, "render");
-
-    // TODO improve error handling
-    var errorHandler = function( collection, response, options ) {
-      alert(response);
-    };
-    
+	initialize: function(options) {    
     this.biblios = options.biblios;
-    this.biblios.fetch( { success: this.render, error: errorHandler } );
-
   },
   
   onDelete: function(event) {
