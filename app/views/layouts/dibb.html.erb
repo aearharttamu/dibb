@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+  <title>The Digital Black Bibliographic Project</title>
+  <%= stylesheet_link_tag    'dibb', media: 'all' %>
+  <%= javascript_include_tag 'dibb' %>
+
+  <!-- Load directly from CDN until asset pipeline gem is updated to 1.10.10 -->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% if user_signed_in? %>
+    <%= render partial: 'layouts/header' %>
+  <% end %>
+  <div class="content">
+    <div class="flash-messages">
+      <% unless notice.nil? %>
+        <div class="alert alert-info" role="alert"><%= notice %></div>
+      <% end %>
+      <% unless alert.nil? %>
+        <div class="alert alert-danger" role="alert"><%= alert %></div>
+      <% end %>
+    </div>
+      <%= yield %>
+  </div>
+</body>
+</html>
