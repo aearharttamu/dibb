@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.1'
+ruby '2.2.3'
 
 # Core
 gem 'rails', '4.2.4'
@@ -36,7 +36,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #  Development
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # gem 'byebug'
 end
 
 group :development do
