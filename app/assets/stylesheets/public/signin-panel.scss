@@ -63,3 +63,38 @@ body {
     border-top-right-radius: 0;
   }
 }
+
+.devise-alert {
+	color: red;
+	font-weight: bold;
+	border: 1px solid red;
+	padding: 8px;
+	margin-bottom: 8px;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.devise-notice {
+	color: #3B8005;
+	font-weight: bold;
+	border: 1px solid #3B8005;
+	padding: 8px;
+	margin-bottom: 8px;
+
+	&:empty {
+		display: none;
+	}
+}
+
+#error_explanation {
+	margin-bottom: 8px;
+	color: red;
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+}
