@@ -14,7 +14,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'exception_notification'
 gem 'devise'
 gem 'devise-encryptable'
-gem 'authorizenet'
+gem 'neography'
 
 # Asset Pipeline
 gem 'sass-rails', '~> 5.0'
