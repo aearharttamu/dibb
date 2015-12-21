@@ -1,0 +1,28 @@
+<h1><%= pageTitle %></h1>
+
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group">   
+      <label for="bib-title" class="control-label col-sm-2">Title:</label>
+      <div class="col-sm-10 field-wrapper">
+        <input type="text" class="form-control" id="bib-title" value="<%= biblio_set.title %>">
+        <div class="instructions">Transcribe the title as appears on title page.</div>
+      </div>
+
+      <label for="bib-genre" class="control-label col-sm-2">Genre:</label>
+      <div class="col-sm-10 field-wrapper">
+        <input type="text" class="form-control" id="bib-genre" value="<%= biblio_set.genre %>">
+      </div>
+
+    </div>
+	  <%= partials.singleItem({ biblio: biblio_set.items, partials: partials }) %>
+	  <%= partials.serialList({ biblio: biblio_set.items, partials: partials }) %>
+	  <%= partials.volumeList({ biblio: biblio_set.items, partials: partials }) %>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary save-button">Save</button>
+      <button type="button" class="btn btn-default cancel-button">Cancel</button>
+    </div>
+  
+  </form>
+</div>

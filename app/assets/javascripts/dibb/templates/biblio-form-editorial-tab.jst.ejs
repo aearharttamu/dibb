@@ -1,0 +1,10 @@
+<h3>Editorial Tab</h3>
+
+<% var editorialTab = [
+	{ name: 'contents', type: 'text', title: 'Statement of the Contents', instructions: 'Provide a bibliographic statement that takes the entirety of the material into account, labeling each section (ex: cover, inside cover with masthead, conference section, publication section, blank page, back cover with address label, etc.).', required: false }
+]; %>
+
+<% for (var i = 0; i < editorialTab.length; i++) { %>
+<% var field = editorialTab[i]; %>
+<%= partials.stringInput({ field_name: field.name, field_title: field.title, field_value: 'todo', field_instructions: field.instructions }) %>
+<% } %>

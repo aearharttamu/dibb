@@ -1,10 +1,10 @@
+/*global DiBB, Backbone */
+DiBB.BiblioSet = Backbone.Model.extend({});
 
-DiBB.Biblio = Backbone.Model.extend({});
+DiBB.BiblioSetCollection = Backbone.Collection.extend({
 
-DiBB.BiblioCollection = Backbone.Collection.extend({ 
-
-  model: DiBB.Biblio,
-  url: "/biblios",
+  model: DiBB.BiblioSet,
+  url: "/biblio_sets",
         
   initialize: function( models, options ) {
 

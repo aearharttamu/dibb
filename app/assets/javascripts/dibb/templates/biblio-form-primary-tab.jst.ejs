@@ -1,0 +1,14 @@
+<h3>Primary Tab</h3>
+
+<% var primaryTab = [
+	{ name: 'descriptors', type: 'text', title: 'Title Page Descriptors', instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).', required: false },
+	{ name: 'date_as_appears', type: 'string', title: 'Date of Bibliography', instructions: 'Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980)', required: false },
+	{ name: 'year', type: 'year', title: 'Year of Publication', instructions: 'Please enter the year the bibliography was published.', required: false }
+//	{ name: 'publisher_id', type: 'publisher', title: 'Select the name of the publisher as it appears on the item.', instructions: '', required: false },
+//	{ name: 'staff', type: 'people', title: 'Staff of Bibliography', instructions: 'Record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms.', required: false }
+]; %>
+
+<% for (var i = 0; i < primaryTab.length; i++) { %>
+<% var field = primaryTab[i]; %>
+<%= partials.stringInput({ field_name: field.name, field_title: field.title, field_value: 'todo', field_instructions: field.instructions }) %>
+<% } %>

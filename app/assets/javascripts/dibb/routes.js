@@ -1,10 +1,11 @@
+/*global DiBB, Backbone, _ */
 
 DiBB.Routes = Backbone.Router.extend({
 
   routes: {
-    "": "biblioList",  
-    "biblio/new": "biblioNew",
-    "biblio/:id/edit": "biblioEdit",  
+    "": "biblioSetList",
+    "biblio_set/new": "biblioSetNew",
+    "biblio_set/:id/edit": "biblioSetEdit"
   },
   
   initialize: function() {
@@ -13,41 +14,41 @@ DiBB.Routes = Backbone.Router.extend({
     DiBB.Routes.routes = this;
   },
 
-  biblioList: function() {
+  biblioSetList: function() {
     
-    this.initBiblios( _.bind( function() {
-      var biblioListView = new DiBB.BiblioListView( { biblios: this.biblios });      
-      biblioListView.render();
+    this.initBiblioSets( _.bind( function() {
+      var biblioSetListView = new DiBB.BiblioSetListView( { biblio_sets: this.biblio_sets });
+      biblioSetListView.render();
     }, this));        
   },
   
-  biblioNew: function() {
+  biblioSetNew: function() {
 
-    this.initBiblios( _.bind( function() {
-      var biblioFormView = new DiBB.BiblioFormView( { biblios: this.biblios } );
-      biblioFormView.render();
+    this.initBiblioSets( _.bind( function() {
+      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblio_sets: this.biblio_sets } );
+      biblioSetFormView.render();
     }, this));        
     
   },
 
-  biblioEdit: function(biblioID) {
+  biblioSetEdit: function(biblioSetID) {
     
-    this.initBiblios( _.bind( function() {
-      var biblioFormView = new DiBB.BiblioFormView( { biblios: this.biblios, biblioID: biblioID } );
-      biblioFormView.render();
+    this.initBiblioSets( _.bind( function() {
+      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblio_sets: this.biblio_sets, biblioSetID: biblioSetID } );
+      biblioSetFormView.render();
     }, this));
   },
   
-  initBiblios: function( initView ) {
+  initBiblioSets: function( initView ) {
 
-    if( !this.biblios ) {
+    if( !this.biblio_sets ) {
       // TODO improve error handling
       var onFetchError = function( collection, response, options ) {
         alert(response);
       };
 
-      this.biblios = new DiBB.BiblioCollection();    
-      this.biblios.fetch( { success: initView, error: onFetchError } );
+      this.biblio_sets = new DiBB.BiblioSetCollection();
+      this.biblio_sets.fetch( { success: initView, error: onFetchError } );
 
     } else {
       initView();

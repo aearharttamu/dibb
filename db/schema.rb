@@ -11,17 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207154205) do
+ActiveRecord::Schema.define(version: 20151221214958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "biblio_sets", force: :cascade do |t|
+    t.string   "title"
+    t.string   "genre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "biblios", force: :cascade do |t|
-    t.string "title"
-    t.string "genre"
-    t.string "date"
-    t.string "provenance"
-    t.string "pubnumber"
+    t.integer  "biblio_set_id"
+    t.string   "item_as_appears"
+    t.integer  "item_number"
+    t.string   "title"
+    t.text     "descriptors"
+    t.string   "date_as_appears"
+    t.integer  "year"
+    t.integer  "publisher_id"
+    t.string   "provenance"
+    t.string   "pub_number"
+    t.integer  "size"
+    t.string   "binding"
+    t.boolean  "pagination"
+    t.boolean  "unnumbered_pages"
+    t.text     "contents"
+    t.string   "category_as_appears"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|

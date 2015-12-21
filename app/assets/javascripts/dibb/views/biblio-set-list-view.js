@@ -1,9 +1,11 @@
-DiBB.BiblioListView = Backbone.View.extend({
+/*global DiBB, Backbone, JST, _ */
 
-	template: JST['dibb/templates/biblio-list-view'],
+DiBB.BiblioSetListView = Backbone.View.extend({
+
+	template: JST['dibb/templates/biblio-set-list-view'],
   
-  id: 'biblio-list-view',
-  className: 'biblio-list',
+  id: 'biblio-set-list-view',
+  className: 'biblio-set-list',
   
   trIDTemplate: _.template("#bibid-<%= id %>"),
   
@@ -12,17 +14,17 @@ DiBB.BiblioListView = Backbone.View.extend({
   },
     
 	initialize: function(options) {    
-    this.biblios = options.biblios;
+    this.biblio_sets = options.biblio_sets;
   },
   
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var bibID = parseInt(deleteButton.attr("data-bibid"));
-    var deletedBiblio = this.biblios.get(bibID);
+    var deletedBiblioSet = this.biblio_sets.get(bibID);
 
-    if( deletedBiblio ) {
+    if( deletedBiblioSet ) {
       deleteButton.attr("disabled", true);  
-      deletedBiblio.destroy( { success: _.bind( function(){
+      deletedBiblioSet.destroy( { success: _.bind( function(){
         var tableRow = this.$(this.trIDTemplate({id: bibID}));
         this.dataTable.row(tableRow).remove().draw();        
       }, this) });
@@ -30,8 +32,8 @@ DiBB.BiblioListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { biblios: this.biblios.toJSON() } ));
-    this.dataTable = this.$('#biblio-table').DataTable();    
+    this.$el.html(this.template( { biblio_sets: this.biblio_sets.toJSON() } ));
+    this.dataTable = this.$('#biblio_set-table').DataTable();
     $(".dibb-app").html(this.$el);
   }
   
