@@ -12,6 +12,11 @@ ActionMailer::Base.smtp_settings = {
 
 ActionMailer::Base.default_url_options[:host] = Rails.application.secrets.smtp_settings['return_path']
 
+# This is for sendgrid: it helps with the statistics on the sendgrid site.
+if Rails.application.secrets.smtp_settings['xsmtpapi'].present?
+	ActionMailer::Base.default "X-SMTPAPI" => "{\"category\": \"#{Rails.application.secrets.smtp_settings['xsmtpapi']}\"}"
+end
+
 if !Rails.application.secrets.mail_intercept['deliver_email']
 	ActionMailer::Base.register_interceptor(StagingMailInterceptor)
 end
