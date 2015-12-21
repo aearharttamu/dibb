@@ -30,8 +30,8 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
 	initialize: function(options) {
     this.biblio_sets = options.biblio_sets;
     
-    if( options.biblioID ) {
-      this.biblio_set = this.biblio_sets.get(parseInt(options.biblioID));
+    if( options.biblioSetID ) {
+      this.biblio_set = this.biblio_sets.get(parseInt(options.biblioSetID));
       this.mode = "edit";
     } else {
       this.biblio_set = new DiBB.BiblioSet();
