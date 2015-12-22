@@ -1,3 +1,4 @@
+/*global Backbone */
 
 // application namespace
 var DiBB = {};
