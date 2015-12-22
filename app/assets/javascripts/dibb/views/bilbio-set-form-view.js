@@ -3,7 +3,9 @@
 DiBB.BiblioSetFormView = Backbone.View.extend({
 
 	template: JST['dibb/templates/biblio-set-form-view'],
-	partials: { stringInput: JST['dibb/templates/string-input'],
+	partials: {
+		stringInput: JST['dibb/templates/string-input'],
+		dropdownInput: JST['dibb/templates/dropdown-input'],
 		singleItem: JST['dibb/templates/biblio-form-single-item'],
 		serialList: JST['dibb/templates/biblio-form-serial-list'],
 		volumeList: JST['dibb/templates/biblio-form-volume-list'],
