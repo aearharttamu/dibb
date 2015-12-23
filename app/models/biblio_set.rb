@@ -11,6 +11,7 @@ class BiblioSet < ActiveRecord::Base
 			id: self.id,
 			title: self.title,
 			genre: self.genre,
+			other_genre: self.other_genre,
 			items: biblios
 		}
 	end

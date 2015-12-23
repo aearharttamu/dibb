@@ -55,7 +55,8 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     
     this.biblio_set.set( {
       title: this.$('#bib-title').val(),
-      genre: this.$('#bib-genre').val()
+      genre: this.$('#bib-genre').val(),
+      other_genre: this.$('#bib-other-genre').val()
     });
     
     this.biblio_sets.add(this.biblio_set);

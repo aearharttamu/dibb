@@ -50,6 +50,6 @@ class BiblioSetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def biblio_set_params
-      params.require(:biblio_set).permit(:title, :genre, :items)
+      params.require(:biblio_set).permit(:title, :genre, :other_genre, :items)
     end
 end

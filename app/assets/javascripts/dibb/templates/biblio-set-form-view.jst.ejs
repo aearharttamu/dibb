@@ -5,6 +5,7 @@
     <div class="form-group main-panel">
 		<%= partials.stringInput({ field_name: "bib-title", field_title: "Title", field_value: biblio_set.title, field_instructions: "Transcribe the title as appears on title page." }) %>
 		<%= partials.dropdownInput({ field_name: "bib-genre", field_title: "Genre", field_value: biblio_set.genre, field_instructions: "", options: genreList }) %>
+		<%= partials.stringInput({ field_name: "bib-other-genre", field_title: "Other Genre", field_value: biblio_set.other_genre, field_instructions: "Add a genre that is not on the above list." }) %>
     </div>
 	  <div role="tabpanel" class="genre-pane" id="single-item">
 		  <%= partials.singleItem({ biblio: biblio_set.items, partials: partials }) %>
