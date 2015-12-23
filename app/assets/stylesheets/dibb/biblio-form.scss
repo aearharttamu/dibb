@@ -1,10 +1,13 @@
 .biblio-set-form {
   
   margin: 20px;
-  
+
+	h1 {
+		margin-left: 30px;
+	}
   .form-wrapper {
     margin: 30px;
-    max-width: 500px;
+    //max-width: 500px;
   }
   
   .field-wrapper {
@@ -20,6 +23,15 @@
   .actions {
     float: right;
   }
+
+	.main-panel {
+		max-width: 800px;
+		margin-left: 11px;
+	}
+
+	.tab-pane {
+		max-width: 800px;
+	}
 
 	.tab-content {
 		border: 1px solid #dddddd;
