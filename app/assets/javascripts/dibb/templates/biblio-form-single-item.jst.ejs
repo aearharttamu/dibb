@@ -1,6 +1,17 @@
-<h3>Single Item</h3>
-<%= partials.primaryTab({ biblio: biblio, partials: partials }) %>
-<%= partials.referenceTab({ biblio: biblio, partials: partials }) %>
-<%= partials.physicalTab({ biblio: biblio, partials: partials }) %>
-<%= partials.editorialTab({ biblio: biblio, partials: partials }) %>
-<%= partials.citationsTab({ biblio: biblio, partials: partials }) %>
+<ul class="nav nav-tabs single-item" role="tablist">
+	<li role="presentation" class="active"><a href="#primary" aria-controls="primary" role="tab" data-toggle="tab">Primary</a></li>
+	<li role="presentation"><a href="#reference" aria-controls="reference" role="tab" data-toggle="tab">Reference</a></li>
+	<li role="presentation"><a href="#physical" aria-controls="physical" role="tab" data-toggle="tab">Physical</a></li>
+	<li role="presentation"><a href="#editorial" aria-controls="editorial" role="tab" data-toggle="tab">Editorial</a></li>
+	<li role="presentation"><a href="#citations" aria-controls="citations" role="tab" data-toggle="tab">Citations</a></li>
+</ul>
+
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="primary"><%= partials.primaryTab({ biblio: biblio, partials: partials }) %></div>
+	<div role="tabpanel" class="tab-pane" id="reference"><%= partials.referenceTab({ biblio: biblio, partials: partials }) %></div>
+	<div role="tabpanel" class="tab-pane" id="physical"><%= partials.physicalTab({ biblio: biblio, partials: partials }) %></div>
+	<div role="tabpanel" class="tab-pane" id="editorial"><%= partials.editorialTab({ biblio: biblio, partials: partials }) %></div>
+	<div role="tabpanel" class="tab-pane" id="citations"><%= partials.citationsTab({ biblio: biblio, partials: partials }) %></div>
+	<div class="clearfix"></div>
+</div>
+

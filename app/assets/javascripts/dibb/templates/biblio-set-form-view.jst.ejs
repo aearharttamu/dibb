@@ -7,9 +7,15 @@
 		<%= partials.dropdownInput({ field_name: "bib-genre", field_title: "Genre", field_value: biblio_set.genre, field_instructions: "", options: genreList }) %>
 
     </div>
-	  <%= partials.singleItem({ biblio: biblio_set.items, partials: partials }) %>
-	  <%= partials.serialList({ biblio: biblio_set.items, partials: partials }) %>
-	  <%= partials.volumeList({ biblio: biblio_set.items, partials: partials }) %>
+	  <div role="tabpanel" class="genre-pane" id="single-item">
+		  <%= partials.singleItem({ biblio: biblio_set.items, partials: partials }) %>
+	  </div>
+	  <div role="tabpanel" class="genre-pane" id="serial-list">
+		  <%= partials.serialList({ biblio: biblio_set.items, partials: partials }) %>
+	  </div>
+	  <div role="tabpanel" class="genre-pane" id="volume-list">
+		  <%= partials.volumeList({ biblio: biblio_set.items, partials: partials }) %>
+	  </div>
 
     <div class="actions">
       <button type="button" class="btn btn-primary save-button">Save</button>
