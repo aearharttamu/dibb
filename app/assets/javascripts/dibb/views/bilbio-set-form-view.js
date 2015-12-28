@@ -55,7 +55,8 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     
     this.biblio_set.set( {
       title: this.$('#bib-title').val(),
-      genre: this.$('#bib-genre').val()
+      genre: this.$('#bib-genre').val(),
+      other_genre: this.$('#bib-other-genre').val()
     });
     
     this.biblio_sets.add(this.biblio_set);
@@ -75,7 +76,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     
    this.$el.html(this.template( { pageTitle: pageTitle, biblio_set: this.biblio_set.toJSON(), partials: this.partials }));
    $(".dibb-app").html(this.$el);
-   
+	  $('#bib-genre').trigger("change");
   }
   
 });
