@@ -16,7 +16,7 @@ class NeoBibliograph
       }
     }
     
-    People.all.each { |person|
+    Person.all.each { |person|
       neo_person = NeoPerson.new( person.node_properties )
     }    
     

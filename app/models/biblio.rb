@@ -26,5 +26,9 @@ class Biblio < ActiveRecord::Base
 			category_as_appears: self.category_as_appears
 		}
 	end
+  
+  def node_properties
+    { }
+  end
 
 end
