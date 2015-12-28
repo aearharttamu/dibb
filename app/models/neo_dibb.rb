@@ -2,10 +2,16 @@ class NeoDibb
   
   include Neo4j::ActiveNode
 
+  property :version, type: String
+  
+  has_many :out, :bibliographs, type: :CONTAINS, model_class: :NeoBibliograph
+  
+  self.mapped_label_name = 'DiBB'
+
   GRAPH_SCHEMA_VERISON = '0.1'
   
   def self.root_node
-    dibb = NeoDibb.new( { version: GRAPH_SCHEMA_VERISON } )
+    dibb = NeoDibb.create( { version: GRAPH_SCHEMA_VERISON } )
     dibb.save!
     dibb
   end
@@ -15,8 +21,9 @@ class NeoDibb
     # TODO what happens if the DB is modified during this process?
     # we have to screen the UI while running this
     
-    neo_bibliograph = NeoBibliograph.new( { created_at: self.created_at } )
+    neo_bibliograph = NeoBibliograph.create( { created_at: Time.now } )
     neo_bibliograph.generate
+    self.bibliographs << neo_bibliograph
     neo_bibliograph.save              
   end
 
