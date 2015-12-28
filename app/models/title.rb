@@ -1,7 +1,7 @@
-class Title {
+class Title 
   
   def node_properties
     { }
   end
   
-}
+end
