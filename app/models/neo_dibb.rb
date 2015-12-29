@@ -11,9 +11,7 @@ class NeoDibb
   GRAPH_SCHEMA_VERISON = '0.1'
   
   def self.root_node
-    dibb = NeoDibb.create( { version: GRAPH_SCHEMA_VERISON } )
-    dibb.save!
-    dibb
+    NeoDibb.create( { version: GRAPH_SCHEMA_VERISON } )
   end
     
   def generate
@@ -25,8 +23,6 @@ class NeoDibb
     neo_bibliograph.generate
     self.bibliographs << neo_bibliograph
   
-    # save the entire graph
-    neo_bibliograph.save              
   end
 
 end
