@@ -12,13 +12,13 @@ class NeoBibliograph
 
     neo_publishers = []
     Publisher.all.map { |publisher|
-      neo_publisher = Publisher.create( publisher.node_properties )   
+      neo_publisher = NeoPublisher.create( publisher.node_properties )   
       neo_publishers[ publisher.id ] = neo_publisher
     }
 
     neo_titles = []
     Title.all.each { |title|
-      neo_title = Title.create( title.node_properties )
+      neo_title = NeoTitle.create( title.node_properties )
       neo_titles[ title.id ] = neo_title
       
       unless title.publisher.nil?
@@ -32,8 +32,12 @@ class NeoBibliograph
       
       biblio.citations.each { |citation| 
         neo_citation = NeoCitation.create( citation.node_properties )
-        neo_citation.title = neo_titles[ citation.title.id ] unless citation.title.nil?
         neo_biblio.citations << neo_citation
+        
+        unless citation.title.nil?
+          neo_title = neo_titles[ citation.title.id ]
+          neo_citation.title = neo_title 
+        end
       }      
 
       self.biblios << neo_biblio

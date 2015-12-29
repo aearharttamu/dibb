@@ -1,5 +1,7 @@
 class BiblioSet < ActiveRecord::Base
 
+  has_many :biblios
+
 	def self.list_all
 		biblio_sets = BiblioSet.all
 		biblio_sets.map { |biblio_set| biblio_set.obj }

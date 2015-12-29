@@ -1,7 +1,7 @@
 class Citation < ActiveRecord::Base
   
   belongs_to :biblio
-  has_one :title
+  belongs_to :title
   
   def node_properties
     { }
