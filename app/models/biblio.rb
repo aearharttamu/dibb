@@ -1,5 +1,7 @@
 class Biblio < ActiveRecord::Base
 
+  has_many :citations
+
 	def self.list(biblio_set_id)
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })
 		biblios.map { |biblio| biblio.obj }
@@ -28,7 +30,11 @@ class Biblio < ActiveRecord::Base
 	end
   
   def node_properties
-    { }
+    { 
+      title: self.title, 
+      date_as_appears: self.date_as_appears,
+      pub_number: self.pub_number
+    }
   end
 
 end

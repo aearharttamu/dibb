@@ -24,6 +24,8 @@ class NeoDibb
     neo_bibliograph = NeoBibliograph.create( { created_at: Time.now } )
     neo_bibliograph.generate
     self.bibliographs << neo_bibliograph
+  
+    # save the entire graph
     neo_bibliograph.save              
   end
 

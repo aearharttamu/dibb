@@ -9,34 +9,35 @@ class NeoBibliograph
   self.mapped_label_name = 'BiblioGraph'
       
   def generate
-                        
+
+    neo_publishers = []
+    Publisher.all.map { |publisher|
+      neo_publisher = Publisher.create( publisher.node_properties )   
+      neo_publishers[ publisher.id ] = neo_publisher
+    }
+
+    neo_titles = []
+    Title.all.each { |title|
+      neo_title = Title.create( title.node_properties )
+      neo_titles[ title.id ] = neo_title
+      
+      unless title.publisher.nil?
+        neo_publisher = neo_publishers[ title.publisher.id ]
+        neo_publisher.titles << neo_title
+      end
+    }
+                            
     Biblio.all.each { |biblio|
       neo_biblio = NeoBiblio.create( biblio.node_properties )
-      self.neo_biblios << neo_biblio
       
       biblio.citations.each { |citation| 
         neo_citation = NeoCitation.create( citation.node_properties )
+        neo_citation.title = neo_titles[ citation.title.id ] unless citation.title.nil?
         neo_biblio.citations << neo_citation
-      }
-    }
-    
-    Person.all.each { |person|
-      neo_person = NeoPerson.create( person.node_properties )
+      }      
+
+      self.biblios << neo_biblio
     }    
-    
-    Publisher.all.each { |publisher|
-      neo_publisher = Publisher.create( publisher.node_properties )      
-    }
-    
-    Title.all.each { |title|
-      neo_title = Title.create( title.node_properties )
-    
-      # TODO
-      # link them to citations
-      # link to people
-      # link to publisher
-    }    
-              
   end
 
 end
