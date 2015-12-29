@@ -4,14 +4,14 @@ class NeoDibb
 
   property :version, type: String
   
-  has_many :out, :bibliographs, type: :CONTAINS, model_class: :NeoBibliograph
+  has_many :out, :bibliographs, type: :CREATED, model_class: :NeoBibliograph
   
   self.mapped_label_name = 'DiBB'
 
   GRAPH_SCHEMA_VERISON = '0.1'
   
   def self.root_node
-    NeoDibb.create( { version: GRAPH_SCHEMA_VERISON } )
+    NeoDibb.find_or_create_by( { version: GRAPH_SCHEMA_VERISON } )
   end
     
   def generate
@@ -22,7 +22,6 @@ class NeoDibb
     neo_bibliograph = NeoBibliograph.create( { created_at: Time.now } )
     neo_bibliograph.generate
     self.bibliographs << neo_bibliograph
-  
   end
 
 end
