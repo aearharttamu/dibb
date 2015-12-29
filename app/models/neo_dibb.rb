@@ -13,6 +13,11 @@ class NeoDibb
   def self.root_node
     NeoDibb.find_or_create_by( { version: GRAPH_SCHEMA_VERISON } )
   end
+  
+  def self.run_graph
+    neo_dibb = NeoDibb.root_node
+    neo_dibb.generate
+  end  
     
   def generate
     
@@ -23,5 +28,5 @@ class NeoDibb
     neo_bibliograph.generate
     self.bibliographs << neo_bibliograph
   end
-
+  
 end

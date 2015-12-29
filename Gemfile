@@ -15,6 +15,7 @@ gem 'exception_notification'
 gem 'devise'
 gem 'devise-encryptable'
 gem 'neo4j'
+gem 'delayed_job_active_record'
 
 # Asset Pipeline
 gem 'sass-rails', '~> 5.0'
