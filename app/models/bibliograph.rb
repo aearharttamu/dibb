@@ -1,6 +1,6 @@
 class Bibliograph < ActiveRecord::Base
     
-  has_one :user
+  belongs_to :user
   
 	def self.list_all
 		bibliographs = Bibliograph.all
@@ -9,6 +9,7 @@ class Bibliograph < ActiveRecord::Base
   
   def obj
     {
+      id: self.id,
       name: self.name,
       node_count: self.node_count,
       schema_version: self.schema_version,

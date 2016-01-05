@@ -2,15 +2,17 @@
 
 DiBB.BibliographListView = Backbone.View.extend({
 
-	template: JST['dibb/templates/bibliograph-list-view'],
-  
+
   id: 'bibliograph-list-view',
   className: 'bibliograph-list',
-  
+
+	template: JST['dibb/templates/bibliograph-list-view'],
+  trIDTemplate: _.template("#graphid-<%= id %>"),
+    
 	partials: {
 		stringInput: JST['dibb/templates/string-input']
 	},
-    
+      
   events: {
     'click .create-graph-button': 'onCreateGraph',
     'click .delete-button': 'onDelete'    
@@ -29,24 +31,33 @@ DiBB.BibliographListView = Backbone.View.extend({
     if( deletedBibliograph ) {
       deleteButton.attr("disabled", true);
       deletedBibliograph.destroy( { success: _.bind( function(){
-        var tableRow = this.$(this.trIDTemplate({id: bibID}));
+        var tableRow = this.$(this.trIDTemplate({id: graphID}));
         this.dataTable.row(tableRow).remove().draw();
       }, this) });
     }
+    
+    return false;
   },
   
   onCreateGraph: function() {
     
+    var newGraphDialog = this.$("#new-graph-dialog");
+        
     var onSuccess = function(model, response, options) {
       // close dialog and reset it
+      // render table? 
+      newGraphDialog.modal('hide');
+         
     };
     
     var onError = function(model, response, options) {
       // TODO show error messages, stay on dialog.   
     };
     
+    this.bibliograph = new DiBB.Bibliograph();
+    
     this.bibliograph.set( {
-      name: this.$('#graph-name').val()
+      name: this.$('#bilbiograph-name').val()
     });
     
     this.bibliographs.add(this.bibliograph);

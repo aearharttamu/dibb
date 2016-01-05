@@ -15,7 +15,8 @@ class BibliographsController < ApplicationController
 
   # POST /bibliographs.json
   def create
-    @bibliograph = Biblio.new(bibliograph_params)
+    @bibliograph = Bibliograph.new(bibliograph_params)
+    @bibliograph.user = current_user
 
     if @bibliograph.save
       render json: @bibliograph.obj
@@ -50,6 +51,6 @@ class BibliographsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bibliograph_params
-      params.require(:biblio).permit( :name )
+      params.require(:bibliograph).permit( :name )
     end
 end
