@@ -9,10 +9,13 @@ DiBB.Routes = Backbone.Router.extend({
     "bibliographs" : "bibliographList"
   },
   
-  initialize: function() {
+  initialize: function(options) {
                       
     // global singleton
     DiBB.Routes.routes = this;
+    
+    // TODO
+    this.graphDashboardURL = ""; 
   },
 
   biblioSetList: function() {
@@ -42,7 +45,8 @@ DiBB.Routes = Backbone.Router.extend({
   
   bibliographList: function() {
     this.initBibliograph( _.bind( function() {
-      var bibliographListView = new DiBB.BibliographListView( { bibliographs: this.bibliographs });
+      var bibliographListView = new DiBB.BibliographListView( { bibliographs: this.bibliographs, 
+                                                                graphDashboardURL: this.graphDashboardURL });
       bibliographListView.render();
     }, this));        
   },

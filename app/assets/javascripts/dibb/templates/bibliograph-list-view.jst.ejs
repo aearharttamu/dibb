@@ -1,4 +1,4 @@
-<h1>Neo4j Graphs</h1>
+<h1>Graphs</h1>
 
 <div class="table-wrapper">    
   
@@ -22,13 +22,36 @@
             <td><%= bibliograph.created_by %></td>
             <td><%= bibliograph.created_at %></td>
             <td>
-              <a href="#" class="btn delete-button btn-danger" data-bibid="<%= bibliograph.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+              <a href="#" class="btn delete-button btn-danger" data-graphid="<%= bibliograph.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
             </td>
         </tr>
       <% }); %>
     </tbody>
   </table>
   
-  <p><a href="#bibliograph/new" class="btn btn-primary">Create Graph</a></p>
+  <div class="actions">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#new-graph-dialog">Create Graph</button>
+    <a href="<%= graphDashboardURL %>" class="btn btn-default">Open Neo4j Dashboard</a>
+  </div>
   
 </div>
+
+<div id="new-graph-dialog" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create Graph</h4>
+      </div>
+      <form class="form-horizontal">
+        <div class="modal-body">
+      		<%= partials.stringInput({ field_name: "bilbiograph-name", field_title: "Name", field_value: defaultGraphName, field_instructions: "Optional name for this graph." }) %>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary create-graph-button">Create</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
