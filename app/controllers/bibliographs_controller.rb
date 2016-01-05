@@ -2,18 +2,18 @@ class BibliographsController < ApplicationController
   before_action :set_bibliograph, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  # GET /bilbiographs.json
+  # GET /bibliographs.json
   def index
     @bibliographs = Bibliograph.list_all
     render json: @bibliographs.to_json
   end
 
-  # GET /bilbiographs/1.json
+  # GET /bibliographs/1.json
   def show
     render json: @bibliograph.obj.to_json
   end
 
-  # POST /bilbiographs.json
+  # POST /bibliographs.json
   def create
     @bibliograph = Biblio.new(bibliograph_params)
 
@@ -24,7 +24,7 @@ class BibliographsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /bilbiographs/1.json
+  # PATCH/PUT /bibliographs/1.json
   def update
     if @bibliograph.update(bibliograph_params)
       render json: @bibliograph.obj
@@ -33,7 +33,7 @@ class BibliographsController < ApplicationController
     end
   end
 
-  # DELETE /bilbiographs/1.json
+  # DELETE /bibliographs/1.json
   def destroy
     if @bibliograph.destroy
       head :no_content
