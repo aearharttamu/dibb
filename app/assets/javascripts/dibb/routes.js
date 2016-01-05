@@ -5,7 +5,8 @@ DiBB.Routes = Backbone.Router.extend({
   routes: {
     "": "biblioSetList",
     "biblio_set/new": "biblioSetNew",
-    "biblio_set/:id/edit": "biblioSetEdit"
+    "biblio_set/:id/edit": "biblioSetEdit",
+    "bibliographs" : "bibliographList"
   },
   
   initialize: function() {
@@ -37,6 +38,30 @@ DiBB.Routes = Backbone.Router.extend({
       var biblioSetFormView = new DiBB.BiblioSetFormView( { biblio_sets: this.biblio_sets, biblioSetID: biblioSetID } );
       biblioSetFormView.render();
     }, this));
+  },
+  
+  bibliographList: function() {
+    this.initBibliograph( _.bind( function() {
+      var bibliographListView = new DiBB.BibliographListView( { bibliographs: this.bibliographs });
+      bibliographListView.render();
+    }, this));        
+  },
+  
+  initBibliograph: function( initView ) {
+    
+    if( !this.bibliographs ) {
+      // TODO improve error handling
+      var onFetchError = function( collection, response, options ) {
+        alert(response);
+      };
+
+      this.bibliographs = new DiBB.BibliographCollection();
+      this.bibliographs.fetch( { success: initView, error: onFetchError } );
+
+    } else {
+      initView();
+    }
+    
   },
   
   initBiblioSets: function( initView ) {

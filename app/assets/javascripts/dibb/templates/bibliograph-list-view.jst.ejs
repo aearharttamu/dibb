@@ -1,0 +1,34 @@
+<h1>Neo4j Graphs</h1>
+
+<div class="table-wrapper">    
+  
+  <table id="bibliograph-table" class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Nodes</th>
+            <th>Schema Version</th>
+            <th>Created By</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% _.each( bibliographs, function( bibliograph ) { %>
+        <tr id="bibid-<%= bibliograph.id %>">
+            <td><%= bibliograph.name %></td>
+            <td><%= bibliograph.node_count %></td>
+            <td><%= bibliograph.schema_version %></td>
+            <td><%= bibliograph.created_by %></td>
+            <td><%= bibliograph.created_at %></td>
+            <td>
+              <a href="#" class="btn delete-button btn-danger" data-bibid="<%= bibliograph.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+            </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  
+  <p><a href="#bibliograph/new" class="btn btn-primary">Create Graph</a></p>
+  
+</div>
