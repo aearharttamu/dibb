@@ -14,17 +14,17 @@ class NeoDibb
     NeoDibb.find_or_create_by( { version: GRAPH_SCHEMA_VERISON } )
   end
   
-  def self.run_graph
+  def self.run_graph( bibliograph )
     neo_dibb = NeoDibb.root_node
-    neo_dibb.generate
+    neo_dibb.generate( bibliograph )
   end  
     
-  def generate
+  def generate( bibliograph )
     
     # TODO what happens if the DB is modified during this process?
     # we have to screen the UI while running this
     
-    neo_bibliograph = NeoBibliograph.create( { created_at: Time.now } )
+    neo_bibliograph = NeoBibliograph.create( bibliograph.node_properties )
     neo_bibliograph.generate
     self.bibliographs << neo_bibliograph
   end
