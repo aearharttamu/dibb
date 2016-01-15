@@ -4,7 +4,7 @@ class BiblioSetsController < ApplicationController
 
   # GET /biblio_sets.json
   def index
-    @biblio_sets = BiblioSet.list_all
+    @biblio_sets = BiblioSet.get_page(params[:page], params[:per_page])
     render json: @biblio_sets.to_json
   end
 

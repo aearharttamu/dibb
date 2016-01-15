@@ -1,7 +1,7 @@
 /*global DiBB, Backbone */
 DiBB.Bibliograph = Backbone.Model.extend({});
 
-DiBB.BibliographCollection = Backbone.Collection.extend({
+DiBB.BibliographCollection = Backbone.PageableCollection.extend({
 
   model: DiBB.Bibliograph,
   url: "/bibliographs",

@@ -15,4 +15,5 @@
 //= require underscore
 //= require backbone
 //= require bootstrap-sprockets
+//= require_tree ./lib
 //= require_tree ./dibb
