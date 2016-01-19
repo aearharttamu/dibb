@@ -7,6 +7,11 @@ class BiblioSet < ActiveRecord::Base
 		biblio_sets.map { |biblio_set| biblio_set.obj }
 	end
 
+	def self.get_all()
+		biblio_sets = BiblioSet.all
+		biblio_sets.map { |biblio_set| biblio_set.obj }
+	end
+
 	def obj
 		biblios = Biblio.list(self.id)
 		{

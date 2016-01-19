@@ -9,7 +9,7 @@
 (function (factory) {
 
   // CommonJS
-  if (typeof exports == "object" && typeof require == "function") {
+  if (typeof exports == "object") {
     module.exports = factory(require("underscore"), require("backbone"));
   }
   // AMD
@@ -592,7 +592,7 @@
                  (totalPages > 0 &&
                   (firstPage ? currentPage > totalPages : currentPage >= totalPages))) {
           throw new RangeError("`currentPage` must be firstPage <= currentPage " +
-                               (firstPage ? "<" : "<=") +
+                               (firstPage ? ">" : ">=") +
                                " totalPages if " + firstPage + "-based. Got " +
                                currentPage + '.');
         }
@@ -1159,15 +1159,7 @@
         var o = _isFunction(queryParams.order) ?
           queryParams.order.call(thisCopy) :
           queryParams.order;
-          if (!_isArray(state.order)) {
-              data[o] = this.queryParams.directions[state.order + ""];
-          }
-          else {
-              data[o] = [];
-              for (i = 0; i < state.order.length; i += 1) {
-                  data[o].push(this.queryParams.directions[state.order[i]]);
-              }
-          }
+        data[o] = this.queryParams.directions[state.order + ""];
       }
       else if (!state.sortKey) delete data[queryParams.order];
 

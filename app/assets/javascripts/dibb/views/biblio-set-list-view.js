@@ -33,7 +33,6 @@ DiBB.BiblioSetListView = Backbone.View.extend({
   
   render: function() {
     this.$el.html(this.template( { biblio_sets: this.biblio_sets.toJSON() } ));
-    this.dataTable = this.$('#biblio_set-table').DataTable();
     $(".dibb-app").html(this.$el);
   }
   
