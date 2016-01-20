@@ -70,13 +70,10 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     DiBB.Routes.routes.navigate("/", {trigger: true});
   },
   
-  render: function() {
-    
+  render: function() {    
     var pageTitle = this.pageTitle[this.mode];
-    
-   this.$el.html(this.template( { pageTitle: pageTitle, biblio_set: this.biblio_set.toJSON(), partials: this.partials }));
-   $(".dibb-app").html(this.$el);
-	  $('#bib-genre').trigger("change");
+    this.$el.html(this.template( { pageTitle: pageTitle, biblio_set: this.biblio_set.toJSON(), partials: this.partials }));
+    $(".dibb-app").html(this.$el);
   }
   
 });
