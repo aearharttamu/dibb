@@ -7,7 +7,5 @@
 //	{ name: 'staff', type: 'people', title: 'Staff of Bibliography', instructions: 'Record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms.', required: false }
 ]; %>
 
-<% for (var i = 0; i < primaryTab.length; i++) { %>
-<% var field = primaryTab[i]; %>
-<%= partials.stringInput({ field_name: field.name, field_title: field.title, field_value: 'todo', field_instructions: field.instructions }) %>
-<% } %>
+
+<%= partials.stringInput({ field_name: 'title', field_title: 'Title', field_value: 'todo', field_instructions: 'Transcribe title as appears on title page.' }) %>
