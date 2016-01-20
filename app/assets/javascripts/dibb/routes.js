@@ -1,4 +1,3 @@
-/*global DiBB, Backbone, _ */
 
 DiBB.Routes = Backbone.Router.extend({
 
