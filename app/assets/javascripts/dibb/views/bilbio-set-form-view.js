@@ -6,15 +6,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
   
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
-		dropdownInput: JST['dibb/templates/common/dropdown-input'],
-		singleItem: JST['dibb/templates/biblio-form/single-item'],
-		serialList: JST['dibb/templates/biblio-form/serial-list'],
-		volumeList: JST['dibb/templates/biblio-form/volume-list'],
-		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
-		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
-		physicalTab: JST['dibb/templates/biblio-form/physical-tab'],
-		primaryTab: JST['dibb/templates/biblio-form/primary-tab'],
-		referenceTab: JST['dibb/templates/biblio-form/reference-tab']
+		dropdownInput: JST['dibb/templates/common/dropdown-input']
 	},
   
   id: 'biblio-set-form-view',
@@ -31,56 +23,63 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
 	},
 	
 	initialize: function(options) {
-    this.biblio_sets = options.biblio_sets;
+    this.biblioSets = options.biblioSets;
     
     if( options.biblioSetID ) {
-      this.biblio_set = this.biblio_sets.get(parseInt(options.biblioSetID));
-      // TODO get the ID of the biblio and retrieve it
+      this.biblioSet = this.biblioSets.get(parseInt(options.biblioSetID));
       this.mode = "edit";
     } else {
-      this.biblio_set = new DiBB.BiblioSet();
-      this.biblio = new DiBB.Biblio();
+      this.biblioSet = new DiBB.BiblioSet();
       this.mode = "new";
-    }    
-    
+    }        
   },
   
   onSave: function(e) {
-  
-    var onSuccess = function(model, response, options) {
-      DiBB.Routes.routes.navigate("/", {trigger: true});    
-    };
-    
-    var onError = function(model, response, options) {
-      // TODO show error messages, stay on this page.   
-      alert(response);  
-    };
-    
-    this.biblio_set.set( {
+          
+    this.biblioSet.set( {
       title: this.$('#bib-title').val(),
       genre: this.$('#bib-genre').val(),
       other_genre: this.$('#bib-other-genre').val()
     });
     
-    // TODO save the biblio object if this is a single item genre
+    var onSuccess = function(model, response, options) {
+      DiBB.Routes.routes.navigate("/", {trigger: true});    
+    };
     
+    // TODO save this.biblioFormView
+
+    this.biblioSets.add(this.biblioSet);
+    this.biblioSet.save(null, { success: onSuccess, error: DiBB.Routes.onError });
     
-    
-    this.biblio_sets.add(this.biblio_set);
-    this.biblio_set.save(null, { success: onSuccess, error: onError });
   },
   
   onCancel: function() {
-    if( this.mode === 'new') {
-      this.biblio_sets.remove(this.biblio_set);
-    }
     DiBB.Routes.routes.navigate("/", {trigger: true});
   },
   
   render: function() {    
+    
+    // render the page without the biblio panel content
     var pageTitle = this.pageTitle[this.mode];
-    this.$el.html(this.template( { pageTitle: pageTitle, biblio_set: this.biblio_set.toJSON(), partials: this.partials }));
+    this.$el.html(this.template( { pageTitle: pageTitle, biblioSet: this.biblioSet.toJSON(), partials: this.partials }));
     $(".dibb-app").html(this.$el);
+    
+    var biblios = new DiBB.BiblioCollection({ biblioSet: this.biblioSet });
+    
+    // retrieve bilbios for this set and display them
+    biblios.fetch( { success: _.bind( function() {
+      
+      // TODO this is where we switch based on genre type between different subviews
+      
+      var biblio = biblios.at(0);
+      var firstID = biblio ? biblio.id : null;
+      this.biblioFormView = new DiBB.BiblioFormView( { biblios: biblios, biblioID: firstID, embed: true } );
+      this.biblioFormView.render();
+            
+      this.$(".biblio-panel").html(this.biblioFormView.$el);
+      
+    }, this), error: DiBB.Routes.onError } );
+                        
   }
   
 });

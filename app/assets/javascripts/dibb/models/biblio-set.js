@@ -7,7 +7,11 @@ DiBB.BiblioSetCollection = Backbone.Collection.extend({
   url: "/biblio_sets",
           
   initialize: function( models, options ) {
-
+  },
+  
+  fetchSet: function() {
+    
+    fetch( { success: initView, error: onFetchError } );
   }
           
 }); 

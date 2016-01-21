@@ -3,12 +3,12 @@
 <div class="form-wrapper">
   <form class="form-horizontal">
     <div class="form-group main-panel">
-		<%= partials.stringInput({ field_name: "bib-title", field_title: "Title", field_value: biblio_set.title, field_instructions: "Transcribe the title as appears on title page." }) %>
-		<% partials.dropdownInput({ field_name: "bib-genre", field_title: "Genre", field_value: biblio_set.genre, field_instructions: "", options: DiBB.Genres }) %>
-		<% partials.stringInput({ field_name: "bib-other-genre", field_title: "Other Genre", field_value: biblio_set.other_genre, field_instructions: "Add a genre that is not on the above list." }) %>
+		<%= partials.stringInput({ field_name: "bib-title", field_title: "Title", field_value: biblioSet.title, field_instructions: "Transcribe the title as appears on title page." }) %>
+		<% partials.dropdownInput({ field_name: "bib-genre", field_title: "Genre", field_value: biblioSet.genre, field_instructions: "", options: DiBB.Genres }) %>
+		<% partials.stringInput({ field_name: "bib-other-genre", field_title: "Other Genre", field_value: biblioSet.other_genre, field_instructions: "Add a genre that is not on the above list." }) %>
     </div>
-	  <div class="genre-pane" id="single-item">
-		  <%= partials.singleItem({ biblio: biblio_set.items, partials: partials }) %>
+	  <div class="biblio-panel">
+		  <p>Loading...</p>
 	  </div>
     <div class="actions">
       <button type="button" class="btn btn-primary save-button">Save</button>

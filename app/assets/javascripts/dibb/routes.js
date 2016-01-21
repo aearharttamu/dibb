@@ -17,18 +17,18 @@ DiBB.Routes = Backbone.Router.extend({
     this.graphDashboardURL = ""; 
   },
 
-  biblioSetList: function() {
+  biblioSetList: function() {    
     
-    this.initBiblioSets( _.bind( function() {
-      var biblioSetListView = new DiBB.BiblioSetListView( { biblio_sets: this.biblio_sets });
+    this.loadBiblioSets( _.bind( function(biblioSets) {
+      var biblioSetListView = new DiBB.BiblioSetListView( { biblioSets: biblioSets });
       biblioSetListView.render();
     }, this));        
   },
   
   biblioSetNew: function() {
-
-    this.initBiblioSets( _.bind( function() {
-      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblio_sets: this.biblio_sets } );
+    
+    this.loadBiblioSets( _.bind( function(biblioSets) {
+      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblioSets: biblioSets } );
       biblioSetFormView.render();
     }, this));        
     
@@ -36,51 +36,34 @@ DiBB.Routes = Backbone.Router.extend({
 
   biblioSetEdit: function(biblioSetID) {
     
-    this.initBiblioSets( _.bind( function() {
-      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblio_sets: this.biblio_sets, biblioSetID: biblioSetID } );
+    this.loadBiblioSets( _.bind( function(biblioSets) {
+      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblioSets: biblioSets, biblioSetID: biblioSetID } );
       biblioSetFormView.render();
     }, this));
   },
   
   bibliographList: function() {
-    this.initBibliograph( _.bind( function() {
-      var bibliographListView = new DiBB.BibliographListView( { bibliographs: this.bibliographs, 
+    
+    this.loadBibliograph( _.bind( function(bibliographs) {
+      var bibliographListView = new DiBB.BibliographListView( { bibliographs: bibliographs, 
                                                                 graphDashboardURL: this.graphDashboardURL });
       bibliographListView.render();
     }, this));        
   },
   
-  initBibliograph: function( initView ) {
-    
-    if( !this.bibliographs ) {
-      // TODO improve error handling
-      var onFetchError = function( collection, response, options ) {
-        alert(response);
-      };
-
-      this.bibliographs = new DiBB.BibliographCollection();
-      this.bibliographs.fetch( { success: initView, error: onFetchError } );
-
-    } else {
-      initView();
-    }
-    
+  loadBibliograph: function( initView ) {
+    var bibliographs = new DiBB.BibliographCollection();
+    bibliographs.fetch( { success: initView, error: this.onError } );
   },
   
-  initBiblioSets: function( initView ) {
-
-    if( !this.biblio_sets ) {
-      // TODO improve error handling
-      var onFetchError = function( collection, response, options ) {
-        alert(response);
-      };
-
-      this.biblio_sets = new DiBB.BiblioSetCollection();
-      this.biblio_sets.fetch( { success: initView, error: onFetchError } );
-
-    } else {
-      initView();
-    }
-  }      
+  loadBiblioSets: function( initView ) {
+    var biblioSets = new DiBB.BiblioSetCollection();
+    biblioSets.fetch( { success: initView, error: this.onError } );
+  },
+  
+   // TODO improve error handling
+  onError: function( collection, response, options ) {
+     alert(response);    
+  }    
 
 });

@@ -4,7 +4,7 @@ class BibliosController < ApplicationController
 
   # GET /biblios.json
   def index
-    @biblios = Biblio.list_all
+    @biblios = Biblio.list(params[:biblio_set_id])
     render json: @biblios.to_json
   end
 

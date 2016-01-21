@@ -4,8 +4,3 @@
 	{ name: 'pagination', type: 'boolean', title: 'Pagination?', instructions: 'Are the pages numbered? Indicate “yes” even if only partially numbered.', required: false },
 	{ name: 'unnumbered_pages', type: 'boolean', title: 'Unnumbered Pages?', instructions: 'Are there unnumbered pages at the beginning or end of the work?', required: false }
 ]; %>
-
-<% for (var i = 0; i < physicalTab.length; i++) { %>
-<% var field = physicalTab[i]; %>
-<%= partials.stringInput({ field_name: field.name, field_title: field.title, field_value: 'todo', field_instructions: field.instructions }) %>
-<% } %>

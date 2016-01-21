@@ -2,8 +2,3 @@
 	{ name: 'provenance', type: 'string', title: 'Provenance of Bibliography', instructions: 'Indicate who owns the materials you are examining (ex: owned by Cushing; borrowed from Princeton University Library).', required: false },
 	{ name: 'pub_number', type: 'string', title: 'Publication Number', instructions: 'Consult the item to see whether an ISSN or ISBN is included.', required: false }
 ]; %>
-
-<% for (var i = 0; i < referenceTab.length; i++) { %>
-<% var field = referenceTab[i]; %>
-<%= partials.stringInput({ field_name: field.name, field_title: field.title, field_value: 'todo', field_instructions: field.instructions }) %>
-<% } %>

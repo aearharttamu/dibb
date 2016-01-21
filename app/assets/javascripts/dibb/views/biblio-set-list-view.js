@@ -14,13 +14,13 @@ DiBB.BiblioSetListView = Backbone.View.extend({
   },
     
 	initialize: function(options) {    
-    this.biblio_sets = options.biblio_sets;
+    this.biblioSets = options.biblioSets;
   },
   
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var bibID = parseInt(deleteButton.attr("data-bibid"));
-    var deletedBiblioSet = this.biblio_sets.get(bibID);
+    var deletedBiblioSet = this.biblioSets.get(bibID);
 
     if( deletedBiblioSet ) {
       deleteButton.attr("disabled", true);  
@@ -32,7 +32,7 @@ DiBB.BiblioSetListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { biblio_sets: this.biblio_sets.toJSON() } ));
+    this.$el.html(this.template( { biblio_sets: this.biblioSets.toJSON() } ));
     $(".dibb-app").html(this.$el);
   }
   
