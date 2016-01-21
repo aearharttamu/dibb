@@ -6,6 +6,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
+		textAreaInput: JST['dibb/templates/common/textarea-input'],
 		dropdownInput: JST['dibb/templates/common/dropdown-input'],
 		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
 		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
@@ -44,7 +45,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   saveForm: function( onSuccess ) {   
          
     this.biblio.set( {
-      title: this.$('#title').val()
+      title: this.$('#title').val(),
+      descriptors: this.$('#descriptors').val()
     });
 
     this.biblios.biblioSetID = this.biblio.get("biblio_set_id");

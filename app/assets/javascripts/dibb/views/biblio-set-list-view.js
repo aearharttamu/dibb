@@ -25,8 +25,8 @@ DiBB.BiblioSetListView = Backbone.View.extend({
     if( deletedBiblioSet ) {
       deleteButton.attr("disabled", true);  
       deletedBiblioSet.destroy( { success: _.bind( function(){
-        var tableRow = this.$(this.trIDTemplate({id: bibID}));
-        this.dataTable.row(tableRow).remove().draw();        
+        // var tableRow = this.$(this.trIDTemplate({id: bibID}));
+        // this.dataTable.row(tableRow).remove().draw();
       }, this) });
     }          
   },

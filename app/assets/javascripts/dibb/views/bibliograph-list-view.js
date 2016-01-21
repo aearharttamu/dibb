@@ -1,5 +1,3 @@
-/*global DiBB, Backbone, JST, _ */
-
 DiBB.BibliographListView = Backbone.View.extend({
 
 
@@ -10,7 +8,7 @@ DiBB.BibliographListView = Backbone.View.extend({
   trIDTemplate: _.template("#graphid-<%= id %>"),
     
 	partials: {
-		stringInput: JST['dibb/templates/string-input']
+		stringInput: JST['dibb/templates/common/string-input']
 	},
       
   events: {

@@ -1,6 +1,4 @@
 <% var primaryTab = [
-	{ name: 'title', type: 'string', title: 'Title', instructions: 'Transcribe title as appears on title page.', required: true },
-	{ name: 'descriptors', type: 'text', title: 'Title Page Descriptors', instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).', required: false },
 	{ name: 'date_as_appears', type: 'string', title: 'Date of Bibliography', instructions: 'Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980)', required: false },
 	{ name: 'year', type: 'year', title: 'Year of Publication', instructions: 'Please enter the year the bibliography was published.', required: false }
 //	{ name: 'publisher_id', type: 'publisher', title: 'Select the name of the publisher as it appears on the item.', instructions: '', required: false },
@@ -9,3 +7,5 @@
 
 
 <%= partials.stringInput({ field_name: 'title', field_title: 'Title', field_value: biblio.title, field_instructions: 'Transcribe title as appears on title page.' }) %>
+
+<%= partials.textAreaInput({ field_name: 'descriptors', field_title: 'Title Page Descriptors', field_value: biblio.descriptors, field_instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).' }) %>
