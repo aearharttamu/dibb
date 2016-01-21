@@ -46,7 +46,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
          
     this.biblio.set( {
       title: this.$('#title').val(),
-      descriptors: this.$('#descriptors').val()
+      descriptors: this.$('#descriptors').val(),
+      date_as_appears: this.$('#date_as_appears').val()  
     });
 
     this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
