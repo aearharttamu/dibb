@@ -42,14 +42,16 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
       other_genre: this.$('#bib-other-genre').val()
     });
     
+    // after everything saves successfully, navigate out 
     var onSuccess = function(model, response, options) {
       DiBB.Routes.routes.navigate("/", {trigger: true});    
     };
     
-    // TODO save this.biblioFormView
-
     this.biblioSets.add(this.biblioSet);
-    this.biblioSet.save(null, { success: onSuccess, error: DiBB.Routes.onError });
+    this.biblioSet.save(null, { success: _.bind( function() {
+      this.biblioFormView.biblio.set( { biblio_set_id: this.biblioSet.id } );
+      this.biblioFormView.saveForm(onSuccess);    
+    }, this), error: DiBB.Routes.onError });
     
   },
   
@@ -67,7 +69,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     var biblios = new DiBB.BiblioCollection({ biblioSet: this.biblioSet });
     
     // retrieve bilbios for this set and display them
-    biblios.fetch( { success: _.bind( function() {
+    biblios.fetch( { success: _.bind( function(biblios) {
       
       // TODO this is where we switch based on genre type between different subviews
       

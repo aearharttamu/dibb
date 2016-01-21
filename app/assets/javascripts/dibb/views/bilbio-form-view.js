@@ -40,6 +40,16 @@ DiBB.BiblioFormView = Backbone.View.extend({
     }
     
   },
+  
+  saveForm: function( onSuccess ) {   
+         
+    this.biblio.set( {
+      title: this.$('#title').val()
+    });
+
+    this.biblios.add(this.biblio);
+    this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });
+  },
     
   render: function() {    
     
