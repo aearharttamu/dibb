@@ -26,7 +26,7 @@ class BibliosController < ApplicationController
 
   # PATCH/PUT /biblios/1.json
   def update
-    if @biblio.update(bibliot_params)
+    if @biblio.update(biblio_params)
       render json: @biblio.obj
     else
       render json: @biblio.errors, status: :unprocessable_entity

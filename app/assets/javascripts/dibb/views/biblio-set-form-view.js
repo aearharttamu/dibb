@@ -66,7 +66,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     this.$el.html(this.template( { pageTitle: pageTitle, biblioSet: this.biblioSet.toJSON(), partials: this.partials }));
     $(".dibb-app").html(this.$el);
     
-    var biblios = new DiBB.BiblioCollection({ biblioSet: this.biblioSet });
+    var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });
     
     // retrieve bilbios for this set and display them
     biblios.fetch( { success: _.bind( function(biblios) {

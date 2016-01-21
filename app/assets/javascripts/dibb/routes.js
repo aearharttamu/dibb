@@ -7,7 +7,7 @@ DiBB.Routes = Backbone.Router.extend({
     "biblio_set/:id/edit": "biblioSetEdit",
     "bibliographs" : "bibliographList"
   },
-  
+    
   initialize: function(options) {
                       
     // global singleton
@@ -15,6 +15,7 @@ DiBB.Routes = Backbone.Router.extend({
     
     // TODO
     this.graphDashboardURL = ""; 
+    
   },
 
   biblioSetList: function() {    
