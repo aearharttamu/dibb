@@ -1,0 +1,10 @@
+<% if(validationErrors && validationErrors.length > 0) { %>  
+  <div class="validation-errors">
+    <p><u>Please correct the following fields:</u></p>
+    <ul>
+      <% _.each( validationErrors, function(validationError) { %>
+          <li><%= validationError %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>

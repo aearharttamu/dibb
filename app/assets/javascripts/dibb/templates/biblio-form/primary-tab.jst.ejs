@@ -1,13 +1,15 @@
 <% var primaryTab = [
 
-	{ name: 'year', type: 'year', title: 'Year of Publication', instructions: 'Please enter the year the bibliography was published.', required: false }
 //	{ name: 'publisher_id', type: 'publisher', title: 'Select the name of the publisher as it appears on the item.', instructions: '', required: false },
 //	{ name: 'staff', type: 'people', title: 'Staff of Bibliography', instructions: 'Record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms.', required: false }
 ]; %>
 
+<%= partials.validationErrors({ validationErrors: validationErrors }) %>
 
 <%= partials.stringInput({ field_name: 'title', field_title: 'Title', field_value: biblio.title, field_instructions: 'Transcribe title as appears on title page.' }) %>
 
 <%= partials.textAreaInput({ field_name: 'descriptors', field_title: 'Title Page Descriptors', field_value: biblio.descriptors, field_instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).' }) %>
 
 <%= partials.stringInput({ field_name: 'date_as_appears', field_title: 'Date of Bibliography', field_value: biblio.date_as_appears, field_instructions: 'Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980)' }) %>
+
+<%= partials.stringInput({ field_name: 'year', field_title: 'Year of Publication', field_value: biblio.year, field_instructions: 'Please enter the year the bibliography was published.' }) %>

@@ -1,5 +1,17 @@
 
-DiBB.Biblio = Backbone.Model.extend({});
+DiBB.Biblio = Backbone.Model.extend({
+  
+  validate: function(attributes, options) {
+    
+    var year = attributes.year.toString();
+    
+    if( year.length != 4 ) {
+      return "Year of Publication must be a four digit year.";
+    }
+    
+  }
+
+});
 
 DiBB.BiblioCollection = Backbone.Collection.extend({
 
@@ -15,5 +27,5 @@ DiBB.BiblioCollection = Backbone.Collection.extend({
   url: function() {
     return (this.biblioSetID) ? this.urlTemplate({ biblioSetID: this.biblioSetID }) :  "/noop.js";
   }
-            
+              
 }); 
