@@ -6,10 +6,34 @@
 
 <%= partials.validationErrors({ validationErrors: validationErrors }) %>
 
-<%= partials.stringInput({ field_name: 'title', field_title: 'Title', field_value: biblio.title, field_instructions: 'Transcribe title as appears on title page.' }) %>
+<%= partials.stringInput({ 
+  field_name: 'title', 
+  field_title: 'Title', 
+  field_value: biblio.title, 
+  field_instructions: 'Transcribe title as appears on title page.', 
+  error: _.has(validationErrors, 'title') 
+}) %>
 
-<%= partials.textAreaInput({ field_name: 'descriptors', field_title: 'Title Page Descriptors', field_value: biblio.descriptors, field_instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).' }) %>
+<%= partials.textAreaInput({ 
+  field_name: 'descriptors', 
+  field_title: 'Title Page Descriptors', 
+  field_value: biblio.descriptors, 
+  field_instructions: 'Designate additional information that doesn’t have a box specified (ex: note about edition or revision, subtitle, multiple publishers).', 
+  error: _.has(validationErrors, 'descriptors') 
+}) %>
 
-<%= partials.stringInput({ field_name: 'date_as_appears', field_title: 'Date of Bibliography', field_value: biblio.date_as_appears, field_instructions: 'Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980)' }) %>
+<%= partials.stringInput({ 
+  field_name: 'date_as_appears', 
+  field_title: 'Date of Bibliography', 
+  field_value: biblio.date_as_appears, 
+  field_instructions: 'Provide the date as it appears on the work (ex: Spring/Summer 1990, September 1980)', 
+  error: _.has(validationErrors, 'date_as_appears') 
+}) %>
 
-<%= partials.stringInput({ field_name: 'year', field_title: 'Year of Publication', field_value: biblio.year, field_instructions: 'Please enter the year the bibliography was published.' }) %>
+<%= partials.stringInput({ 
+  field_name: 'year', 
+  field_title: 'Year of Publication', 
+  field_value: biblio.year, 
+  field_instructions: 'Please enter the year the bibliography was published.', 
+  error: _.has(validationErrors, 'year') 
+}) %>

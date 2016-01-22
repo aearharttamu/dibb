@@ -3,9 +3,34 @@
 <div class="form-wrapper">
   <form class="form-horizontal">
     <div class="form-group main-panel">
-		<%= partials.stringInput({ field_name: "bib-title", field_title: "Title", field_value: biblioSet.title, field_instructions: "Transcribe the title as appears on title page." }) %>
-		<% partials.dropdownInput({ field_name: "bib-genre", field_title: "Genre", field_value: biblioSet.genre, field_instructions: "", options: DiBB.Genres }) %>
-		<% partials.stringInput({ field_name: "bib-other-genre", field_title: "Other Genre", field_value: biblioSet.other_genre, field_instructions: "Add a genre that is not on the above list." }) %>
+      
+    <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+      
+		<%= partials.stringInput({ 
+      field_name: "bib-title", 
+      field_title: "Title", 
+      field_value: biblioSet.title, 
+      field_instructions: "Transcribe the title as appears on title page.",
+      error: _.has(validationErrors, 'bib-title') 
+    }) %>
+    
+		<% partials.dropdownInput({ 
+      field_name: "bib-genre", 
+      field_title: "Genre", 
+      field_value: biblioSet.genre, 
+      field_instructions: "", 
+      options: DiBB.Genres,
+      error: _.has(validationErrors, 'bib-genre') 
+    }) %>
+		
+    <% partials.stringInput({ 
+      field_name: "bib-other-genre", 
+      field_title: "Other Genre", 
+      field_value: biblioSet.other_genre, 
+      field_instructions: "Add a genre that is not on the above list.", 
+      error: _.has(validationErrors, 'bib-other-genre') 
+    }) %>
+    
     </div>
 	  <div class="biblio-panel">
 		  <p>Loading...</p>

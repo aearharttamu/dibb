@@ -6,7 +6,7 @@ DiBB.Biblio = Backbone.Model.extend({
     var year = attributes.year.toString();
     
     if( year.length != 4 ) {
-      return "Year of Publication must be a four digit year.";
+      return { year: "Year of Publication must be a four digit year." };
     }
     
   }

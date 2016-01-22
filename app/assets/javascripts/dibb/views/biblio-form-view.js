@@ -68,8 +68,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
   },
   
-  onValidationError: function( model, error ) {
-    this.validationErrors = [ error ];    
+  onValidationError: function( model, errors ) {
+    this.validationErrors = errors;    
     this.render();
   },
     

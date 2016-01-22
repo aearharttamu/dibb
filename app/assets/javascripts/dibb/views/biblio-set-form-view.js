@@ -6,7 +6,8 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
   
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
-		dropdownInput: JST['dibb/templates/common/dropdown-input']
+		dropdownInput: JST['dibb/templates/common/dropdown-input'],
+    validationErrors: JST['dibb/templates/common/validation-errors']
 	},
   
   id: 'biblio-set-form-view',
@@ -63,7 +64,13 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     
     // render the page without the biblio panel content
     var pageTitle = this.pageTitle[this.mode];
-    this.$el.html(this.template( { pageTitle: pageTitle, biblioSet: this.biblioSet.toJSON(), partials: this.partials }));
+    this.$el.html(this.template( { 
+      pageTitle: pageTitle, 
+      biblioSet: this.biblioSet.toJSON(), 
+      partials: this.partials,
+      validationErrors: {} 
+    }));
+    
     $(".dibb-app").html(this.$el);
     
     var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });
