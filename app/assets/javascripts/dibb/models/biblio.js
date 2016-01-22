@@ -1,14 +1,13 @@
 
 DiBB.Biblio = Backbone.Model.extend({
+
+  validYear: /(^\d{4}$)/,
   
   validate: function(attributes, options) {
-    
-    var year = attributes.year.toString();
-    
-    if( year.length != 4 ) {
+        
+    if( attributes.year && !this.validYear.exec(attributes.year) ) {
       return { year: "Year of Publication must be a four digit year." };
-    }
-    
+    }    
   }
 
 });
