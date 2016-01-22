@@ -2,6 +2,7 @@ class Biblio < ActiveRecord::Base
 
   has_many :citations
   belongs_to :biblio_set
+  belongs_to :publisher
 
 	def self.list(biblio_set_id)
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })

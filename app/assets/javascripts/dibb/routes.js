@@ -5,7 +5,10 @@ DiBB.Routes = Backbone.Router.extend({
     "": "biblioSetList",
     "biblio_set/new": "biblioSetNew",
     "biblio_set/:id/edit": "biblioSetEdit",
-    "bibliographs" : "bibliographList"
+    "bibliographs" : "bibliographList",
+    "publishers" : "publisherList",
+    "publishers/new": "publisherNew",
+    "publishers/:id/edit": "publisherEdit",
   },
     
   initialize: function(options) {
@@ -50,6 +53,37 @@ DiBB.Routes = Backbone.Router.extend({
                                                                 graphDashboardURL: this.graphDashboardURL });
       bibliographListView.render();
     }, this));        
+  },
+  
+  publisherList: function() {
+
+    this.loadPublishers( _.bind( function(publishers) {
+      var publisherListView = new DiBB.PublisherListView( { publishers: publishers });
+      publisherListView.render();
+    }, this));            
+  },
+  
+  publisherNew: function() {
+    
+    this.loadPublishers( _.bind( function(publishers) {
+      var publisherFormView = new DiBB.PublisherFormView( { publishers: publishers } );
+      publisherFormView.render();
+    }, this));        
+    
+  },
+
+  publisherEdit: function(publisherID) {
+    
+    this.loadPublishers( _.bind( function(publishers) {
+      var publisherFormView = new DiBB.PublisherFormView( { publishers: publishers, publisherID: publisherID } );
+      publisherFormView.render();
+    }, this));        
+    
+  },
+
+  loadPublishers: function( initView ) {
+    var publishers = new DiBB.PublisherCollection();
+    publishers.fetch( { success: initView, error: this.onError } );
   },
   
   loadBibliograph: function( initView ) {
