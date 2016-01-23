@@ -1,6 +1,5 @@
 <% var primaryTab = [
 
-//	{ name: 'publisher_id', type: 'publisher', title: 'Select the name of the publisher as it appears on the item.', instructions: '', required: false },
 //	{ name: 'staff', type: 'people', title: 'Staff of Bibliography', instructions: 'Record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms.', required: false }
 ]; %>
 
@@ -37,3 +36,12 @@
   field_instructions: 'Please enter the year the bibliography was published.', 
   error: _.has(validationErrors, 'year') 
 }) %>
+
+<%= partials.referenceInput({ 
+  field_name: 'publisher_id', 
+  field_title: 'Publisher Name', 
+  field_value: biblio.publisher_id, 
+  field_instructions: 'Select the name of the publisher as it appears on the item.', 
+  error: _.has(validationErrors, 'publisher_id') 
+}) %>
+

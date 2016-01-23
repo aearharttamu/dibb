@@ -34,9 +34,10 @@ DiBB.PublisherFormView = Backbone.View.extend({
     
     this.publisher.on("invalid", this.onValidationError );
     
-''  },
+   },
   
   onSave: function(e) {
+    this.validationErrors = null;
     this.save(this.onCancel);
   },
   

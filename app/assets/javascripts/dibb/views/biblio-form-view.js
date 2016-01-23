@@ -9,6 +9,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		numberInput: JST['dibb/templates/common/number-input'],
 		textAreaInput: JST['dibb/templates/common/textarea-input'],
 		dropdownInput: JST['dibb/templates/common/dropdown-input'],
+		referenceInput: JST['dibb/templates/common/reference-input'],
     validationErrors: JST['dibb/templates/common/validation-errors'],
 		primaryTab: JST['dibb/templates/biblio-form/primary-tab'],
 		referenceTab: JST['dibb/templates/biblio-form/reference-tab'],
@@ -72,9 +73,30 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.validationErrors = errors;    
     this.render();
   },
+  
+  initReferenceField: function( fieldID ) {
+        
+    var publishers = new DiBB.PublisherCollection();
     
-  render: function() {    
-    this.$el.html(this.template( { embedded: true, biblio: this.biblio.toJSON(), partials: this.partials, validationErrors: this.validationErrors }));
+    publishers.fetch( { success: _.bind( function(publishers) {
+      this.$( "#"+fieldID ).autocomplete({
+        source: publishers.names()
+      });
+    }, this), error: DiBB.Routes.onError } );
+    
+  },
+    
+  render: function() {      
+    
+    this.$el.html(this.template( { 
+      embedded: true, 
+      biblio: this.biblio.toJSON(), 
+      partials: this.partials, 
+      validationErrors: this.validationErrors 
+    }));
+  
+    this.initReferenceField("publisher_id");
+  
   }
   
 });
