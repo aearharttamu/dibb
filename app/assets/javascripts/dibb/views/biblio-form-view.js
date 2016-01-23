@@ -51,11 +51,19 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
   saveForm: function( onSuccessCallback ) {   
          
+    var publisherID = null;
+    if( this.selectedPublisher && this.selectedPublisher.item && this.selectedPublisher.item.id ) {
+      publisherID = this.selectedPublisher.item.id;
+    } else {
+      // TODO new object
+    }
+    
     this.biblio.set( {
       title: this.$('#title').val(),
       descriptors: this.$('#descriptors').val(),
       date_as_appears: this.$('#date_as_appears').val(),
-      year: this.$('#year').val()  
+      year: this.$('#year').val(),
+      publisher_id: publisherID 
     });
     
     var onSuccess = _.bind( function(model, response, options) {
@@ -79,9 +87,23 @@ DiBB.BiblioFormView = Backbone.View.extend({
     var publishers = new DiBB.PublisherCollection();
     
     publishers.fetch( { success: _.bind( function(publishers) {
-      this.$( "#"+fieldID ).autocomplete({
+      var publisherField = this.$( "#"+fieldID );
+      
+      publisherField.autocomplete({
         source: publishers.names()
       });
+      
+      // populate with the current publisher name
+      var publisherID = this.biblio.get('publisher_id');
+      if( publisherID ) {
+        var publisher = publishers.get( parseInt(publisherID) );
+        publisherField.val( publisher.get("name") );
+      }
+      
+      publisherField.on( "autocompletechange", _.bind( function( event, publisher ) {
+        this.selectedPublisher = publisher;     
+      }, this) );
+      
     }, this), error: DiBB.Routes.onError } );
     
   },
