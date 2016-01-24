@@ -30,6 +30,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
         
     this.biblios = options.biblios;
     this.embedded = options.embed;
+    this.referenceFieldSelection = {};
     
     _.bindAll( this, "onValidationError" );
     
@@ -52,8 +53,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   saveForm: function( onSuccessCallback ) {   
          
     var publisherID = null;
-    if( this.selectedPublisher && this.selectedPublisher.item && this.selectedPublisher.item.id ) {
-      publisherID = this.selectedPublisher.item.id;
+    if( this.referenceFieldSelection['publisher_id'] ) {
+      publisherID = this.referenceFieldSelection['publisher_id'].id;
     } else {
       // TODO new object
     }
@@ -82,26 +83,26 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.render();
   },
   
-  initReferenceField: function( fieldID ) {
+  initReferenceField: function( fieldID, model, collectionClass ) {
         
-    var publishers = new DiBB.PublisherCollection();
+    var collection = new collectionClass();
     
-    publishers.fetch( { success: _.bind( function(publishers) {
-      var publisherField = this.$( "#"+fieldID );
+    collection.fetch( { success: _.bind( function(collection) {
+      var field = this.$( "#"+fieldID );
       
-      publisherField.autocomplete({
-        source: publishers.names()
+      field.autocomplete({
+        source: collection.names()
       });
       
-      // populate with the current publisher name
-      var publisherID = this.biblio.get('publisher_id');
-      if( publisherID ) {
-        var publisher = publishers.get( parseInt(publisherID) );
-        publisherField.val( publisher.get("name") );
+      // populate the field with the currently referenced name
+      var refID = model.get(fieldID);
+      if( refID ) {
+        var refModel = collection.get( parseInt(refID) );
+        field.val( refModel.get("name") );
       }
       
-      publisherField.on( "autocompletechange", _.bind( function( event, publisher ) {
-        this.selectedPublisher = publisher;     
+      field.on( "autocompletechange", _.bind( function( event, refObject ) {
+        this.referenceFieldSelection[fieldID] = refObject.item;     
       }, this) );
       
     }, this), error: DiBB.Routes.onError } );
@@ -117,7 +118,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
       validationErrors: this.validationErrors 
     }));
   
-    this.initReferenceField("publisher_id");
+    this.initReferenceField( "publisher_id", this.biblio, DiBB.PublisherCollection );
   
   }
   
