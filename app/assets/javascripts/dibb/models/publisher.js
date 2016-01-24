@@ -1,5 +1,7 @@
 /*global DiBB, Backbone */
 DiBB.Publisher = Backbone.Model.extend({
+
+  url: "/publishers",
   
   validate: function(attributes, options) {
         
@@ -23,6 +25,5 @@ DiBB.PublisherCollection = Backbone.Collection.extend({
       return { label: publisher.get('name'), id: publisher.id };      
     });
   }
-  
-            
+          
 }); 

@@ -49,32 +49,43 @@ DiBB.BiblioFormView = Backbone.View.extend({
     }
     
   },
+  
+  saveReferenceFields: function( onSuccessCallback ) {
+    
+    // if this is a stub publisher record, create it on server before continuing
+    if( !this.referenceFieldSelection['publisher_id'] ) {
+      var publisherName = this.$('#publisher_id').val();
+      publisher = new DiBB.Publisher({ name: publisherName });
+      publisher.save(null, { success: _.bind( function(publisher) {
+        this.referenceFieldSelection['publisher_id'] = publisher.id;
+        onSuccessCallback();
+      }, this), error: DiBB.Routes.onError });
+    } else {
+      onSuccessCallback();
+    }
+  },
     
   saveForm: function( onSuccessCallback ) {   
          
-    var publisherID = null;
-    if( this.referenceFieldSelection['publisher_id'] ) {
-      publisherID = this.referenceFieldSelection['publisher_id'].id;
-    } else {
-      // TODO new object
-    }
+    this.saveReferenceFields( _.bind( function() {
+      
+      this.biblio.set( {
+        title: this.$('#title').val(),
+        descriptors: this.$('#descriptors').val(),
+        date_as_appears: this.$('#date_as_appears').val(),
+        year: this.$('#year').val(),
+        publisher_id: this.referenceFieldSelection['publisher_id'] 
+      });
     
-    this.biblio.set( {
-      title: this.$('#title').val(),
-      descriptors: this.$('#descriptors').val(),
-      date_as_appears: this.$('#date_as_appears').val(),
-      year: this.$('#year').val(),
-      publisher_id: publisherID 
-    });
-    
-    var onSuccess = _.bind( function(model, response, options) {
-      this.validationErrors = null;
-      onSuccessCallback(model, response, options);
-    }, this);
+      var onSuccess = _.bind( function(model, response, options) {
+        this.validationErrors = null;
+        onSuccessCallback(model, response, options);
+      }, this);
 
-    this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
-    this.biblios.add(this.biblio);
-    this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });
+      this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
+      this.biblios.add(this.biblio);
+      this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });          
+    }, this));
   
   },
   
@@ -102,7 +113,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
       }
       
       field.on( "autocompletechange", _.bind( function( event, refObject ) {
-        this.referenceFieldSelection[fieldID] = refObject.item;     
+        this.referenceFieldSelection[fieldID] = (refObject.item) ? refObject.item.id : null;     
       }, this) );
       
     }, this), error: DiBB.Routes.onError } );
