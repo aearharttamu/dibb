@@ -1,6 +1,7 @@
 class Biblio < ActiveRecord::Base
 
   has_many :citations
+  has_many :publication_places
   belongs_to :biblio_set
   belongs_to :publisher
 
@@ -10,6 +11,11 @@ class Biblio < ActiveRecord::Base
 	end
 
 	def obj
+    
+    publisher_name = Publisher.find(self.publisher_id).name unless self.publisher_id.nil?
+    publication_places = PublicationPlace.where( biblio_id: self.id )
+    publication_place_objs = publication_places { |publication_place| publication_place.obj }
+    
 		{
 			id: self.id,
 			biblio_set_id: self.biblio_set_id,
@@ -20,6 +26,8 @@ class Biblio < ActiveRecord::Base
 			date_as_appears: self.date_as_appears,
 			year: self.year,
 			publisher_id: self.publisher_id,
+      publisher_name: publisher_name,
+      publication_places: publication_place_objs.to_json,
 			provenance: self.provenance,
 			pub_number: self.pub_number,
 			size: self.size,

@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= partials.stringInput({ 
+      field_name: 'city', 
+      field_title: 'City', 
+      field_value: (publicationPlace) ? publicationPlace.city : '', 
+      field_instructions: 'Please enter the city as printed.', 
+      error: _.has(validationErrors, 'city') 
+    }) %>
+
+
+    <%= partials.stringInput({ 
+      field_name: 'state', 
+      field_title: 'State', 
+      field_value: (publicationPlace) ? publicationPlace.state : '', 
+      field_instructions: 'Please enter the state as printed.', 
+      error: _.has(validationErrors, 'state') 
+    }) %>
+
+
+    <%= partials.stringInput({ 
+      field_name: 'country', 
+      field_title: 'Country', 
+      field_value: (publicationPlace) ? publicationPlace.country : '', 
+      field_instructions: 'Please enter the country as printed.', 
+      error: _.has(validationErrors, 'country') 
+    }) %>
+  </div>
+</div>

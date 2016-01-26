@@ -15,7 +15,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		referenceTab: JST['dibb/templates/biblio-form/reference-tab'],
 		physicalTab: JST['dibb/templates/biblio-form/physical-tab'],
 		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
-		citationsTab: JST['dibb/templates/biblio-form/citations-tab']
+		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
+		publicationPlace: JST['dibb/templates/biblio-form/publication-place']
 	},
   
   id: 'biblio-form-view',
@@ -51,7 +52,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   saveReferenceFields: function( onSuccessCallback ) {
-    
+
     // if this is a stub publisher record, create it on server before continuing
     if( !this.referenceFieldSelection['publisher_id'] ) {
       var publisherName = this.$('#publisher_id').val();
@@ -63,6 +64,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     } else {
       onSuccessCallback();
     }
+    
   },
     
   saveForm: function( onSuccessCallback ) {   
@@ -76,15 +78,31 @@ DiBB.BiblioFormView = Backbone.View.extend({
         year: this.$('#year').val(),
         publisher_id: this.referenceFieldSelection['publisher_id'] 
       });
+      
+      var publicationPlace = this.biblio.publicationPlaces.at(0);
+      
+      if( !publicationPlace ) {
+        publicationPlace = new DiBB.PublicationPlace();
+      }
     
+      publicationPlace.set( {
+        city: this.$('#city').val(),
+        state: this.$('#state').val(),
+        country: this.$('#country').val()        
+      });
+                
       var onSuccess = _.bind( function(model, response, options) {
         this.validationErrors = null;
         onSuccessCallback(model, response, options);
       }, this);
 
+      this.biblio.publicationPlaces.add(publicationPlace); 
+      publicationPlace.save(null, { error: DiBB.Routes.onError })      
+
       this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
       this.biblios.add(this.biblio);
-      this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });          
+      this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
+      
     }, this));
   
   },
@@ -105,13 +123,6 @@ DiBB.BiblioFormView = Backbone.View.extend({
         source: collection.names()
       });
       
-      // populate the field with the currently referenced name
-      var refID = model.get(fieldID);
-      if( refID ) {
-        var refModel = collection.get( parseInt(refID) );
-        field.val( refModel.get("name") );
-      }
-      
       field.on( "autocompletechange", _.bind( function( event, refObject ) {
         this.referenceFieldSelection[fieldID] = (refObject.item) ? refObject.item.id : null;     
       }, this) );
@@ -122,9 +133,11 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
   render: function() {      
     
+    var obj = this.biblio.obj();
+    
     this.$el.html(this.template( { 
       embedded: true, 
-      biblio: this.biblio.toJSON(), 
+      biblio: obj, 
       partials: this.partials, 
       validationErrors: this.validationErrors 
     }));

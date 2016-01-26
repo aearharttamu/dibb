@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
-    resources :biblios, only: [ :index, :show, :update, :create, :destroy ]
+    resources :biblios, only: [ :index, :show, :update, :create, :destroy ] do
+      resources :publication_places, only: [ :index, :show, :update, :create, :destroy ]
+    end
   end
 
 	get "test_email" => 'home#test_email'
