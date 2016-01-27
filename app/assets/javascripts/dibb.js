@@ -13,10 +13,10 @@
   
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
 //= require underscore
 //= require backbone
 //= require bootstrap-sprockets
+//= require typeahead.js/dist/typeahead.bundle  
 //= require_tree ./lib
 
 //= require_tree ./dibb

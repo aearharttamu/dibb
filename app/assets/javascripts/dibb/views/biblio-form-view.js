@@ -52,15 +52,19 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   saveReferenceFields: function( onSuccessCallback ) {
-
+    
     // if this is a stub publisher record, create it on server before continuing
-    if( !this.referenceFieldSelection['publisher_id'] ) {
+    if( !this.referenceFieldSelection['publisher_id']  ) {
       var publisherName = this.$('#publisher_id').val();
-      publisher = new DiBB.Publisher({ name: publisherName });
-      publisher.save(null, { success: _.bind( function(publisher) {
-        this.referenceFieldSelection['publisher_id'] = publisher.id;
-        onSuccessCallback();
-      }, this), error: DiBB.Routes.onError });
+      
+      // create a new record if the publisher name is not empty
+      if( publisherName.length > 0 ) { 
+        publisher = new DiBB.Publisher({ name: publisherName });
+        publisher.save(null, { success: _.bind( function(publisher) {
+          this.referenceFieldSelection['publisher_id'] = publisher.id;
+          onSuccessCallback();
+        }, this), error: DiBB.Routes.onError });
+      }      
     } else {
       onSuccessCallback();
     }
@@ -114,18 +118,37 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
   initReferenceField: function( fieldID, model, collectionClass ) {
         
+    var field = this.$( "#"+fieldID );
+    
+    // this field tracks the reference to the collection's table
+    this.referenceFieldSelection[fieldID] = model.get(fieldID);
+    
+    if( this.referenceFieldSelection[fieldID] ) {
+      field.attr("disabled", true);
+    }
+    
     var collection = new collectionClass();
     
     collection.fetch( { success: _.bind( function(collection) {
-      var field = this.$( "#"+fieldID );
       
-      field.autocomplete({
-        source: collection.names()
+      var nameSource = new Bloodhound({
+        local: ['one', 'two', 'three'],
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        datumTokenizer: Bloodhound.tokenizers.whitespace
       });
-      
-      field.on( "autocompletechange", _.bind( function( event, refObject ) {
-        this.referenceFieldSelection[fieldID] = (refObject.item) ? refObject.item.id : null;     
-      }, this) );
+
+      field.typeahead({
+        minLength: 3,
+        highlight: true
+      },
+      {
+        name: fieldID,
+        source: nameSource
+      });        
+            
+      // field.on( "autocompletechange", _.bind( function( event, refObject ) {
+      //   this.referenceFieldSelection[fieldID] = (refObject.item) ? refObject.item.id : null;
+      // }, this) );
       
     }, this), error: DiBB.Routes.onError } );
     

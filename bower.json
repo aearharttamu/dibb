@@ -1,0 +1,20 @@
+{
+  "name": "DiBB",
+  "homepage": "https://github.com/performant-software/dibb",
+  "authors": [
+    "nicklaiacona <nick@performantsoftware.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ]
+}

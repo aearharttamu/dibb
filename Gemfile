@@ -21,14 +21,15 @@ gem 'will_paginate', '~> 3.0.5'
 # Asset Pipeline
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
-gem 'rails-backbone'
-gem 'underscore-rails'
 gem 'therubyracer' 
 gem "less-rails"
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-ui-sass-rails'
+
+gem 'rails-backbone'
+gem 'underscore-rails'
 
 # Testing
 gem 'factory_girl_rails'

@@ -8,9 +8,9 @@
 @import "skin";
 
 // Libraries
-@import "jquery.ui.all";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "lib/typeahead.css";
 
 // Application Folder
 @import "dibb/*";
