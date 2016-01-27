@@ -116,6 +116,12 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.render();
   },
   
+  toggleReferenceFieldState: function( field, enabled ) {
+    var backgroundColor = (enabled) ? 'white' : '#ccc';
+    field.attr("disabled", !enabled );
+    field.css("background-color", backgroundColor);          
+  },
+  
   initReferenceField: function( fieldID, model, suggestionDataSource ) {
         
     var field = this.$( "#"+fieldID );
@@ -123,9 +129,9 @@ DiBB.BiblioFormView = Backbone.View.extend({
     // this field tracks the reference to the collection's table
     this.referenceFieldSelection[fieldID] = model.get(fieldID);
     
-    // if( this.referenceFieldSelection[fieldID] ) {
-    //   field.attr("disabled", true);
-    // }
+    if( this.referenceFieldSelection[fieldID] ) {
+      this.toggleReferenceFieldState(field, false);
+    }
         
     field.typeahead({
       minLength: 3,
@@ -139,7 +145,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
     field.bind('typeahead:select', _.bind(function(ev, suggestion) {
       this.referenceFieldSelection[fieldID] = suggestion.id;
-      field.attr("disabled", true);
+      this.toggleReferenceFieldState(field, false);
     }, this));      
     
   },
