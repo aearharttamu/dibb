@@ -116,41 +116,31 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.render();
   },
   
-  initReferenceField: function( fieldID, model, collectionClass ) {
+  initReferenceField: function( fieldID, model, suggestionDataSource ) {
         
     var field = this.$( "#"+fieldID );
     
     // this field tracks the reference to the collection's table
     this.referenceFieldSelection[fieldID] = model.get(fieldID);
     
-    if( this.referenceFieldSelection[fieldID] ) {
+    // if( this.referenceFieldSelection[fieldID] ) {
+    //   field.attr("disabled", true);
+    // }
+        
+    field.typeahead({
+      minLength: 3,
+      highlight: true
+    },
+    {
+      name: fieldID,
+      source: suggestionDataSource,
+      display: function( suggestion ) { return suggestion.name; }
+    });        
+    
+    field.bind('typeahead:select', _.bind(function(ev, suggestion) {
+      this.referenceFieldSelection[fieldID] = suggestion.id;
       field.attr("disabled", true);
-    }
-    
-    var collection = new collectionClass();
-    
-    collection.fetch( { success: _.bind( function(collection) {
-      
-      var nameSource = new Bloodhound({
-        local: ['one', 'two', 'three'],
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        datumTokenizer: Bloodhound.tokenizers.whitespace
-      });
-
-      field.typeahead({
-        minLength: 3,
-        highlight: true
-      },
-      {
-        name: fieldID,
-        source: nameSource
-      });        
-            
-      // field.on( "autocompletechange", _.bind( function( event, refObject ) {
-      //   this.referenceFieldSelection[fieldID] = (refObject.item) ? refObject.item.id : null;
-      // }, this) );
-      
-    }, this), error: DiBB.Routes.onError } );
+    }, this));      
     
   },
     
@@ -165,7 +155,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
       validationErrors: this.validationErrors 
     }));
   
-    this.initReferenceField( "publisher_id", this.biblio, DiBB.PublisherCollection );
+    this.initReferenceField( "publisher_id", this.biblio, DiBB.PublisherBloodhound );
   
   }
   

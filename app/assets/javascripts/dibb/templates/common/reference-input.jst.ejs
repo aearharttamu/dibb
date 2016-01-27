@@ -1,7 +1,7 @@
 <div class="row <%= (error) ? 'has-error' : '' %>">
   <label for="<%= field_name %>" class="control-label col-sm-2"><%= field_title %>:</label>
   <div class="col-sm-10 field-wrapper">
-      <input type="text" class="form-control ref-input-field" id="<%= field_name %>" value="<%= field_value %>">
+      <input type="text" class="form-control" id="<%= field_name %>" value="<%= field_value %>">
       <span>
         <button id="edit-<%=field_name%>" class="btn btn-sm btn-default edit-button" type="button"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button>
       </span>
