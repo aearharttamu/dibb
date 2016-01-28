@@ -42,7 +42,7 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     var modalDialog = this.$('#publisher-form-modal');
 
     modalDialog.on('hidden.bs.modal', function (e) {
-      modalDialog.detach();
+      this.$el.detach();
     })
     
     modalDialog.modal('hide');
