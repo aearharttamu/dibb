@@ -13,27 +13,40 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     	
 	initialize: function(options) {
 
-    _.bindAll( this, "onValidationError", "onSave", "onClose", "onUnlink" );
+    _.bindAll( this, "onValidationError", "onSave", "onCancel", "onUnlink", "close" );
         
     this.model.on("invalid", this.onValidationError );
+    this.onCloseCallback = options.onClose;
     
    },
   
   onSave: function(e) {
     this.validationErrors = null;
-    this.save(this.onClose);
-  },
-    
-  onClose: function() {
-    // TODO close the modal
+    this.save(this.close);
   },
   
+  onCancel: function() {
+    this.close();
+  },
+      
   onUnlink: function() {
-    // TODO unlink this record 
+    this.$('#publisher-form-modal').modal('hide');
+    this.onCloseCallback( "", null);
   },
   
   open: function() {
-    this.$('#publisher-form-modal').modal();
+    this.$('#publisher-form-modal').modal( { keyboard: false });
+  },
+  
+  close: function() {
+    var modalDialog = this.$('#publisher-form-modal');
+
+    modalDialog.on('hidden.bs.modal', function (e) {
+      modalDialog.detach();
+    })
+    
+    modalDialog.modal('hide');
+    this.onCloseCallback( this.model.get("name"), this.model.id );   
   },
     
   save: function( onSuccessCallback ) {   
@@ -66,7 +79,7 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     
     this.$(".pub-unlink-button").click( this.onUnlink );
     this.$(".pub-save-button").click( this.onSave );
-    this.$(".pub-cancel-button").click( this.onClose );
+    this.$(".pub-cancel-button").click( this.onCancel );
         
   }
   

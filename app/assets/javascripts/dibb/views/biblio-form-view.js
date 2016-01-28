@@ -35,7 +35,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.embedded = options.embed;
     this.referenceFieldSelection = {};
     
-    _.bindAll( this, "onValidationError", "onRefEditButton" );
+    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose" );
     
     if( options.biblioID ) {
       this.biblio = this.biblios.get(parseInt(options.biblioID));
@@ -119,9 +119,9 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   toggleReferenceFieldState: function( field, enabled ) {
-    var fontStyle = (enabled) ? 'normal' : 'italic';
+    var backgroundColor = (enabled) ? 'white' : '#f0f0f0';
     field.attr("disabled", !enabled );
-    field.css("font-style", fontStyle);          
+    field.css("background-color", backgroundColor);          
   },
   
   onRefEditButton: function( model, fieldID, refModelClass, formViewClass ) {
@@ -131,12 +131,19 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
     refModel.fetch( { success: _.bind( function(refModel) {
       // set up the edit dialog
-      var formView = new formViewClass({ model: refModel });
+      var formView = new formViewClass({ model: refModel, onClose: _.partial( this.onRefModalClose, fieldID, model )});
       formView.render();
       this.$el.append(formView.$el);
       formView.open();         
     },this), 
     error: DiBB.Routes.onError });
+  },
+  
+  onRefModalClose: function( fieldID, model, fieldValue, refID ) {
+    var field = this.$( "#"+fieldID );
+    field.val(fieldValue);
+    model.set( fieldID, refID );
+    this.toggleReferenceFieldState(field, (refID == null));
   },
   
   initReferenceField: function( fieldID, model, dataSource, formViewClass, refModelClass ) {
