@@ -1,13 +1,17 @@
 /*global DiBB, Backbone */
 DiBB.Publisher = Backbone.Model.extend({
 
-  url: "/publishers",
+  urlTemplate: _.template("/publishers/<%= id %>"),
   
   validate: function(attributes, options) {
         
     if( attributes.name == null || attributes.name.length == 0 ) {
       return { year: "Publisher Name cannot be blank." };
     }    
+  },
+  
+  url: function() {
+    return this.urlTemplate({ id: this.id });
   }
   
 });

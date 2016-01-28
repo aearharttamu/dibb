@@ -22,6 +22,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   id: 'biblio-form-view',
   className: 'biblio-form',
   
+  refEditButtonSelectorTemplate: _.template("#edit-<%= fieldID %>"),
+  
   pageTitle: {
     "new": "New Bibliography",
     "edit": "Edit Bibliography"
@@ -33,7 +35,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.embedded = options.embed;
     this.referenceFieldSelection = {};
     
-    _.bindAll( this, "onValidationError" );
+    _.bindAll( this, "onValidationError", "onRefEditButton" );
     
     if( options.biblioID ) {
       this.biblio = this.biblios.get(parseInt(options.biblioID));
@@ -117,19 +119,32 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   toggleReferenceFieldState: function( field, enabled ) {
-    var backgroundColor = (enabled) ? 'white' : '#ccc';
+    var fontStyle = (enabled) ? 'normal' : 'italic';
     field.attr("disabled", !enabled );
-    field.css("background-color", backgroundColor);          
+    field.css("font-style", fontStyle);          
   },
   
-  initReferenceField: function( fieldID, model, suggestionDataSource ) {
+  onRefEditButton: function( model, fieldID, refModelClass, formViewClass ) {
+    
+    var refID = model.get(fieldID);
+    var refModel = new refModelClass( { id: refID });
+    
+    refModel.fetch( { success: _.bind( function(refModel) {
+      // set up the edit dialog
+      var formView = new formViewClass({ model: refModel });
+      formView.render();
+      this.$el.append(formView.$el);
+      formView.open();         
+    },this), 
+    error: DiBB.Routes.onError });
+  },
+  
+  initReferenceField: function( fieldID, model, dataSource, formViewClass, refModelClass ) {
         
     var field = this.$( "#"+fieldID );
     
-    // this field tracks the reference to the collection's table
-    this.referenceFieldSelection[fieldID] = model.get(fieldID);
-    
-    if( this.referenceFieldSelection[fieldID] ) {
+    // if this field is linked disable editing
+    if( model.get(fieldID) ) {
       this.toggleReferenceFieldState(field, false);
     }
         
@@ -139,12 +154,15 @@ DiBB.BiblioFormView = Backbone.View.extend({
     },
     {
       name: fieldID,
-      source: suggestionDataSource,
+      source: dataSource,
       display: function( suggestion ) { return suggestion.name; }
     });        
     
+    var refEditButton = this.$(this.refEditButtonSelectorTemplate({ fieldID: fieldID }));
+    refEditButton.click( _.partial( this.onRefEditButton, model, fieldID, refModelClass, formViewClass ) );
+    
     field.bind('typeahead:select', _.bind(function(ev, suggestion) {
-      this.referenceFieldSelection[fieldID] = suggestion.id;
+      model.set( fieldID, suggestion.id );
       this.toggleReferenceFieldState(field, false);
     }, this));      
     
@@ -160,8 +178,14 @@ DiBB.BiblioFormView = Backbone.View.extend({
       partials: this.partials, 
       validationErrors: this.validationErrors 
     }));
-  
-    this.initReferenceField( "publisher_id", this.biblio, DiBB.PublisherBloodhound );
+      
+    this.initReferenceField( 
+      "publisher_id", 
+      this.biblio, 
+      DiBB.PublisherBloodhound, 
+      DiBB.PublisherFormModal,
+      DiBB.Publisher 
+    );
   
   }
   
