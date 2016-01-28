@@ -3,12 +3,12 @@ DiBB.Biblio = Backbone.Model.extend({
 
   validYear: /(^\d{4}$)/,
   
-  initialize: function(attributes, options) {
-    var publicationPlacesJSON = attributes.publication_places;
-    var publicationPlaceOptions = { biblio: attributes.id, biblio_set_id: attributes.biblio_set_id };
-    
-    var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
-    this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj, publicationPlaceOptions );
+  initialize: function(attributes, options) {    
+    if( attributes && attributes.publication_places ) {
+      var publicationPlacesJSON = attributes.publication_places;
+      var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
+      this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj, { biblioID: attributes.id } );
+    }    
   },
   
   validate: function(attributes, options) {
@@ -20,7 +20,11 @@ DiBB.Biblio = Backbone.Model.extend({
   
   obj: function() {
     var obj = this.toJSON();
-    obj.publicationPlaces = this.publicationPlaces.toJSON();
+    
+    if( this.publicationPlaces && this.publicationPlaces.length > 0 ) {
+      obj.publicationPlaces = this.publicationPlaces.toJSON();
+    }
+
     return obj;
   }
   

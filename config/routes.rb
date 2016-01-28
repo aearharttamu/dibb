@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :publication_places, only: [ :index, :show, :update, :create, :destroy ]
+
 	get "test_email" => 'home#test_email'
 	get "test_exception" => 'home#test_exception'
   
