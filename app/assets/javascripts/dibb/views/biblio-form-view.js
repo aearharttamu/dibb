@@ -147,14 +147,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
   initReferenceField: function( fieldID, model, dataSource, formViewClass, refModelClass ) {
         
-    var field = this.$( "#"+fieldID );
-    
-    // if this field is linked disable editing
-    if( model.get(fieldID) ) {
-      this.toggleReferenceFieldState(field, false);
-    }
-        
-    field.typeahead({
+    var field = this.$( "#"+fieldID ).typeahead({
       minLength: 3,
       highlight: true
     },
@@ -163,6 +156,11 @@ DiBB.BiblioFormView = Backbone.View.extend({
       source: dataSource,
       display: function( suggestion ) { return suggestion.name; }
     });        
+    
+    // if this field is linked disable editing
+    if( model.get(fieldID) ) {
+      this.toggleReferenceFieldState(field, false);
+    }
     
     var refEditButton = this.$(this.refEditButtonSelectorTemplate({ fieldID: fieldID }));
     refEditButton.click( _.partial( this.onRefEditButton, model, fieldID, refModelClass, formViewClass ) );
