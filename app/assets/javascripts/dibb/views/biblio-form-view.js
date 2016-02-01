@@ -54,19 +54,16 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   saveReferenceFields: function( onSuccessCallback ) {
+
+    var publisherName = this.$('#publisher_id').val();
     
     // if this is a stub publisher record, create it on server before continuing
-    if( !this.biblio.get('publisher_id') ) {
-      var publisherName = this.$('#publisher_id').val();
-      
-      // create a new record if the publisher name is not empty
-      if( publisherName.length > 0 ) { 
-        publisher = new DiBB.Publisher({ name: publisherName });
-        publisher.save(null, { success: _.bind( function(publisher) {
-          this.biblio.set('publisher_id', publisher.id );
-          onSuccessCallback();
-        }, this), error: DiBB.Routes.onError });
-      }      
+    if( !this.biblio.get('publisher_id') && publisherName.length > 0 ) {      
+      publisher = new DiBB.Publisher({ name: publisherName });
+      publisher.save(null, { success: _.bind( function(publisher) {
+        this.biblio.set('publisher_id', publisher.id );
+        onSuccessCallback();
+      }, this), error: DiBB.Routes.onError });
     } else {
       onSuccessCallback();
     }
@@ -84,25 +81,25 @@ DiBB.BiblioFormView = Backbone.View.extend({
         year: this.$('#year').val()
       });
       
-      var publicationPlace = this.biblio.publicationPlaces.at(0);
-      
-      if( !publicationPlace ) {
-        publicationPlace = new DiBB.PublicationPlace();
-      }
-    
-      publicationPlace.set( {
-        city: this.$('#city').val(),
-        state: this.$('#state').val(),
-        country: this.$('#country').val()        
-      });
+      // var publicationPlace = this.biblio.publicationPlaces.at(0);
+      //
+      // if( !publicationPlace ) {
+      //   publicationPlace = new DiBB.PublicationPlace();
+      // }
+      //
+      // publicationPlace.set( {
+      //   city: this.$('#city').val(),
+      //   state: this.$('#state').val(),
+      //   country: this.$('#country').val()
+      // });
                 
       var onSuccess = _.bind( function(model, response, options) {
         this.validationErrors = null;
         onSuccessCallback(model, response, options);
       }, this);
 
-      this.biblio.publicationPlaces.add(publicationPlace); 
-      publicationPlace.save(null, { error: DiBB.Routes.onError })      
+      // this.biblio.publicationPlaces.add(publicationPlace);
+      // publicationPlace.save(null, { error: DiBB.Routes.onError })
 
       this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
       this.biblios.add(this.biblio);
