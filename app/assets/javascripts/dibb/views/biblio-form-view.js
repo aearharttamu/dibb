@@ -47,6 +47,9 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
     this.biblio.on("invalid", this.onValidationError );
     
+    // data source for publisher drop down
+    this.publisherBloodhound = DiBB.PublisherBloodhound();
+    
     if( !this.embedded ) {
       // TODO set up click handlers for save and cancel
     }
@@ -185,7 +188,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.initReferenceField( 
       "publisher_id", 
       this.biblio, 
-      DiBB.PublisherBloodhound, 
+      this.publisherBloodhound, 
       DiBB.PublisherFormModal,
       DiBB.Publisher 
     );

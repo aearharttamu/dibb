@@ -1,16 +1,20 @@
-DiBB.PublisherBloodhound = new Bloodhound({
-
-  remote: {
-    url: '/publishers'
-  },
+DiBB.PublisherBloodhound = function() {
   
-  queryTokenizer: Bloodhound.tokenizers.whitespace,  
+  return new Bloodhound({
 
-  datumTokenizer: function( datum ) {
-    return datum.name.split(" ");
-  },
-      
-  identify: function(datum) {
-    return datum.id;
-  }  
-});
+    remote: {
+      url: '/publishers'
+    },
+
+    queryTokenizer: Bloodhound.tokenizers.whitespace,  
+
+    datumTokenizer: function( datum ) {
+      return datum.name.split(" ");
+    },
+    
+    identify: function(datum) {
+      return datum.id;
+    }  
+  });
+
+}
