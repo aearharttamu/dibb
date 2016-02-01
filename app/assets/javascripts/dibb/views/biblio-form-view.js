@@ -56,14 +56,14 @@ DiBB.BiblioFormView = Backbone.View.extend({
   saveReferenceFields: function( onSuccessCallback ) {
     
     // if this is a stub publisher record, create it on server before continuing
-    if( !this.referenceFieldSelection['publisher_id']  ) {
+    if( !this.biblio.get('publisher_id') ) {
       var publisherName = this.$('#publisher_id').val();
       
       // create a new record if the publisher name is not empty
       if( publisherName.length > 0 ) { 
         publisher = new DiBB.Publisher({ name: publisherName });
         publisher.save(null, { success: _.bind( function(publisher) {
-          this.referenceFieldSelection['publisher_id'] = publisher.id;
+          this.biblio.set('publisher_id', publisher.id );
           onSuccessCallback();
         }, this), error: DiBB.Routes.onError });
       }      
@@ -81,8 +81,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
         title: this.$('#title').val(),
         descriptors: this.$('#descriptors').val(),
         date_as_appears: this.$('#date_as_appears').val(),
-        year: this.$('#year').val(),
-        publisher_id: this.referenceFieldSelection['publisher_id'] 
+        year: this.$('#year').val()
       });
       
       var publicationPlace = this.biblio.publicationPlaces.at(0);
