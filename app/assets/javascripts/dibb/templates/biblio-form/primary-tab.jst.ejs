@@ -45,12 +45,8 @@
   error: _.has(validationErrors, 'publisher_id') 
 }) %>
 
-<% if(biblio.publicationPlaces) { %>
+<%= partials.publicationPlaces({ 
+  publicationPlaces: biblio.publicationPlaces, 
+  partials: partials
+}) %>
 
-  <%= partials.publicationPlace({ 
-    publicationPlace: _.first(biblio.publicationPlaces), 
-    partials: partials, 
-    validationErrors: validationErrors 
-  }) %>
-
-<% } %>

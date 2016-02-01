@@ -6,6 +6,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
+		stringInputCell: JST['dibb/templates/common/string-input-cell'],
 		numberInput: JST['dibb/templates/common/number-input'],
 		textAreaInput: JST['dibb/templates/common/textarea-input'],
 		dropdownInput: JST['dibb/templates/common/dropdown-input'],
@@ -16,7 +17,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		physicalTab: JST['dibb/templates/biblio-form/physical-tab'],
 		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
 		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
-		publicationPlace: JST['dibb/templates/biblio-form/publication-place']
+		publicationPlaces: JST['dibb/templates/biblio-form/publication-places']
 	},
   
   id: 'biblio-form-view',
@@ -44,7 +45,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
       this.biblio = new DiBB.Biblio();
       this.mode = "new";
     }    
-    
+        
     this.biblio.on("invalid", this.onValidationError );
     
     // data source for publisher drop down
@@ -171,6 +172,24 @@ DiBB.BiblioFormView = Backbone.View.extend({
     }, this));      
     
   },
+  
+  initHasManyTable: function() {    
+    
+    this.$(".add-publication-place-button").click( _.bind( function() {
+      
+      // TODO add a new publication place
+      var publicationPlace = new Dibb.PublicationPlace( null, { biblioID: this.biblio.id });
+      this.biblio.publicationPlaces.add(publicationPlace);
+      this.renderPublicationTable();
+      
+    }, this));
+
+  },
+  
+  renderPublicationTable: function() {
+      
+    
+  },
     
   render: function() {      
     
@@ -190,6 +209,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
       DiBB.PublisherFormModal,
       DiBB.Publisher 
     );
+    
+    this.initHasManyTable();
   
   }
   
