@@ -4,6 +4,7 @@ DiBB.PublisherFormModal = Backbone.View.extend({
 	template: JST['dibb/templates/publisher-form-modal'],
   
 	partials: {
+    publisherFormPanel: JST['dibb/templates/publisher-form-modal/publisher-form-panel'],
 		stringInput: JST['dibb/templates/common/string-input'],
     validationErrors: JST['dibb/templates/common/validation-errors']  
 	},
@@ -46,7 +47,11 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     }, this) ); 
     
     modalDialog.modal('hide');
-    this.onCloseCallback( this.model.get("name"), this.model.id );   
+
+    // only update the parent form if values are valid and saved
+    if( this.validationErrors == null ) {
+      this.onCloseCallback( this.model.get("name"), this.model.id );   
+    }
   },
     
   save: function( onSuccessCallback ) {   
@@ -66,17 +71,20 @@ DiBB.PublisherFormModal = Backbone.View.extend({
   
   onValidationError: function( model, errors ) {
     this.validationErrors = errors;    
-    this.render();
+    this.renderForm();
   },
-    
-  render: function() {    
-    
-    this.$el.html(this.template( { 
+  
+  renderForm: function() {    
+    this.$(".publisher-form-panel").html( this.partials.publisherFormPanel( { 
       publisher: this.model.toJSON(),
       partials: this.partials, 
       validationErrors: this.validationErrors 
-    }));
+    }));    
+  },
     
+  render: function() {    
+    this.$el.html( this.template() );
+    this.renderForm();
     this.$(".pub-unlink-button").click( this.onUnlink );
     this.$(".pub-save-button").click( this.onSave );
     this.$(".pub-cancel-button").click( this.onCancel );
