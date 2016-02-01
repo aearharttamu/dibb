@@ -5,8 +5,11 @@ DiBB.PublisherBloodhound = new Bloodhound({
   },
   
   queryTokenizer: Bloodhound.tokenizers.whitespace,  
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('label'),
-  
+
+  datumTokenizer: function( datum ) {
+    return datum.name.split(" ");
+  },
+      
   identify: function(datum) {
     return datum.id;
   }  
