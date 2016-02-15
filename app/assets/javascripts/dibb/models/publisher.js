@@ -26,7 +26,8 @@ DiBB.PublisherCollection = Backbone.Collection.extend({
   
   names: function() {
     return _.map( this.models, function( publisher ) {
-      return { label: publisher.get('name'), id: publisher.id };      
+      var name = publisher.get('name');
+      return { label: name, value: name, id: publisher.id };      
     });
   }
           

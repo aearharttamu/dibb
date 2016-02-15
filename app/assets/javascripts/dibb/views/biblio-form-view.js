@@ -47,10 +47,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     }    
         
     this.biblio.on("invalid", this.onValidationError );
-    
-    // data source for publisher drop down
-    this.publisherBloodhound = DiBB.PublisherBloodhound();
-    
+        
     if( !this.embedded ) {
       // TODO set up click handlers for save and cancel
     }
@@ -146,18 +143,15 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.toggleReferenceFieldState(field, (refID == null));
   },
   
-  initReferenceField: function( fieldID, model, dataSource, formViewClass, refModelClass ) {
+  initReferenceField: function( fieldID, model, formViewClass, refModelClass ) {
         
-    var field = this.$( "#"+fieldID ).typeahead({
-      minLength: 3,
-      highlight: true
-    },
-    {
-      name: fieldID,
-      source: dataSource,
-      display: function( suggestion ) { return suggestion.name; }
-    });        
-    
+    var field = this.$("#"+fieldID);
+    DiBB.Routes.routes.loadPublishers( function(publishers) {
+      new Awesomplete( field[0], {
+        list: publishers.names()
+      });
+    });
+        
     // if this field is linked disable editing
     if( model.get(fieldID) ) {
       this.toggleReferenceFieldState(field, false);
@@ -166,10 +160,11 @@ DiBB.BiblioFormView = Backbone.View.extend({
     var refEditButton = this.$(this.refEditButtonSelectorTemplate({ fieldID: fieldID }));
     refEditButton.click( _.partial( this.onRefEditButton, model, fieldID, refModelClass, formViewClass ) );
     
-    field.bind('typeahead:select', _.bind(function(ev, suggestion) {
-      model.set( fieldID, suggestion.id );
+    field.bind('awesomplete-select', _.bind(function(event) {
+      var dataID = event.originalEvent.dataID;
+      model.set( fieldID, dataID );
       this.toggleReferenceFieldState(field, false);
-    }, this));      
+    }, this));
     
   },
   
@@ -201,11 +196,10 @@ DiBB.BiblioFormView = Backbone.View.extend({
       partials: this.partials, 
       validationErrors: this.validationErrors 
     }));
-      
+    
     this.initReferenceField( 
       "publisher_id", 
       this.biblio, 
-      this.publisherBloodhound, 
       DiBB.PublisherFormModal,
       DiBB.Publisher 
     );
