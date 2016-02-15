@@ -182,7 +182,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   renderPublicationTable: function() {
-      
+    
+    
     
   },
     

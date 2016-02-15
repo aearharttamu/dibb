@@ -11,22 +11,10 @@
   <tbody>
     <% _.each( publicationPlaces, function( publicationPlace ) { %>
       <tr id="publication-place-<%= publicationPlace.id %>">
-          <%= partials.stringInputCell({ 
-            field_name: 'city', 
-            field_placeholder: 'City as printed.', 
-            field_value: publicationPlace.city 
-          }) %>
-          <%= partials.stringInputCell({ 
-            field_name: 'state', 
-            field_placeholder: 'State as printed.', 
-            field_value: publicationPlace.city 
-          }) %>
-          <%= partials.stringInputCell({ 
-            field_name: 'country', 
-            field_placeholder: 'Country as printed.', 
-            field_value: publicationPlace.city 
-          }) %>
-          <td>
+        <td><%= publicationPlace.city %></td>
+        <td><%= publicationPlace.state %></td>
+        <td><%= publicationPlace.country %></td>
+        <td>
           <a href="#" class="btn delete-publication-place-button btn-danger btn-sm" data-publication-id="<%= publicationPlace.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove</a>
         </td>
       </tr>
@@ -35,3 +23,10 @@
 </table>
 
 <a href="#" class="btn add-publication-place-button btn-default">Add</a>
+
+<!-- example for edit panel -->
+<%# partials.stringInputCell({ 
+           field_name: 'state', 
+            field_placeholder: 'State as printed.', 
+            field_value: publicationPlace.city 
+        }) %>
