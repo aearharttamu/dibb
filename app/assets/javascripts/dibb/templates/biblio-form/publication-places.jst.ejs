@@ -8,7 +8,7 @@
           <th>Actions</th>
       </tr>
   </thead>
-  <tbody>
+  <tbody id="publication-places-tbody">
     <% _.each( publicationPlaces, function( publicationPlace ) { %>
       <tr id="publication-place-<%= publicationPlace.id %>">
         <td><%= publicationPlace.city %></td>
@@ -22,11 +22,4 @@
   </tbody>
 </table>
 
-<a href="#" class="btn add-publication-place-button btn-default">Add</a>
-
-<!-- example for edit panel -->
-<%# partials.stringInputCell({ 
-           field_name: 'state', 
-            field_placeholder: 'State as printed.', 
-            field_value: publicationPlace.city 
-        }) %>
+<button class="btn add-publication-place-button btn-default">Add</button>

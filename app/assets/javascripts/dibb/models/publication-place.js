@@ -1,5 +1,13 @@
 
 DiBB.PublicationPlace = Backbone.Model.extend({
+  
+  urlTemplate: _.template("/biblios/<$= biblioID %>/publication_places"),
+          
+  initialize: function( options ) {
+    if( options ) {
+      this.urlRoot = this.urlTemplate({ biblioID: options.biblioID });
+    }
+  }
 
 });
 

@@ -17,7 +17,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		physicalTab: JST['dibb/templates/biblio-form/physical-tab'],
 		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
 		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
-		publicationPlaces: JST['dibb/templates/biblio-form/publication-places']
+		publicationPlaces: JST['dibb/templates/biblio-form/publication-places'],
+		publicationPlaceForm: JST['dibb/templates/biblio-form/publication-place-form']
 	},
   
   id: 'biblio-form-view',
@@ -36,7 +37,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.embedded = options.embed;
     this.referenceFieldSelection = {};
     
-    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose" );
+    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose", 
+                "onAddPublicationPlace", "onEditPublicationPlace", "onDeletePublicationPlace" );
     
     if( options.biblioID ) {
       this.biblio = this.biblios.get(parseInt(options.biblioID));
@@ -143,10 +145,10 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.toggleReferenceFieldState(field, (refID == null));
   },
   
-  initReferenceField: function( fieldID, model, loadCollectionFunction, formViewClass, refModelClass ) {
+  initReferenceField: function( fieldID, model, formViewClass, refModelClass ) {
         
     var field = this.$("#"+fieldID);
-    loadCollectionFunction( function(publishers) {
+    DiBB.Routes.routes.loadPublishers( function(publishers) {
       new Awesomplete( field[0], {
         list: publishers.names()
       });
@@ -168,23 +170,48 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
   },
   
-  initHasManyTable: function() {    
+  openPublicationPlaceForm: function( publicationPlace ) {
     
-    this.$(".add-publication-place-button").click( _.bind( function() {
-      
-      // TODO add a new publication place
-      var publicationPlace = new Dibb.PublicationPlace( null, { biblioID: this.biblio.id });
-      this.biblio.publicationPlaces.add(publicationPlace);
-      this.renderPublicationTable();
-      
+    var placeForm = this.partials.publicationPlaceForm( { publicationPlace: publicationPlace, partials: this.partials }); 
+    
+    // TODO if existing id, replace otherwise add to end
+    this.$('#publication-places-tbody').append(placeForm);
+    
+    this.$(".save-place-button").click( _.bind( function() { 
+      // TODO save and render publication table
+      this.closePublicationPlaceForm();
     }, this));
 
+    this.$(".cancel-place-button").click( _.bind( function() { 
+      this.closePublicationPlaceForm();
+    }, this));    
+    
   },
   
+  closePublicationPlaceForm: function() {
+    this.$('.edit-place-form').detach();
+    this.$(".add-publication-place-button").attr("disabled", false);  
+  },
+  
+  onAddPublicationPlace: function() {
+    var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.biblio.id });
+    this.openPublicationPlaceForm(publicationPlace);    
+    this.$(".add-publication-place-button").attr("disabled", true);
+  },
+  
+  onEditPublicationPlace: function() {
+    // TODO
+    // var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.biblio.id });
+    // this.editPublicationPlace(publicationPlace);
+    // this.$(".add-publication-place-button").attr("disabled", true);
+  },
+  
+  onDeletePublicationPlace: function() {
+    // TODO
+  },
+    
   renderPublicationTable: function() {
-    
-    
-    
+    // TODO
   },
     
   render: function() {      
@@ -201,12 +228,13 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.initReferenceField( 
       "publisher_id", 
       this.biblio, 
-      DiBB.Routes.routes.loadPublishers,
       DiBB.PublisherFormModal,
       DiBB.Publisher 
     );
     
-    this.initHasManyTable();
+    this.$(".add-publication-place-button").click( this.onAddPublicationPlace );
+    this.$(".edit-publication-place-button").click( this.onEditPublicationPlace );
+    this.$(".delete-publication-place-button").click( this.onDeletePublicationPlace );
   
   }
   
