@@ -143,10 +143,10 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.toggleReferenceFieldState(field, (refID == null));
   },
   
-  initReferenceField: function( fieldID, model, formViewClass, refModelClass ) {
+  initReferenceField: function( fieldID, model, loadCollectionFunction, formViewClass, refModelClass ) {
         
     var field = this.$("#"+fieldID);
-    DiBB.Routes.routes.loadPublishers( function(publishers) {
+    loadCollectionFunction( function(publishers) {
       new Awesomplete( field[0], {
         list: publishers.names()
       });
@@ -200,6 +200,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.initReferenceField( 
       "publisher_id", 
       this.biblio, 
+      DiBB.Routes.routes.loadPublishers,
       DiBB.PublisherFormModal,
       DiBB.Publisher 
     );
