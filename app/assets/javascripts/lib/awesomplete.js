@@ -1,3 +1,6 @@
+// NOTE: This is a patched version of a pull request #16852 to this library, 
+// I added the ability to pass a data id when an item is selected. 
+
 /**
  * Simple, lightweight, usable local autocomplete library for modern browsers
  * Because there weren’t enough autocomplete scripts in the world? Because I’m completely insane and have NIH syndrome? Probably both. :P
