@@ -2,14 +2,14 @@
 
 DiBB.PublicationPlacesPanel = Backbone.View.extend({
 
-	template: JST['dibb/templates/biblio-form/publication-places'],
+	template: JST['dibb/templates/biblio-form/publication-places-panel'],
   
 	partials: {
 		stringInputCell: JST['dibb/templates/common/string-input-cell'],
 		publicationPlaceForm: JST['dibb/templates/biblio-form/publication-place-form']
 	},
   
-  id: 'publication-places',
+  id: 'publication-places-panel',
   
   events: {
     "click .add-publication-place-button": "onAddPublicationPlace",
