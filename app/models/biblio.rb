@@ -4,6 +4,7 @@ class Biblio < ActiveRecord::Base
   has_many :publication_places
   belongs_to :biblio_set
   belongs_to :publisher
+    
 
 	def self.list(biblio_set_id)
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })
@@ -14,8 +15,35 @@ class Biblio < ActiveRecord::Base
     self.publication_places.map { |publication_place| publication_place.obj }.to_json    
   end
   
-  def publication_places_json=( json )
+  def publication_places_json=( proposed_places )
+    
+    logger.debug("called setter with #{proposed_places}")
+    
+    proposed_places = [] if proposed_places.nil? 
+    deleted_places = self.publication_places.map { |place| place.id }
+    
+    proposed_places.each { |proposed_place|
+      if proposed_place[:id].nil?
+        # add place
+        place = PublicationPlace.new(proposed_place)
+        place.biblio = self
+        place.save
+      else
+        # update place
+        place = PublicationPlace.find_by( id: proposed_place[:id], biblio_id: self.id )
+        unless place.nil?
+          place.update(proposed_place)
+          deleted_places.delete(place.id)
+          place.save
+        end
+      end
+    }
 
+    # delete places not found in the proposed list
+    deleted_places.each { |place_id| 
+      doomed = self.publication_places.pluck(place_id)
+      doomed.destroy unless doomed.nil?
+    }      
   end
 
 	def obj
