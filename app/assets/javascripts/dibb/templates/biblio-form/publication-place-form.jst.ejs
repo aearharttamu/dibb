@@ -2,17 +2,17 @@
     <%= partials.stringInputCell({ 
       field_name: 'city', 
       field_placeholder: 'City', 
-      field_value: publicationPlace.city 
+      field_value: publicationPlace.get('city') 
     }) %>
     <%= partials.stringInputCell({ 
       field_name: 'state', 
       field_placeholder: 'State', 
-      field_value: publicationPlace.state
+      field_value: publicationPlace.get('state')
     }) %>
     <%= partials.stringInputCell({ 
       field_name: 'country', 
       field_placeholder: 'Country', 
-      field_value: publicationPlace.country
+      field_value: publicationPlace.get('country')
     }) %>
     <td>
     <button class="btn save-place-button btn-primary btn-sm">Add</button>

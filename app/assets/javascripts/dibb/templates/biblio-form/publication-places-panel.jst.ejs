@@ -11,7 +11,7 @@
   </thead>
   <tbody id="publication-places-tbody">
     <% _.each( publicationPlaces, function( publicationPlace ) { %>
-      <tr id="publication-place-<%= publicationPlace.id %>">
+      <tr id="place-<%= publicationPlace.cid %>">
         <td><%= publicationPlace.get('city') %></td>
         <td><%= publicationPlace.get('state') %></td>
         <td><%= publicationPlace.get('country') %></td>

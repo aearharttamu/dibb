@@ -23,32 +23,40 @@ DiBB.PublicationPlacesPanel = Backbone.View.extend({
   
   onSave: function() {
     
-    var city = this.$('#city').val();
-    var state = this.$('#state').val();
-    var country = this.$('#country').val();
-
-    var publicationPlace = new DiBB.PublicationPlace( { city: city, 
-                                                        state: state, 
-                                                        country: country } );
-    this.collection.add(publicationPlace);
+    this.publicationPlace.set( 'city', this.$('#city').val() );
+    this.publicationPlace.set( 'state', this.$('#state').val() );
+    this.publicationPlace.set( 'country', this.$('#country').val() );
+    
+    // TODO validation publication place
+    
+    this.collection.add(this.publicationPlace);
     this.closePublicationPlaceForm();
     this.render();
   },
   
   onCancel: function() {
     this.closePublicationPlaceForm();    
+    this.render();
   },
   
-  openPublicationPlaceForm: function( publicationPlace ) {
+  openPublicationPlaceForm: function( mode ) {
     
-    var placeForm = this.partials.publicationPlaceForm( { publicationPlace: publicationPlace, 
-                                                          partials: this.partials }); 
+    var placeForm = this.partials.publicationPlaceForm( 
+      { publicationPlace: this.publicationPlace, partials: this.partials }); 
     
-    // TODO if existing id, replace otherwise add to end
-    this.$('#publication-places-tbody').append(placeForm);
-
+    if( mode == "edit") {
+      // replace the existing row with the form
+      this.$("#place-"+this.publicationPlace.cid).replaceWith(placeForm);      
+    } else {
+      // must be adding a new one
+      this.$('#publication-places-tbody').append(placeForm);
+    }
+    
     this.$(".save-place-button").click( this.onSave );
     this.$(".cancel-place-button").click( this.onCancel );    
+
+    // can't add another while this is open
+    this.$(".add-publication-place-button").attr("disabled", true);
   },
   
   closePublicationPlaceForm: function() {
@@ -57,16 +65,14 @@ DiBB.PublicationPlacesPanel = Backbone.View.extend({
   },
   
   onAddPublicationPlace: function() {
-    var publicationPlace = new DiBB.PublicationPlace();
-    this.openPublicationPlaceForm(publicationPlace);    
-    this.$(".add-publication-place-button").attr("disabled", true);
+    this.publicationPlace = new DiBB.PublicationPlace();
+    this.openPublicationPlaceForm("add");    
   },
   
-  onEditPublicationPlace: function() {
-    // TODO
-    // var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.biblio.id });
-    // this.editPublicationPlace(publicationPlace);
-    // this.$(".add-publication-place-button").attr("disabled", true);
+  onEditPublicationPlace: function(e) {
+    var placeID = $(e.currentTarget).attr('data-place-cid');
+    this.publicationPlace = this.collection.get(placeID);
+    this.openPublicationPlaceForm("edit");    
   },
   
   onDeletePublicationPlace: function(e) {
