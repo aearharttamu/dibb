@@ -12,11 +12,12 @@
   <tbody id="publication-places-tbody">
     <% _.each( publicationPlaces, function( publicationPlace ) { %>
       <tr id="publication-place-<%= publicationPlace.id %>">
-        <td><%= publicationPlace.city %></td>
-        <td><%= publicationPlace.state %></td>
-        <td><%= publicationPlace.country %></td>
+        <td><%= publicationPlace.get('city') %></td>
+        <td><%= publicationPlace.get('state') %></td>
+        <td><%= publicationPlace.get('country') %></td>
         <td>
-          <a href="#" class="btn delete-publication-place-button btn-danger btn-sm" data-publication-id="<%= publicationPlace.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove</a>
+          <button href="#" class="btn edit-publication-place-button btn-default btn-sm" data-place-cid="<%= publicationPlace.cid %>" >Edit</button>
+          <button href="#" class="btn delete-publication-place-button btn-danger btn-sm" data-place-cid="<%= publicationPlace.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
         </td>
       </tr>
     <% }); %>

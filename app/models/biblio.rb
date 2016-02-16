@@ -16,9 +16,7 @@ class Biblio < ActiveRecord::Base
   end
   
   def publication_places_json=( proposed_places )
-    
-    logger.debug("called setter with #{proposed_places}")
-    
+        
     proposed_places = [] if proposed_places.nil? 
     deleted_places = self.publication_places.map { |place| place.id }
     
@@ -40,10 +38,7 @@ class Biblio < ActiveRecord::Base
     }
 
     # delete places not found in the proposed list
-    deleted_places.each { |place_id| 
-      doomed = self.publication_places.pluck(place_id)
-      doomed.destroy unless doomed.nil?
-    }      
+    PublicationPlace.destroy(deleted_places)
   end
 
 	def obj

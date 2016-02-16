@@ -23,7 +23,11 @@ module Dibb
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    
+
+    # see: http://guides.rubyonrails.org/security.html#unsafe-query-generation 
+    config.action_dispatch.perform_deep_munge = false
+
+
     # for bower compatibility
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
     

@@ -69,16 +69,15 @@ DiBB.PublicationPlacesPanel = Backbone.View.extend({
     // this.$(".add-publication-place-button").attr("disabled", true);
   },
   
-  onDeletePublicationPlace: function() {
-    // TODO
+  onDeletePublicationPlace: function(e) {
+    var placeID = $(e.currentTarget).attr('data-place-cid');
+    var place = this.collection.get(placeID);
+    this.collection.remove(place);
+    this.render();
   },
-    
-  renderPublicationTable: function() {
-    // TODO
-  },
-    
+        
   render: function() {      
-    this.$el.html( this.template( { publicationPlaces: this.collection.toJSON() } ) );
+    this.$el.html( this.template( { publicationPlaces: this.collection.models } ) );
   }
   
 });
