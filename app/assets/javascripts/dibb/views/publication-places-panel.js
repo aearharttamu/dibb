@@ -16,24 +16,39 @@ DiBB.PublicationPlacesPanel = Backbone.View.extend({
     "click .edit-publication-place-button": "onEditPublicationPlace",
     "click .delete-publication-place-button": "onDeletePublicationPlace"    
   },
+  
+  initialize: function() {
+    _.bindAll( this, "onSave", "onCancel" );
+  },
+  
+  onSave: function() {
     
+    var city = this.$('#city').val();
+    var state = this.$('#state').val();
+    var country = this.$('#country').val();
+
+    var publicationPlace = new DiBB.PublicationPlace( { city: city, 
+                                                        state: state, 
+                                                        country: country } );
+    this.collection.add(publicationPlace);
+    this.closePublicationPlaceForm();
+    this.render();
+  },
+  
+  onCancel: function() {
+    this.closePublicationPlaceForm();    
+  },
+  
   openPublicationPlaceForm: function( publicationPlace ) {
     
-    var placeForm = this.partials.publicationPlaceForm( { publicationPlace: publicationPlace, partials: this.partials }); 
+    var placeForm = this.partials.publicationPlaceForm( { publicationPlace: publicationPlace, 
+                                                          partials: this.partials }); 
     
     // TODO if existing id, replace otherwise add to end
     this.$('#publication-places-tbody').append(placeForm);
-    
-    this.$(".save-place-button").click( _.bind( function() { 
-      // TODO save and render publication table
-      
-      this.closePublicationPlaceForm();
-    }, this));
 
-    this.$(".cancel-place-button").click( _.bind( function() { 
-      this.closePublicationPlaceForm();
-    }, this));    
-    
+    this.$(".save-place-button").click( this.onSave );
+    this.$(".cancel-place-button").click( this.onCancel );    
   },
   
   closePublicationPlaceForm: function() {
@@ -42,7 +57,7 @@ DiBB.PublicationPlacesPanel = Backbone.View.extend({
   },
   
   onAddPublicationPlace: function() {
-    var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.collection.biblioID });
+    var publicationPlace = new DiBB.PublicationPlace();
     this.openPublicationPlaceForm(publicationPlace);    
     this.$(".add-publication-place-button").attr("disabled", true);
   },

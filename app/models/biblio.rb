@@ -9,12 +9,18 @@ class Biblio < ActiveRecord::Base
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })
 		biblios.map { |biblio| biblio.obj }
 	end
+  
+  def publication_places_json()
+    self.publication_places.map { |publication_place| publication_place.obj }.to_json    
+  end
+  
+  def publication_places_json=( json )
+
+  end
 
 	def obj
     
     publisher_name = Publisher.find(self.publisher_id).name unless self.publisher_id.nil?
-    publication_places = PublicationPlace.where( biblio_id: self.id )
-    publication_place_objs = publication_places { |publication_place| publication_place.obj }
     
 		{
 			id: self.id,
@@ -27,7 +33,7 @@ class Biblio < ActiveRecord::Base
 			year: self.year,
 			publisher_id: self.publisher_id,
       publisher_name: publisher_name,
-      publication_places: publication_place_objs.to_json,
+      publication_places_json: self.publication_places_json,
 			provenance: self.provenance,
 			pub_number: self.pub_number,
 			size: self.size,

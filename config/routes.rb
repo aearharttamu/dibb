@@ -8,12 +8,8 @@ Rails.application.routes.draw do
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
-    resources :biblios, only: [ :index, :show, :update, :create, :destroy ] do
-      resources :publication_places, only: [ :index, :show, :update, :create, :destroy ]
-    end
+    resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 
   end
-
-  resources :publication_places, only: [ :index, :show, :update, :create, :destroy ]
 
 	get "test_email" => 'home#test_email'
 	get "test_exception" => 'home#test_exception'

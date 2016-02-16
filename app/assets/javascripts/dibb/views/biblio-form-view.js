@@ -79,28 +79,14 @@ DiBB.BiblioFormView = Backbone.View.extend({
         title: this.$('#title').val(),
         descriptors: this.$('#descriptors').val(),
         date_as_appears: this.$('#date_as_appears').val(),
-        year: this.$('#year').val()
+        year: this.$('#year').val(),
+        publication_places_json: this.biblio.publicationPlaces.toJSON()
       });
-      
-      // var publicationPlace = this.biblio.publicationPlaces.at(0);
-      //
-      // if( !publicationPlace ) {
-      //   publicationPlace = new DiBB.PublicationPlace();
-      // }
-      //
-      // publicationPlace.set( {
-      //   city: this.$('#city').val(),
-      //   state: this.$('#state').val(),
-      //   country: this.$('#country').val()
-      // });
-                
+                      
       var onSuccess = _.bind( function(model, response, options) {
         this.validationErrors = null;
         onSuccessCallback(model, response, options);
       }, this);
-
-      // this.biblio.publicationPlaces.add(publicationPlace);
-      // publicationPlace.save(null, { error: DiBB.Routes.onError })
 
       this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
       this.biblios.add(this.biblio);

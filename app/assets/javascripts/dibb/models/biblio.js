@@ -4,10 +4,10 @@ DiBB.Biblio = Backbone.Model.extend({
   validYear: /(^\d{4}$)/,
   
   initialize: function(attributes, options) {    
-    if( attributes && attributes.publication_places ) {
-      var publicationPlacesJSON = attributes.publication_places;
+    if( attributes && attributes.publication_places_json ) {
+      var publicationPlacesJSON = attributes.publication_places_json;
       var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
-      this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj, { biblioID: attributes.id } );
+      this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj );
     }    
   },
   
@@ -17,7 +17,6 @@ DiBB.Biblio = Backbone.Model.extend({
       return { year: "Year of Publication must be a four digit year." };
     }    
   }
-  
   
 });
 
