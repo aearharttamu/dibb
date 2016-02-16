@@ -45,8 +45,9 @@
   error: _.has(validationErrors, 'publisher_id') 
 }) %>
 
-<%= partials.publicationPlaces({ 
-  publicationPlaces: biblio.publicationPlaces, 
+<div id="publication-places"></div>
+
+<%= partials.staff({ 
   partials: partials
 }) %>
 

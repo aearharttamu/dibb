@@ -1,27 +1,26 @@
-<div class="publication-places">
-  <h4>Publication Places</h4>
-  <table class="table" >
-    <thead>
-        <tr>
-            <th>City</th>
-            <th>State</th>
-            <th>Country</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="publication-places-tbody">
-      <% _.each( publicationPlaces, function( publicationPlace ) { %>
-        <tr id="publication-place-<%= publicationPlace.id %>">
-          <td><%= publicationPlace.city %></td>
-          <td><%= publicationPlace.state %></td>
-          <td><%= publicationPlace.country %></td>
-          <td>
-            <a href="#" class="btn delete-publication-place-button btn-danger btn-sm" data-publication-id="<%= publicationPlace.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove</a>
-          </td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+<h4>Place of Publication</h4>
+<div class="instructions">Use the table below to record the place(s) of publication as printed in the bibliography. Click 'New Place' to add an entry.</div>
+<table class="table" >
+  <thead>
+      <tr>
+          <th>City</th>
+          <th>State</th>
+          <th>Country</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody id="publication-places-tbody">
+    <% _.each( publicationPlaces, function( publicationPlace ) { %>
+      <tr id="publication-place-<%= publicationPlace.id %>">
+        <td><%= publicationPlace.city %></td>
+        <td><%= publicationPlace.state %></td>
+        <td><%= publicationPlace.country %></td>
+        <td>
+          <a href="#" class="btn delete-publication-place-button btn-danger btn-sm" data-publication-id="<%= publicationPlace.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove</a>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
 
-  <button class="btn btn-sm add-publication-place-button btn-default">New Place</button>
-</div>
+<button class="btn btn-sm add-publication-place-button btn-default">New Place</button>

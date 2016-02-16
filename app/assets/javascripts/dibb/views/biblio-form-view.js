@@ -17,8 +17,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		physicalTab: JST['dibb/templates/biblio-form/physical-tab'],
 		editorialTab: JST['dibb/templates/biblio-form/editorial-tab'],
 		citationsTab: JST['dibb/templates/biblio-form/citations-tab'],
-		publicationPlaces: JST['dibb/templates/biblio-form/publication-places'],
-		publicationPlaceForm: JST['dibb/templates/biblio-form/publication-place-form']
+		staff: JST['dibb/templates/biblio-form/staff']
 	},
   
   id: 'biblio-form-view',
@@ -37,8 +36,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.embedded = options.embed;
     this.referenceFieldSelection = {};
     
-    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose", 
-                "onAddPublicationPlace", "onEditPublicationPlace", "onDeletePublicationPlace" );
+    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose" );
     
     if( options.biblioID ) {
       this.biblio = this.biblios.get(parseInt(options.biblioID));
@@ -170,57 +168,11 @@ DiBB.BiblioFormView = Backbone.View.extend({
     
   },
   
-  openPublicationPlaceForm: function( publicationPlace ) {
-    
-    var placeForm = this.partials.publicationPlaceForm( { publicationPlace: publicationPlace, partials: this.partials }); 
-    
-    // TODO if existing id, replace otherwise add to end
-    this.$('#publication-places-tbody').append(placeForm);
-    
-    this.$(".save-place-button").click( _.bind( function() { 
-      // TODO save and render publication table
-      this.closePublicationPlaceForm();
-    }, this));
-
-    this.$(".cancel-place-button").click( _.bind( function() { 
-      this.closePublicationPlaceForm();
-    }, this));    
-    
-  },
-  
-  closePublicationPlaceForm: function() {
-    this.$('.edit-place-form').detach();
-    this.$(".add-publication-place-button").attr("disabled", false);  
-  },
-  
-  onAddPublicationPlace: function() {
-    var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.biblio.id });
-    this.openPublicationPlaceForm(publicationPlace);    
-    this.$(".add-publication-place-button").attr("disabled", true);
-  },
-  
-  onEditPublicationPlace: function() {
-    // TODO
-    // var publicationPlace = new DiBB.PublicationPlace({ biblioID: this.biblio.id });
-    // this.editPublicationPlace(publicationPlace);
-    // this.$(".add-publication-place-button").attr("disabled", true);
-  },
-  
-  onDeletePublicationPlace: function() {
-    // TODO
-  },
-    
-  renderPublicationTable: function() {
-    // TODO
-  },
-    
   render: function() {      
-    
-    var obj = this.biblio.obj();
-    
+        
     this.$el.html(this.template( { 
       embedded: true, 
-      biblio: obj, 
+      biblio: this.biblio.toJSON(), 
       partials: this.partials, 
       validationErrors: this.validationErrors 
     }));
@@ -232,9 +184,10 @@ DiBB.BiblioFormView = Backbone.View.extend({
       DiBB.Publisher 
     );
     
-    this.$(".add-publication-place-button").click( this.onAddPublicationPlace );
-    this.$(".edit-publication-place-button").click( this.onEditPublicationPlace );
-    this.$(".delete-publication-place-button").click( this.onDeletePublicationPlace );
+    // render publications panel
+    var publicationPlacesPanel = new DiBB.PublicationPlacesPanel({ collection: this.biblio.publicationPlaces });
+    publicationPlacesPanel.render();
+    this.$("#"+publicationPlacesPanel.id).replaceWith(publicationPlacesPanel.$el);
   
   }
   

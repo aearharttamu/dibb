@@ -16,17 +16,8 @@ DiBB.Biblio = Backbone.Model.extend({
     if( attributes.year && !this.validYear.exec(attributes.year) ) {
       return { year: "Year of Publication must be a four digit year." };
     }    
-  },
-  
-  obj: function() {
-    var obj = this.toJSON();
-    
-    if( this.publicationPlaces && this.publicationPlaces.length > 0 ) {
-      obj.publicationPlaces = this.publicationPlaces.toJSON();
-    }
-
-    return obj;
   }
+  
   
 });
 
