@@ -3,6 +3,8 @@ class Publisher < ActiveRecord::Base
   has_many :titles
   has_many :biblios
   
+  before_destroy :remove_refs
+  
 	def self.get_all()
 		publishers = Publisher.all
 		publishers.map { |publisher| publisher.obj }
@@ -17,6 +19,19 @@ class Publisher < ActiveRecord::Base
   
   def node_properties
     { }
+  end
+  
+  
+  def remove_refs
+    self.titles.each { |title| 
+      title.publisher = nil
+      title.save
+    }
+    
+    self.biblios.each { |biblio|
+      biblio.publisher = nil
+      biblio.save
+    }    
   end
   
 end

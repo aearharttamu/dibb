@@ -14,7 +14,7 @@ class Biblio < ActiveRecord::Base
     [ { id: 23, name: 'frank', role: 'pitcher' } ].to_json
   end
   
-  def staff_json=()
+  def staff_json=( proposed_staff )
     # TODO
   end
   
