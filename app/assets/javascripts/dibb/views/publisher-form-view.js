@@ -2,12 +2,7 @@
 
 DiBB.PublisherFormView = Backbone.View.extend({
 
-	template: JST['dibb/templates/publisher-form-view'],
-  
-	partials: {
-		stringInput: JST['dibb/templates/common/string-input'],
-    validationErrors: JST['dibb/templates/common/validation-errors']  
-	},
+	template: JST['dibb/templates/publisher-form/publisher-form-view'],
   
   id: 'publisher-form-view',
   className: 'publisher-form',
@@ -16,71 +11,45 @@ DiBB.PublisherFormView = Backbone.View.extend({
     "new": "New Publisher",
     "edit": "Edit Publisher"
   },
+  
+  events: {
+    "click .save-button": "onSave",
+    "click .cancel-button": "onCancel"
+  },
     	
 	initialize: function(options) {
-        
-    this.publishers = options.publishers;
-    this.embedded = options.embed;
     
-    _.bindAll( this, "onValidationError", "onSave", "onCancel" );
+    this.publishers = options.publishers;            
     
     if( options.publisherID ) {
-      this.publisher = this.publishers.get(parseInt(options.publisherID));
+      this.model = this.publishers.get(parseInt(options.publisherID));
       this.mode = "edit";
     } else {
-      this.publisher = new DiBB.Publisher();
+      this.model = new DiBB.Publisher();
       this.mode = "new";
     }    
-    
-    this.publisher.on("invalid", this.onValidationError );
-    
+        
    },
   
   onSave: function(e) {
-    this.validationErrors = null;
-    this.save(this.onCancel);
+    this.publisherFormPanel.save(this.onCancel);
   },
   
   onCancel: function() {
     DiBB.Routes.routes.navigate("publishers", {trigger: true});
   },
     
-  save: function( onSuccessCallback ) {   
-         
-    this.publisher.set( {
-      name: this.$('#name').val() 
-    });
-    
-    var onSuccess = _.bind( function(model, response, options) {
-      this.validationErrors = null;
-      onSuccessCallback(model, response, options);
-    }, this);
-
-    this.publishers.add(this.publisher);
-    this.publisher.save(null, { success: onSuccess, error: DiBB.Routes.onError });
-  
-  },
-  
-  onValidationError: function( model, errors ) {
-    this.validationErrors = errors;    
-    this.render();
-  },
-    
   render: function() {    
     var pageTitle = this.pageTitle[this.mode];
     
     this.$el.html(this.template( { 
-      pageTitle: pageTitle, 
-      embedded: this.embedded, 
-      publisher: this.publisher.toJSON(), 
-      partials: this.partials, 
-      validationErrors: this.validationErrors 
+      pageTitle: pageTitle,
     }));
     
-    if( !this.embedded ) {
-      this.$(".save-button").click( this.onSave );
-      this.$(".cancel-button").click( this.onCancel );
-    }
+    // render panel with form    
+    this.publisherFormPanel = new DiBB.PublisherFormPanel( { model: this.model });
+    this.publisherFormPanel.render();    
+    this.$("#"+this.publisherFormPanel.id).replaceWith(this.publisherFormPanel.$el);
     
     $(".dibb-app").html(this.$el);
   }

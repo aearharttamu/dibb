@@ -14,7 +14,7 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     
 	initialize: function(options) {
     _.bindAll( this, "close");
-    this.onCloseCallback = options.onClose;    
+    this.onCloseCallback = options.onClose;  
    },
   
   onSave: function(e) {
