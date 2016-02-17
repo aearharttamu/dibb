@@ -12,6 +12,9 @@ DiBB.Routes = Backbone.Router.extend({
     "people" : "personList",
     "people/new": "personNew",
     "people/:id/edit": "personEdit",
+    "roles" : "roleList",
+    "roles/new": "roleNew",
+    "roles/:id/edit": "roleEdit"
   },
     
   initialize: function(options) {
@@ -49,6 +52,8 @@ DiBB.Routes = Backbone.Router.extend({
     }, this));
   },
   
+  ////////////////////////////////////
+  
   bibliographList: function() {
     
     this.loadBibliograph( _.bind( function(bibliographs) {
@@ -57,6 +62,8 @@ DiBB.Routes = Backbone.Router.extend({
       bibliographListView.render();
     }, this));        
   },
+  
+  ////////////////////////////////////
   
   publisherList: function() {
 
@@ -84,6 +91,8 @@ DiBB.Routes = Backbone.Router.extend({
     
   },
   
+  ////////////////////////////////////
+  
   personList: function() {
 
     this.loadPeople( _.bind( function(people) {
@@ -109,7 +118,42 @@ DiBB.Routes = Backbone.Router.extend({
     }, this));        
     
   },
+  
+  ////////////////////////////////////
 
+  roleList: function() {
+
+    this.loadRoles( _.bind( function(roles) {
+      var roleListView = new DiBB.RoleListView( { collection: roles });
+      roleListView.render();
+    }, this));            
+  },
+  
+  roleNew: function() {
+    
+    this.loadRoles( _.bind( function(roles) {
+      var roleFormView = new DiBB.RoleFormView( { collection: roles } );
+      roleFormView.render();
+    }, this));        
+    
+  },
+
+  roleEdit: function(roleID) {
+    
+    this.loadRoles( _.bind( function(roles) {
+      var roleFormView = new DiBB.RoleFormView( { collection: roles, roleID: roleID } );
+      roleFormView.render();
+    }, this));        
+    
+  },
+  
+  ////////////////////////////////////////////////////////////////////////
+  
+  loadRoles: function( initView ) {
+    var roles = new DiBB.RoleCollection();
+    roles.fetch( { success: initView, error: this.onError } );
+  },
+  
   loadPublishers: function( initView ) {
     var publishers = new DiBB.PublisherCollection();
     publishers.fetch( { success: initView, error: this.onError } );

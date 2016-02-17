@@ -4,7 +4,7 @@ DiBB.PersonListView = Backbone.View.extend({
 	template: JST['dibb/templates/person-list-view'],
   
   id: 'person-list-view',
-  className: 'person-list',
+  className: 'dibb-list-view',  
   
   trIDTemplate: _.template("#pid-<%= id %>"),
   

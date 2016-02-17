@@ -4,7 +4,7 @@ DiBB.PublisherListView = Backbone.View.extend({
 	template: JST['dibb/templates/publisher-list-view'],
   
   id: 'publisher-list-view',
-  className: 'publisher-list',
+  className: 'dibb-list-view',  
   
   trIDTemplate: _.template("#pubid-<%= id %>"),
   

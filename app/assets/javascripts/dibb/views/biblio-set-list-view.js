@@ -5,7 +5,7 @@ DiBB.BiblioSetListView = Backbone.View.extend({
 	template: JST['dibb/templates/biblio-set-list-view'],
   
   id: 'biblio-set-list-view',
-  className: 'biblio-set-list',
+  className: 'dibb-list-view',
   
   trIDTemplate: _.template("#bibid-<%= id %>"),
   

@@ -3,7 +3,7 @@ DiBB.PersonFormView = Backbone.View.extend({
 	template: JST['dibb/templates/person-form/person-form-view'],
   
   id: 'person-form-view',
-  className: 'person-form',
+  className: 'dibb-form-view',
   
   pageTitle: {
     "new": "New Person",

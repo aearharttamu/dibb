@@ -5,7 +5,7 @@ DiBB.PublisherFormView = Backbone.View.extend({
 	template: JST['dibb/templates/publisher-form/publisher-form-view'],
   
   id: 'publisher-form-view',
-  className: 'publisher-form',
+  className: 'dibb-form-view',
   
   pageTitle: {
     "new": "New Publisher",

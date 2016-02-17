@@ -1,0 +1,24 @@
+<h1><%= pageTitle %></h1>
+
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group main-panel">
+      <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+      <div class="fields">
+      	<%= partials.stringInput({ 
+          field_name: "name", 
+          field_title: "Name", 
+          field_value: role.name, 
+          field_instructions: "The name of this role.",
+          error: _.has(validationErrors, 'name') 
+        }) %>
+      </div>       
+    </div>
+  </form>
+</div>
+
+<div class="actions">
+  <button type="button" class="btn btn-primary save-button">Save</button>
+  <button type="button" class="btn btn-default cancel-button">Cancel</button>
+</div>
