@@ -1,6 +1,9 @@
 class Biblio < ActiveRecord::Base
 
+  include MergeMany
+  
   has_many :citations, dependent: :destroy
+  has_many :staffs, dependent: :destroy
   has_many :publication_places, dependent: :destroy
   belongs_to :biblio_set
   belongs_to :publisher
@@ -11,11 +14,11 @@ class Biblio < ActiveRecord::Base
 	end
 
   def staff_json()
-    [ { id: 23, name: 'frank', role: 'pitcher' } ].to_json
+   self.staffs.map { |staff| staff.obj }.to_json    
   end
   
   def staff_json=( proposed_staff )
-    # TODO
+    merge_many_changes( Staff, :biblio_id, self.staffs, proposed_staff )
   end
   
   def publication_places_json()
@@ -23,29 +26,7 @@ class Biblio < ActiveRecord::Base
   end
   
   def publication_places_json=( proposed_places )
-        
-    proposed_places = [] if proposed_places.nil? 
-    deleted_places = self.publication_places.map { |place| place.id }
-    
-    proposed_places.each { |proposed_place|
-      if proposed_place[:id].nil?
-        # add place
-        place = PublicationPlace.new(proposed_place)
-        place.biblio = self
-        place.save
-      else
-        # update place
-        place = PublicationPlace.find_by( id: proposed_place[:id], biblio_id: self.id )
-        unless place.nil?
-          place.update(proposed_place)
-          deleted_places.delete(place.id)
-          place.save
-        end
-      end
-    }
-
-    # delete places not found in the proposed list
-    PublicationPlace.destroy(deleted_places)
+    merge_many_changes( PublicationPlace, :biblio_id, self.publication_places, proposed_places )
   end
 
 	def obj
