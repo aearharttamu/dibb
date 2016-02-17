@@ -174,6 +174,11 @@ DiBB.BiblioFormView = Backbone.View.extend({
     var publicationPlacesPanel = new DiBB.PublicationPlacesPanel({ collection: this.biblio.publicationPlaces });
     publicationPlacesPanel.render();
     this.$("#"+publicationPlacesPanel.id).replaceWith(publicationPlacesPanel.$el);
+
+    // render staff panel
+    var staffPanel = new DiBB.StaffPanel({ collection: this.biblio.staff });
+    staffPanel.render();
+    this.$("#"+staffPanel.id).replaceWith(staffPanel.$el);
   
   }
   

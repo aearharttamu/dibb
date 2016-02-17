@@ -4,11 +4,13 @@ DiBB.Biblio = Backbone.Model.extend({
   validYear: /(^\d{4}$)/,
   
   initialize: function(attributes, options) {    
-    if( attributes && attributes.publication_places_json ) {
-      var publicationPlacesJSON = attributes.publication_places_json;
-      var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
-      this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj );
-    }    
+    var publicationPlacesJSON = attributes.publication_places_json;
+    var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
+    this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj );
+
+    var staffJSON = attributes.staff_json;
+    var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
+    this.staff = new DiBB.StaffMemberCollection( staffObj );
   },
   
   validate: function(attributes, options) {

@@ -1,0 +1,25 @@
+<h4>Bibliography Staff</h4>
+<div class="instructions">Use the table below to record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms. Click 'New Person' to add an entry.</div>
+<table class="table" >
+  <thead>
+      <tr>
+          <th>Person</th>
+          <th>Role</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody id="staff-tbody">
+    <% _.each( staff, function( staffMember ) { %>
+      <tr id="staff-<%= staffMember.cid %>">
+        <td><%= staffMember.get('name') %></td>
+        <td><%= staffMember.get('role') %></td>
+        <td>
+          <button href="#" class="btn edit-staff-button btn-default btn-sm" data-staff-cid="<%= staffMember.cid %>" >Edit</button>
+          <button href="#" class="btn delete-staff-button btn-danger btn-sm" data-staff-cid="<%= staffMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<button class="btn btn-sm add-staff-button btn-default">New Person</button>

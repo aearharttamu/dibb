@@ -1,5 +1,3 @@
-/*global DiBB, Backbone, JST */
-
 DiBB.PublicationPlacesPanel = Backbone.View.extend({
 
 	template: JST['dibb/templates/biblio-form/publication-places-panel'],

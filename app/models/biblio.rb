@@ -5,11 +5,18 @@ class Biblio < ActiveRecord::Base
   belongs_to :biblio_set
   belongs_to :publisher
     
-
 	def self.list(biblio_set_id)
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })
 		biblios.map { |biblio| biblio.obj }
 	end
+
+  def staff_json()
+    [ { id: 23, name: 'frank', role: 'pitcher' } ].to_json
+  end
+  
+  def staff_json=()
+    # TODO
+  end
   
   def publication_places_json()
     self.publication_places.map { |publication_place| publication_place.obj }.to_json    
@@ -57,6 +64,7 @@ class Biblio < ActiveRecord::Base
 			publisher_id: self.publisher_id,
       publisher_name: publisher_name,
       publication_places_json: self.publication_places_json,
+      staff_json: self.staff_json,
 			provenance: self.provenance,
 			pub_number: self.pub_number,
 			size: self.size,
