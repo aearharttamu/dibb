@@ -5,19 +5,18 @@ DiBB.Biblio = Backbone.Model.extend({
   
   initialize: function(attributes, options) {    
 
-    var publicationPlacesObj = {};
-    var staffObj = {}
-    
     if( attributes ) {
       var publicationPlacesJSON = attributes.publication_places_json;
-      publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
+      var publicationPlacesObj = ( publicationPlacesJSON ) ? JSON.parse(publicationPlacesJSON) : null;
+      this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj );
       var staffJSON = attributes.staff_json;
-      staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
+      var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
+      this.staff = new DiBB.StaffMemberCollection( staffObj );
+    } else {
+      this.publicationPlaces = new DiBB.PublicationPlaceCollection();
+      this.staff = new DiBB.StaffMemberCollection();
     }
-    
-    this.publicationPlaces = new DiBB.PublicationPlaceCollection( publicationPlacesObj );
-    this.staff = new DiBB.StaffMemberCollection( staffObj );
-    
+
   },
   
   validate: function(attributes, options) {
