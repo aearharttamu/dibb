@@ -24,7 +24,7 @@ DiBB.PersonListView = Backbone.View.extend({
     if( deletedPerson ) {
       deleteButton.attr("disabled", true);  
       deletedPerson.destroy( { success: _.bind( function(){
-        var tableRow = this.$(this.trIDTemplate({id: pubID}));
+        var tableRow = this.$(this.trIDTemplate({id: pID}));
         tableRow.detach();
       }, this) });
     }          
