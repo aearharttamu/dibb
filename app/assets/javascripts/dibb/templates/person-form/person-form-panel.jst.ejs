@@ -1,0 +1,45 @@
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group main-panel">
+      <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+      <div class="fields">
+      	<%= partials.stringInput({ 
+          field_name: "full_name", 
+          field_title: "Full Name", 
+          field_value: person.full_name, 
+          field_instructions: "The full name of the person.",
+          error: _.has(validationErrors, 'full_name') 
+        }) %>
+      	<%= partials.stringInput({ 
+          field_name: "first_name", 
+          field_title: "First Name", 
+          field_value: person.first_name, 
+          field_instructions: "The first name of the person.",
+          error: _.has(validationErrors, 'name') 
+        }) %>
+      	<%= partials.stringInput({ 
+          field_name: "middle_name", 
+          field_title: "Middle Name", 
+          field_value: person.middle_name, 
+          field_instructions: "The middle name of the person.",
+          error: _.has(validationErrors, 'middle_name') 
+        }) %>
+      	<%= partials.stringInput({ 
+          field_name: "last_name", 
+          field_title: "Last Name", 
+          field_value: person.last_name, 
+          field_instructions: "The last name of the person.",
+          error: _.has(validationErrors, 'last_name') 
+        }) %>
+      	<%= partials.stringInput({ 
+          field_name: "alternative_name", 
+          field_title: "Alternative Name", 
+          field_value: person.alternative_name, 
+          field_instructions: "The alternative name of the person.",
+          error: _.has(validationErrors, 'alternative_name') 
+        }) %>
+      </div>       
+    </div>
+  </form>
+</div>

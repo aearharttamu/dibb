@@ -4,7 +4,7 @@ DiBB.Person = Backbone.Model.extend({
   
   validate: function(attributes, options) {
         
-    if( attributes.name == null || attributes.name.length == 0 ) {
+    if( attributes.full_name == null || attributes.full_name.length == 0 ) {
       return { year: "Person's full name cannot be blank." };
     }    
   },
