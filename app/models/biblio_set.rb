@@ -1,6 +1,6 @@
 class BiblioSet < ActiveRecord::Base
 
-  has_many :biblios
+  has_many :biblios, dependent: :destroy
 
 	def self.get_page(page, per_page=20)
 		biblio_sets = BiblioSet.paginate( page: page, per_page: per_page )

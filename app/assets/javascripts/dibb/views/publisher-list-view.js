@@ -19,13 +19,13 @@ DiBB.PublisherListView = Backbone.View.extend({
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var pubID = parseInt(deleteButton.attr("data-pubid"));
-    var deletedPublisher = this.biblioSets.get(pubID);
+    var deletedPublisher = this.publishers.get(pubID);
 
     if( deletedPublisher ) {
       deleteButton.attr("disabled", true);  
       deletedPublisher.destroy( { success: _.bind( function(){
-        // var tableRow = this.$(this.trIDTemplate({id: bibID}));
-        // this.dataTable.row(tableRow).remove().draw();
+        var tableRow = this.$(this.trIDTemplate({id: pubID}));
+        tableRow.detach();
       }, this) });
     }          
   },

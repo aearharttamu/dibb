@@ -1,7 +1,7 @@
 class Biblio < ActiveRecord::Base
 
-  has_many :citations
-  has_many :publication_places
+  has_many :citations, dependent: :destroy
+  has_many :publication_places, dependent: :destroy
   belongs_to :biblio_set
   belongs_to :publisher
     
