@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   
   resources :bibliographs, only: [ :index, :show, :update, :create, :destroy ]
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
+  resources :people, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
     resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 

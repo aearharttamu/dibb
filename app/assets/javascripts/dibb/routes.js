@@ -9,6 +9,9 @@ DiBB.Routes = Backbone.Router.extend({
     "publishers" : "publisherList",
     "publishers/new": "publisherNew",
     "publishers/:id/edit": "publisherEdit",
+    "people" : "personList",
+    "people/new": "personNew",
+    "people/:id/edit": "personEdit",
   },
     
   initialize: function(options) {
@@ -80,10 +83,41 @@ DiBB.Routes = Backbone.Router.extend({
     }, this));        
     
   },
+  
+  personList: function() {
+
+    this.loadPeople( _.bind( function(people) {
+      var personListView = new DiBB.PersonListView( { people: people });
+      personListView.render();
+    }, this));            
+  },
+  
+  personNew: function() {
+    
+    this.loadPeople( _.bind( function(people) {
+      var personFormView = new DiBB.PersonFormView( { people: people } );
+      personFormView.render();
+    }, this));        
+    
+  },
+
+  personEdit: function(personID) {
+    
+    this.loadPeople( _.bind( function(people) {
+      var personFormView = new DiBB.PersonFormView( { people: people, personID: personID } );
+      personFormView.render();
+    }, this));        
+    
+  },
 
   loadPublishers: function( initView ) {
     var publishers = new DiBB.PublisherCollection();
     publishers.fetch( { success: initView, error: this.onError } );
+  },
+  
+  loadPeople: function( initView ) {
+    var people = new DiBB.PersonCollection();
+    people.fetch( { success: initView, error: this.onError } );
   },
   
   loadBibliograph: function( initView ) {
