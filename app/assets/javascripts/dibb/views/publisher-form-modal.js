@@ -1,29 +1,25 @@
 
 DiBB.PublisherFormModal = Backbone.View.extend({
 
-	template: JST['dibb/templates/publisher-form-modal'],
-  
-	partials: {
-    publisherFormPanel: JST['dibb/templates/publisher-form-modal/publisher-form-panel'],
-		stringInput: JST['dibb/templates/common/string-input'],
-    validationErrors: JST['dibb/templates/common/validation-errors']  
-	},
-  
+	template: JST['dibb/templates/publisher-form/publisher-form-modal'],
+    
   id: 'publisher-form-modal-view',
   className: 'publisher-form-modal-view',
-    	
-	initialize: function(options) {
-
-    _.bindAll( this, "onValidationError", "onSave", "onCancel", "onUnlink", "close" );
-        
-    this.model.on("invalid", this.onValidationError );
-    this.onCloseCallback = options.onClose;
+  
+  events: {
+    "click .pub-unlink-button": "onUnlink",
+    "click .pub-save-button": "onSave",
+    "click .pub-cancel-button": "onCancel"
+  },
     
+	initialize: function(options) {
+    _.bindAll( this, "close");
+    this.onCloseCallback = options.onClose;    
    },
   
   onSave: function(e) {
     this.validationErrors = null;
-    this.save(this.close);
+    this.publisherFormPanel.save(this.close);
   },
   
   onCancel: function() {
@@ -54,41 +50,13 @@ DiBB.PublisherFormModal = Backbone.View.extend({
     }
   },
     
-  save: function( onSuccessCallback ) {   
-         
-    this.model.set( {
-      name: this.$('#name').val() 
-    });
-    
-    var onSuccess = _.bind( function(model, response, options) {
-      this.validationErrors = null;
-      onSuccessCallback(model, response, options);
-    }, this);
-
-    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });
-  
-  },
-  
-  onValidationError: function( model, errors ) {
-    this.validationErrors = errors;    
-    this.renderForm();
-  },
-  
-  renderForm: function() {    
-    this.$(".publisher-form-panel").html( this.partials.publisherFormPanel( { 
-      publisher: this.model.toJSON(),
-      partials: this.partials, 
-      validationErrors: this.validationErrors 
-    }));    
-  },
-    
   render: function() {    
     this.$el.html( this.template() );
-    this.renderForm();
-    this.$(".pub-unlink-button").click( this.onUnlink );
-    this.$(".pub-save-button").click( this.onSave );
-    this.$(".pub-cancel-button").click( this.onCancel );
-        
+    
+    // render panel with form    
+    this.publisherFormPanel = new DiBB.PublisherFormPanel( { model: this.model });
+    this.publisherFormPanel.render();    
+    this.$("#"+this.publisherFormPanel.id).replaceWith(this.publisherFormPanel.$el);
   }
   
 });
