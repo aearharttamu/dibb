@@ -30,7 +30,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   saveForm: function( saveCallback ) {
-    this.currentTab.saveForm(saveCallback);    
+    this.currentTab.save(saveCallback);    
   },
       
   render: function() {      
