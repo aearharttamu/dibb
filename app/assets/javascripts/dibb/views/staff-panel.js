@@ -4,7 +4,7 @@ DiBB.StaffPanel = Backbone.View.extend({
   
 	partials: {
 		stringInputCell: JST['dibb/templates/common/string-input-cell'],
-		dropdownInput: JST['dibb/templates/common/dropdown-input'],
+		dropdownInputCell: JST['dibb/templates/common/dropdown-input-cell'],
 		staffForm: JST['dibb/templates/biblio-form/staff-form']
 	},
   
@@ -55,7 +55,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         this.$('#staff-tbody').append(staffForm);
       }
     
-      // render publisher reference input field
+      // render person reference input field
       var personField = new DiBB.ReferenceInput( {
         id: 'person-field',
         model: this.staffMember, 
@@ -66,7 +66,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         field_title: 'Person Name', 
         field_value: this.staffMember.get("name"), 
         field_instructions: 'Select the name of the person as it appears on the item.', 
-        error: false      
+        cellMode: true      
       });
       personField.render();
       this.$("#person-field").replaceWith(personField.$el);

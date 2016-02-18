@@ -1,6 +1,7 @@
 DiBB.ReferenceInput = Backbone.View.extend({
 
 	template: JST['dibb/templates/common/reference-input'],
+  cellTemplate: JST['dibb/templates/common/reference-input-cell'],
   
   className: 'reference-input',
         	
@@ -12,7 +13,9 @@ DiBB.ReferenceInput = Backbone.View.extend({
     this.refModelClass = options.refModelClass;
     this.loader = options.loader;    
     this.fieldID = options.field_name;
+    this.cellMode = options.cellMode;
     this.formOptions = options;
+        
   },
     
   toggleReferenceFieldState: function( enabled ) {
@@ -44,7 +47,10 @@ DiBB.ReferenceInput = Backbone.View.extend({
   
   render: function() {
     
-    this.$el.html( this.template( this.formOptions ) );    
+    // choose either table based or regular
+    var template = this.cellMode ? this.cellTemplate : this.template;
+    this.$el.html( template( this.formOptions ) );    
+
     this.inputField = this.$( "#"+this.fieldID );
     
     // load the list for the autocompleting drop down
