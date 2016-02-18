@@ -1,3 +1,12 @@
-<% var editorialTab = [
-	{ name: 'contents', type: 'text', title: 'Statement of the Contents', instructions: 'Provide a bibliographic statement that takes the entirety of the material into account, labeling each section (ex: cover, inside cover with masthead, conference section, publication section, blank page, back cover with address label, etc.).', required: false }
-]; %>
+<%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+<%= partials.textAreaInput({ 
+  field_name: 'contents', 
+  field_title: 'Statement of the Contents', 
+  field_value: biblio.contents, 
+  field_instructions: 'Provide a bibliographic statement that takes the entirety of the material into account, labeling each section (ex: cover, inside cover with masthead, conference section, publication section, blank page, back cover with address label, etc.).', 
+  error: _.has(validationErrors, 'contents') 
+}) %>
+
+
+<p>TODO: Categories</p>
