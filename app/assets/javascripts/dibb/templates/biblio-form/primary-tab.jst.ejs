@@ -32,13 +32,7 @@
   error: _.has(validationErrors, 'year') 
 }) %>
 
-<%= partials.referenceInput({ 
-  field_name: 'publisher_id', 
-  field_title: 'Publisher Name', 
-  field_value: biblio.publisher_name, 
-  field_instructions: 'Select the name of the publisher as it appears on the item.', 
-  error: _.has(validationErrors, 'publisher_id') 
-}) %>
+<div id="publisher-field"></div>
 
 <div id="publication-places-panel"></div>
 

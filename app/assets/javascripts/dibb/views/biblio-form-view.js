@@ -10,7 +10,6 @@ DiBB.BiblioFormView = Backbone.View.extend({
 		numberInput: JST['dibb/templates/common/number-input'],
 		textAreaInput: JST['dibb/templates/common/textarea-input'],
 		dropdownInput: JST['dibb/templates/common/dropdown-input'],
-		referenceInput: JST['dibb/templates/common/reference-input'],
     validationErrors: JST['dibb/templates/common/validation-errors'],
 		primaryTab: JST['dibb/templates/biblio-form/primary-tab'],
 		referenceTab: JST['dibb/templates/biblio-form/reference-tab'],
@@ -22,9 +21,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
   id: 'biblio-form-view',
   className: 'biblio-form',
-  
-  refEditButtonSelectorTemplate: _.template("#edit-<%= fieldID %>"),
-  
+    
   pageTitle: {
     "new": "New Bibliography",
     "edit": "Edit Bibliography"
@@ -34,9 +31,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
         
     this.biblios = options.biblios;
     this.embedded = options.embed;
-    this.referenceFieldSelection = {};
     
-    _.bindAll( this, "onValidationError", "onRefEditButton", "onRefModalClose" );
+    _.bindAll( this, "onValidationError" );
     
     if( options.biblioID ) {
       this.biblio = this.biblios.get(parseInt(options.biblioID));
@@ -100,60 +96,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     this.validationErrors = errors;    
     this.render();
   },
-  
-  toggleReferenceFieldState: function( field, enabled ) {
-    var backgroundColor = (enabled) ? 'white' : '#f0f0f0';
-    field.attr("disabled", !enabled );
-    field.css("background-color", backgroundColor);          
-  },
-  
-  onRefEditButton: function( model, fieldID, refModelClass, formViewClass ) {
     
-    var refID = model.get(fieldID);
-    var refModel = new refModelClass( { id: refID });
-    
-    refModel.fetch( { success: _.bind( function(refModel) {
-      // set up the edit dialog
-      var formView = new formViewClass({ model: refModel, onClose: _.partial( this.onRefModalClose, fieldID, model )});
-      formView.render();
-      this.$el.append(formView.$el);
-      formView.open();         
-    },this), 
-    error: DiBB.Routes.onError });
-  },
-  
-  onRefModalClose: function( fieldID, model, fieldValue, refID ) {
-    var field = this.$( "#"+fieldID );
-    field.val(fieldValue);
-    model.set( fieldID, refID );
-    this.toggleReferenceFieldState(field, (refID == null));
-  },
-  
-  initReferenceField: function( fieldID, model, formViewClass, refModelClass ) {
-        
-    var field = this.$("#"+fieldID);
-    DiBB.Routes.routes.loadPublishers( function(publishers) {
-      new Awesomplete( field[0], {
-        list: publishers.names()
-      });
-    });
-        
-    // if this field is linked disable editing
-    if( model.get(fieldID) ) {
-      this.toggleReferenceFieldState(field, false);
-    }
-    
-    var refEditButton = this.$(this.refEditButtonSelectorTemplate({ fieldID: fieldID }));
-    refEditButton.click( _.partial( this.onRefEditButton, model, fieldID, refModelClass, formViewClass ) );
-    
-    field.bind('awesomplete-select', _.bind(function(event) {
-      var dataID = event.originalEvent.dataID;
-      model.set( fieldID, dataID );
-      this.toggleReferenceFieldState(field, false);
-    }, this));
-    
-  },
-  
   render: function() {      
         
     this.$el.html(this.template( { 
@@ -163,13 +106,22 @@ DiBB.BiblioFormView = Backbone.View.extend({
       validationErrors: this.validationErrors 
     }));
     
-    this.initReferenceField( 
-      "publisher_id", 
-      this.biblio, 
-      DiBB.PublisherFormModal,
-      DiBB.Publisher 
-    );
-    
+    // render publisher reference input field
+    var publisherField = new DiBB.ReferenceInput( {
+      id: 'publisher-field',
+      model: this.biblio, 
+      formViewClass: DiBB.PublisherFormModal,
+      refModelClass: DiBB.Publisher,
+      loader: DiBB.Routes.routes.loadPublishers,
+      field_name: 'publisher_id', 
+      field_title: 'Publisher Name', 
+      field_value: this.biblio.get("publisher_name"), 
+      field_instructions: 'Select the name of the publisher as it appears on the item.', 
+      error: _.has(this.validationErrors, 'publisher_id')       
+    });
+    publisherField.render();
+    this.$("#publisher-field").replaceWith(publisherField.$el);
+        
     // render publications panel
     var publicationPlacesPanel = new DiBB.PublicationPlacesPanel({ collection: this.biblio.publicationPlaces });
     publicationPlacesPanel.render();
