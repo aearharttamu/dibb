@@ -1,5 +1,3 @@
-/*global DiBB, Backbone, JST */
-
 DiBB.BiblioFormView = Backbone.View.extend({
 
 	template: JST['dibb/templates/biblio-form/biblio-form-view'],
@@ -49,47 +47,33 @@ DiBB.BiblioFormView = Backbone.View.extend({
     }
     
   },
-  
-  saveReferenceFields: function( onSuccessCallback ) {
-
-    var publisherName = this.$('#publisher_id').val();
-    
-    // if this is a stub publisher record, create it on server before continuing
-    if( !this.biblio.get('publisher_id') && publisherName.length > 0 ) {      
-      publisher = new DiBB.Publisher({ name: publisherName });
-      publisher.save(null, { success: _.bind( function(publisher) {
-        this.biblio.set('publisher_id', publisher.id );
-        onSuccessCallback();
-      }, this), error: DiBB.Routes.onError });
-    } else {
-      onSuccessCallback();
-    }
-    
-  },
-    
+      
   saveForm: function( onSuccessCallback ) {   
-         
-    this.saveReferenceFields( _.bind( function() {
-      
-      this.biblio.set( {
-        title: this.$('#title').val(),
-        descriptors: this.$('#descriptors').val(),
-        date_as_appears: this.$('#date_as_appears').val(),
-        year: this.$('#year').val(),
-        publication_places_json: this.biblio.publicationPlaces.toJSON()
-      });
-                      
-      var onSuccess = _.bind( function(model, response, options) {
-        this.validationErrors = null;
-        onSuccessCallback(model, response, options);
-      }, this);
+                  
+    this.biblio.set( {
+      title: this.$('#title').val(),
+      descriptors: this.$('#descriptors').val(),
+      date_as_appears: this.$('#date_as_appears').val(),
+      year: this.$('#year').val(),
+      publication_places_json: this.biblio.publicationPlaces.toJSON()
+    });
 
-      this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
-      this.biblios.add(this.biblio);
-      this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
-      
-    }, this));
-  
+    // if the user created a publisher and it isn't linked, save it
+    var publisherName = this.$('#publisher_id').val();
+    if( !this.biblio.get('publisher_id') && publisherName.length > 0 ) {      
+      this.biblio.set( 'publisher_name', publisherName );      
+    } else {
+      this.biblio.set( 'publisher_name', null );      
+    }
+                  
+    var onSuccess = _.bind( function(model, response, options) {
+      this.validationErrors = null;
+      onSuccessCallback(model, response, options);
+    }, this);
+
+    this.biblios.biblioSetID = this.biblio.get("biblio_set_id");
+    this.biblios.add(this.biblio);
+    this.biblio.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
   },
   
   onValidationError: function( model, errors ) {

@@ -7,7 +7,7 @@ class Biblio < ActiveRecord::Base
   has_many :publication_places, dependent: :destroy
   belongs_to :biblio_set
   belongs_to :publisher
-    
+      
 	def self.list(biblio_set_id)
 		biblios = Biblio.where({ biblio_set_id: biblio_set_id })
 		biblios.map { |biblio| biblio.obj }
@@ -27,6 +27,11 @@ class Biblio < ActiveRecord::Base
   
   def publication_places_json=( proposed_places )
     merge_many_changes( PublicationPlace, :biblio_id, self.publication_places, proposed_places )
+  end
+  
+  def publisher_name=( name )
+    # if a name is provided, use it to create a new publisher (otherwise, publisher_id links to it)
+    self.publisher = Publisher.new({ name: name }) unless name.blank?
   end
 
 	def obj
@@ -64,5 +69,5 @@ class Biblio < ActiveRecord::Base
       pub_number: self.pub_number
     }
   end
-
+  
 end
