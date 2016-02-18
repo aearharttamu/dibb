@@ -1,27 +1,31 @@
 DiBB.CitationsTab = Backbone.View.extend({
 
 	template: JST['dibb/templates/biblio-form/citations-tab'],
-  
-	partials: {
-    validationErrors: JST['dibb/templates/common/validation-errors']
-	},
-  
+    
   id: 'citations-tab-panel',
   className: 'biblio-tab',
             	
-	initialize: function(options) {
-    _.bindAll( this, "onValidationError" );    
-    this.model.on("invalid", this.onValidationError );            
+  trIDTemplate: _.template("#citid-<%= id %>"),
+  
+  events: {
+    'click .delete-button': 'onDelete'    
   },
       
+  onDelete: function(event) {
+    var deleteButton = $(event.currentTarget);
+    var citID = parseInt(deleteButton.attr("data-citid"));
+    var deletedCitation = this.citations.get(citID);
+
+    if( deletedCitation ) {
+      deletedCitation.attr("disabled", true);  
+      deletedCitation.destroy( { success: _.bind( function(){
+        var tableRow = this.$(this.trIDTemplate({id: citID}));
+        tableRow.detach();
+      }, this) });
+    }          
+  },
+            
   save: function( onSuccessCallback ) {   
-                  
-    // this.model.set( {
-    //   size: this.$('#size').val(),
-    //   binding: this.$('#binding').val(),
-    //   pagination: this.$('#pagination').val(),
-    //   unnumbered_pages: this.$('#unnumbered_pages').val()
-    // });
                   
     var onSuccess = _.bind( function(model, response, options) {
       this.validationErrors = null;
@@ -33,19 +37,11 @@ DiBB.CitationsTab = Backbone.View.extend({
     this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
   },
   
-  onValidationError: function( model, errors ) {
-    this.validationErrors = errors;    
-    this.render();
-  },
-    
-  render: function() {      
-        
-    this.$el.html(this.template( { 
-      biblio: this.model.toJSON(), 
-      partials: this.partials, 
-      validationErrors: this.validationErrors 
-    }));
-    
+              
+  render: function() {        
+    DiBB.Routes.routes.loadCitations( _.bind( function(citations) {
+      this.$el.html(this.template( { citations: this.citations.toJSON() } ));
+    }, this ));
   }
   
 });
