@@ -11,56 +11,54 @@
           field_instructions: "Enter title of work described in the citation (whether book, chapter, essay, article, part of book, etc.).Give the first title that appears in citation, regardless of whether the citation is a review or not.",
           error: _.has(validationErrors, 'name') 
         }) %>
+      	<%= partials.dropdownInput({ 
+          field_name: "is_review", 
+          field_title: "Is the citation a review?", 
+          field_value: title.is_review, 
+          field_instructions: "",
+          options: booleanValues,
+          error: _.has(validationErrors, 'is_review') 
+        }) %>
+        
+<!-- TODO should only appear if citation is a review  -->
+        <%= partials.textAreaInput({ 
+          field_name: 'review_full_text', 
+          field_title: 'Fields Specific to Reviews', 
+          field_value: title.review_full_text, 
+          field_instructions: 'Usually signalled by the phrase “review of,” or a book title as title; citations of reviews are complex and can include multiple authors, titles, and, sometimes, publication information. Reviews may be written for books, articles, events, performances, and other works.', 
+          error: _.has(validationErrors, 'review_full_text') 
+        }) %>
+
+      	<%= partials.stringInput({ 
+          field_name: "serial_title", 
+          field_title: "Serial Title", 
+          field_value: title.serial_title, 
+          field_instructions: "Provide the title of the serial publication.",
+          error: _.has(validationErrors, 'serial_title') 
+        }) %>
+        
+      	<%= partials.stringInput({ 
+          field_name: "serial_volume_as_appears", 
+          field_title: "Serial Volume Number", 
+          field_value: title.serial_volume_as_appears, 
+          field_instructions: "Provide the volume number as it appears on the work, whether in Roman or Arabic numerals.",
+          error: _.has(validationErrors, 'serial_volume_as_appears') 
+        }) %>
+        
+      	<%= partials.stringInput({ 
+          field_name: "serial_issue_as_appears", 
+          field_title: "Serial Issue Number", 
+          field_value: title.serial_issue_as_appears, 
+          field_instructions: "Provide the issue number as it appears on the work, whether in Roman or Arabic numerals.",
+          error: _.has(validationErrors, 'serial_issue_as_appears') 
+        }) %>
+        
       </div>       
     </div>
   </form>
 </div>
 
 <!-- 
-
-Field: title
-Type: string
-Display Name: Title of Item
-Instructions: Enter title of work described in the citation (whether book, chapter, essay, article, part of book, etc.).Give the first title that appears in citation, regardless of whether the citation is a review or not.
-Required: Yes
-Ref #: 22
-
-Field: is_review
-Type: boolean
-Display Name: Is the citation a review?
-Instructions:
-Notes: Options in dropdown [<no value>, yes, no]
-Required: No
-Ref #: 20
-
-Field: review_full_text
-Type: text
-Display Name: Fields Specific to Reviews
-Instructions: Usually signalled by the phrase “review of,” or a book title as title; citations of reviews are complex and can include multiple authors, titles, and, sometimes, publication information. Reviews may be written for books, articles, events, performances, and other works.
-Notes: Follow the models laid out for editors, publication place, publication date, publisher, title, author, etc., referenced elsewhere. This field only is visible if is_review is set to true.
-Required: No
-Ref #: 26
-
-Field: serial_title
-Type: string
-Display Name: Serial Title
-Instructions: Provide the title of the serial publication.
-Required: No
-Ref #: 24
-
-Field: serial_volume_as_appears
-Type: string
-Display Name: Serial Volume Number
-Instructions: Provide the volume number as it appears on the work, whether in Roman or Arabic numerals.
-Required: No
-Ref #: 24
-
-Field: serial_issue_as_appears
-Type: string
-Display Name: Serial Issue Number
-Instructions: Provide the issue number as it appears on the work, whether in Roman or Arabic numerals.
-Required: No
-Ref #: 24
 
 Field: encompassing_title_id
 Type: belongs_to encompassing_title

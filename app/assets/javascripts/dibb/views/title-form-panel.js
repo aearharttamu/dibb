@@ -5,6 +5,8 @@ DiBB.TitleFormPanel = Backbone.View.extend({
   
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
+		dropdownInput: JST['dibb/templates/common/dropdown-input'],
+		textAreaInput: JST['dibb/templates/common/textarea-input'],
     validationErrors: JST['dibb/templates/common/validation-errors']  
 	},
   
@@ -46,6 +48,7 @@ DiBB.TitleFormPanel = Backbone.View.extend({
     this.$el.html( this.template( {
       title: this.model.toJSON(),
       partials: this.partials, 
+      booleanValues: DiBB.BooleanValues,
       validationErrors: this.validationErrors 
     }) );
   }
