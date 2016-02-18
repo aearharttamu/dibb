@@ -1,17 +1,27 @@
 <ul class="nav nav-tabs single-item" role="tablist">
-	<li role="presentation" class="active"><a href="#primary" aria-controls="primary" role="tab">Primary</a></li>
-	<li role="presentation"><a href="#reference" aria-controls="reference" role="tab">Reference</a></li>
-	<li role="presentation"><a href="#physical" aria-controls="physical" role="tab">Physical</a></li>
-	<li role="presentation"><a href="#editorial" aria-controls="editorial" role="tab">Editorial</a></li>
-	<li role="presentation"><a href="#citations" aria-controls="citations" role="tab">Citations</a></li>
+	<li role="presentation" data-tab-id='primary-tab' class="bib-tab <%= activeTab == 'primary-tab' ? 'active' : '' %>">
+    <a href="#primary" aria-controls="primary" role="tab">Primary</a>
+  </li>
+	<li role="presentation" data-tab-id='reference-tab' class="bib-tab <%= activeTab == 'reference-tab' ? 'active' : '' %>">
+    <a href="#reference" aria-controls="reference" role="tab">Reference</a>
+  </li>
+	<li role="presentation" data-tab-id='physical-tab' class="bib-tab <%= activeTab == 'physical-tab' ? 'active' : '' %>">
+    <a href="#physical" aria-controls="physical" role="tab">Physical</a>
+  </li>
+	<li role="presentation" data-tab-id='editorial-tab' class="bib-tab <%= activeTab == 'editorial-tab' ? 'active' : '' %>">
+    <a href="#editorial" aria-controls="editorial" role="tab">Editorial</a>
+  </li>
+	<li role="presentation" data-tab-id='citations-tab' class="bib-tab <%= activeTab == 'citations-tab' ? 'active' : '' %>">
+    <a href="#citations" aria-controls="citations" role="tab">Citations</a>
+  </li>
 </ul>
 
 <div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="primary"><div id="primary-tab"></div></div>
-	<div role="tabpanel" class="tab-pane" id="reference"></div>
-	<div role="tabpanel" class="tab-pane" id="physical"></div>
-	<div role="tabpanel" class="tab-pane" id="editorial"></div>
-	<div role="tabpanel" class="tab-pane" id="citations"></div>
+	<div role="tabpanel" class="tab-pane <%= activeTab == 'primary-tab' ? 'active' : '' %>" id="primary"><div id="primary-tab-panel"></div></div>
+	<div role="tabpanel" class="tab-pane <%= activeTab == 'reference-tab' ? 'active' : '' %>" id="reference"><div id="reference-tab-panel"></div></div>
+	<div role="tabpanel" class="tab-pane <%= activeTab == 'physical-tab' ? 'active' : '' %>" id="physical"><div id="physical-tab-panel"></div></div>
+	<div role="tabpanel" class="tab-pane <%= activeTab == 'editorial-tab' ? 'active' : '' %>" id="editorial"><div id="editorial-tab-panel"></div></div>
+	<div role="tabpanel" class="tab-pane <%= activeTab == 'citations-tab' ? 'active' : '' %>" id="citations"><div id="citations-tab-panel"></div></div>
 	<div class="clearfix"></div>
 </div>
 

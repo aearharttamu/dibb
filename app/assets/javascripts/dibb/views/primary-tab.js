@@ -8,7 +8,7 @@ DiBB.PrimaryTab = Backbone.View.extend({
     validationErrors: JST['dibb/templates/common/validation-errors']
 	},
   
-  id: 'primary-tab',
+  id: 'primary-tab-panel',
   className: 'biblio-tab',
         	
 	initialize: function(options) {
