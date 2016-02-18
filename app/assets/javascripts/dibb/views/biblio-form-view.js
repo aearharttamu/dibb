@@ -57,7 +57,7 @@ DiBB.BiblioFormView = Backbone.View.extend({
     } else if( this.activeTab == 'reference-tab' ) {
       this.tab = new DiBB.ReferenceTab({ model: this.biblio, collection: this.biblios });      
     } else if( this.activeTab == 'physical-tab' ) {
-      // this.tab = new DiBB.PhysicalTab({ model: this.biblio, collection: this.biblios });
+      this.tab = new DiBB.PhysicalTab({ model: this.biblio, collection: this.biblios });
     } else if( this.activeTab == 'editorial-tab' ) {
       // this.tab = new DiBB.EditorialTab({ model: this.biblio, collection: this.biblios });
     } else if( this.activeTab == 'citation-tab' ) {

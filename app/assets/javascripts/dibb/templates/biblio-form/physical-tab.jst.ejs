@@ -1,6 +1,38 @@
-<% var physicalTab = [
-	{ name: 'size', type: 'int', title: 'Size of leaf/page, in millimeters', instructions: 'Only provide for materials examined in print.', required: false },
-	{ name: 'binding', type: 'string', title: 'Original Binding', instructions: 'Only provide for materials examined in print and disregard library bindings (focus on original binding).', required: false },
-	{ name: 'pagination', type: 'boolean', title: 'Pagination?', instructions: 'Are the pages numbered? Indicate “yes” even if only partially numbered.', required: false },
-	{ name: 'unnumbered_pages', type: 'boolean', title: 'Unnumbered Pages?', instructions: 'Are there unnumbered pages at the beginning or end of the work?', required: false }
-]; %>
+<%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+<%= partials.numberInput({ 
+  field_name: 'size', 
+  field_title: 'Size of leaf/page, in millimeters', 
+  field_value: biblio.size, 
+  field_instructions: 'Only provide for materials examined in print.', 
+  error: _.has(validationErrors, 'size') 
+}) %>
+
+<%= partials.dropdownInput({ 
+  field_name: 'binding', 
+  field_title: 'Original Binding', 
+  field_value: biblio.binding, 
+  field_instructions: 'Only provide for materials examined in print and disregard library bindings (focus on original binding).', 
+  options: bindingTypes,
+  error: _.has(validationErrors, 'binding') 
+}) %>
+
+<%= partials.dropdownInput({ 
+  field_name: 'pagination', 
+  field_title: 'Pagination?', 
+  field_value: biblio.pagination, 
+  field_instructions: 'Are the pages numbered? Indicate “yes” even if only partially numbered.', 
+  options: booleanValues,
+  error: _.has(validationErrors, 'pagination') 
+}) %>
+
+<%= partials.dropdownInput({ 
+  field_name: 'unnumbered_pages', 
+  field_title: 'Unnumbered Pages?', 
+  field_value: biblio.unnumbered_pages, 
+  field_instructions: 'Are there unnumbered pages at the beginning or end of the work?', 
+  options: booleanValues,
+  error: _.has(validationErrors, 'unnumbered_pages') 
+}) %>
+
+<p>TODO: Page Number Sequences </p>
