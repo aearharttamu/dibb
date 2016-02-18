@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
     resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 
   end
+  
+  resources :biblios, only: [ ] do
+    resources :citations, only: [ :index, :show, :update, :create, :destroy ] 
+  end
 
 	get "test_email" => 'home#test_email'
 	get "test_exception" => 'home#test_exception'

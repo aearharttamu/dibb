@@ -12,9 +12,11 @@ DiBB.Biblio = Backbone.Model.extend({
       var staffJSON = attributes.staff_json;
       var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
       this.staff = new DiBB.StaffMemberCollection( staffObj );
+      this.citations = new DiBB.CitationCollection();
     } else {
       this.publicationPlaces = new DiBB.PublicationPlaceCollection();
       this.staff = new DiBB.StaffMemberCollection();
+      this.citations = new DiBB.CitationCollection();
     }
 
   },

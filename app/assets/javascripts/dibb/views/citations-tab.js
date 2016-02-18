@@ -39,9 +39,7 @@ DiBB.CitationsTab = Backbone.View.extend({
   
               
   render: function() {        
-    DiBB.Routes.routes.loadCitations( _.bind( function(citations) {
-      this.$el.html(this.template( { citations: this.citations.toJSON() } ));
-    }, this ));
+    this.$el.html(this.template( { citations: this.model.citations.toJSON(), biblio_id: this.model.id } ));
   }
   
 });

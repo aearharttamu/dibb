@@ -1,0 +1,52 @@
+<h1><%= pageTitle %></h1>
+
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group main-panel">
+      <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+      <div class="fields">
+        <%= partials.textAreaInput({ 
+          field_name: 'full_text', 
+          field_title: 'Full Entry of Citation', 
+          field_value: citation.full_text, 
+          field_instructions: 'Enter the citation exactly as it appears, including punctuation (capitalization, marks, underlining, italics, bold, any special characters, symbols, or accents).', 
+          error: _.has(validationErrors, 'full_text') 
+        }) %>
+        <%= partials.numberInput({ 
+          field_name: 'page_number', 
+          field_title: 'Page Number in Bibliography', 
+          field_value: citation.page_number, 
+          field_instructions: 'Enter the page in the bibliography where the citation appears or begins.', 
+          error: _.has(validationErrors, 'page_number') 
+        }) %>
+        <%= partials.stringInput({ 
+          field_name: 'originating_page_number_as_appears', 
+          field_title: 'Originating Page Number', 
+          field_value: citation.originating_page_number_as_appears, 
+          field_instructions: 'Provide number as printed in the citation, if applicable.', 
+          error: _.has(validationErrors, 'originating_page_number_as_appears') 
+        }) %>
+        <%= partials.stringInput({ 
+          field_name: 'ending_page_number_as_appears', 
+          field_title: 'Ending Page Number', 
+          field_value: citation.ending_page_number_as_appears, 
+          field_instructions: 'Provide number as printed in the citation, if applicable.', 
+          error: _.has(validationErrors, 'ending_page_number_as_appears') 
+        }) %>
+        <%= partials.textAreaInput({ 
+          field_name: 'notes', 
+          field_title: 'Notes', 
+          field_value: citation.notes, 
+          field_instructions: 'Sometimes citations will include information that does not fit in the previous categories or that presents special difficulties in interpretation or transcription. Use this field to report additional information and/or signal problems.', 
+          error: _.has(validationErrors, 'notes') 
+        }) %>
+      </div>       
+    </div>
+  </form>
+</div>
+
+<div class="actions">
+  <button type="button" class="btn btn-primary save-button">Save</button>
+  <button type="button" class="btn btn-default cancel-button">Cancel</button>
+</div>

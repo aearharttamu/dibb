@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217201420) do
+ActiveRecord::Schema.define(version: 20160218174932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,8 +57,15 @@ ActiveRecord::Schema.define(version: 20160217201420) do
   create_table "citations", force: :cascade do |t|
     t.integer  "title_id"
     t.integer  "biblio_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.text     "full_text"
+    t.integer  "page_number"
+    t.integer  "page_number_sequence_id"
+    t.string   "originating_page_number_as_appears"
+    t.string   "ending_page_number_as_appears"
+    t.integer  "category_id"
+    t.text     "notes"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
