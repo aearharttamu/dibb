@@ -63,9 +63,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         refModelClass: DiBB.Person,
         loader: DiBB.Routes.routes.loadPeople,
         field_name: 'person_id', 
-        field_title: 'Person Name', 
         field_value: this.staffMember.get("name"), 
-        field_instructions: 'Select the name of the person as it appears on the item.', 
         cellMode: true      
       });
       personField.render();
