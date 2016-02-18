@@ -1,4 +1,17 @@
-<% var referenceTab = [
-	{ name: 'provenance', type: 'string', title: 'Provenance of Bibliography', instructions: 'Indicate who owns the materials you are examining (ex: owned by Cushing; borrowed from Princeton University Library).', required: false },
-	{ name: 'pub_number', type: 'string', title: 'Publication Number', instructions: 'Consult the item to see whether an ISSN or ISBN is included.', required: false }
-]; %>
+<%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+<%= partials.stringInput({ 
+  field_name: 'provenance', 
+  field_title: 'Provenance of Bibliography', 
+  field_value: biblio.provenance, 
+  field_instructions: 'Indicate who owns the materials you are examining (ex: owned by Cushing; borrowed from Princeton University Library).', 
+  error: _.has(validationErrors, 'provenance') 
+}) %>
+
+<%= partials.stringInput({ 
+  field_name: 'pub_number', 
+  field_title: 'Publication Number', 
+  field_value: biblio.pub_number, 
+  field_instructions: 'Consult the item to see whether an ISSN or ISBN is included.', 
+  error: _.has(validationErrors, 'pub_number') 
+}) %>
