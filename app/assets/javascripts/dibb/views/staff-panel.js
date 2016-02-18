@@ -63,8 +63,11 @@ DiBB.StaffPanel = Backbone.View.extend({
         refModelClass: DiBB.Person,
         loader: DiBB.Routes.routes.loadPeople,
         field_name: 'person_id', 
+        field_title: '',
+        field_instructions: '',
         field_value: this.staffMember.get("name"), 
-        cellMode: true      
+        cellMode: true,
+        error: false      
       });
       personField.render();
       this.$("#person-field").replaceWith(personField.$el);

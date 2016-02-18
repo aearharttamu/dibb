@@ -3,6 +3,16 @@ DiBB.ReferenceInput = Backbone.View.extend({
 	template: JST['dibb/templates/common/reference-input'],
   cellTemplate: JST['dibb/templates/common/reference-input-cell'],
   
+	partials: {
+		stringInput: JST['dibb/templates/common/string-input'],
+		stringInputCell: JST['dibb/templates/common/string-input-cell'],
+		numberInput: JST['dibb/templates/common/number-input'],
+		textAreaInput: JST['dibb/templates/common/textarea-input'],
+		dropdownInput: JST['dibb/templates/common/dropdown-input'],
+    validationErrors: JST['dibb/templates/common/validation-errors'],
+		staff: JST['dibb/templates/biblio-form/staff']
+	},
+  
   className: 'reference-input',
         	
 	initialize: function(options) {
@@ -15,6 +25,7 @@ DiBB.ReferenceInput = Backbone.View.extend({
     this.fieldID = options.field_name;
     this.cellMode = options.cellMode;
     this.formOptions = options;
+    this.formOptions.partials = this.partials;
         
   },
     
@@ -49,7 +60,7 @@ DiBB.ReferenceInput = Backbone.View.extend({
     
     // choose either table based or regular
     var template = this.cellMode ? this.cellTemplate : this.template;
-    this.$el.html( template( this.formOptions ) );    
+    this.$el.html( this.template( this.formOptions ) );    
 
     this.inputField = this.$( "#"+this.fieldID );
     
