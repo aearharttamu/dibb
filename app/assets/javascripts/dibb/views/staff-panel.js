@@ -4,6 +4,7 @@ DiBB.StaffPanel = Backbone.View.extend({
   
 	partials: {
 		stringInputCell: JST['dibb/templates/common/string-input-cell'],
+		dropdownInput: JST['dibb/templates/common/dropdown-input'],
 		staffForm: JST['dibb/templates/biblio-form/staff-form']
 	},
   
@@ -15,14 +16,14 @@ DiBB.StaffPanel = Backbone.View.extend({
     "click .delete-staff-button": "onDelete"    
   },
   
-  initialize: function() {
+  initialize: function(options) {
     _.bindAll( this, "onSave", "onCancel" );
   },
   
   onSave: function() {
     
-    this.staffMember.set( 'name', this.$('#name').val() );
-    this.staffMember.set( 'role', this.$('#role').val() );
+    // this.staffMember.set( 'name', this.$('#name').val() );
+    // this.staffMember.set( 'role', this.$('#role').val() );
     
     // TODO validation staff
     
@@ -38,22 +39,46 @@ DiBB.StaffPanel = Backbone.View.extend({
   
   openForm: function( mode ) {
     
-    var staffForm = this.partials.staffForm( 
-      { staffMember: this.staffMember, partials: this.partials }); 
-    
-    if( mode == "edit") {
-      // replace the existing row with the form
-      this.$("#staff-"+this.staffMember.cid).replaceWith(staffForm);      
-    } else {
-      // must be adding a new one
-      this.$('#staff-tbody').append(staffForm);
-    }
-    
-    this.$(".save-staff-button").click( this.onSave );
-    this.$(".cancel-staff-button").click( this.onCancel );    
+    DiBB.Routes.routes.loadRoles( _.bind( function(roles) {
 
-    // can't add another while this is open
-    this.$(".add-staff-button").attr("disabled", true);
+      var staffForm = this.partials.staffForm( { 
+        staffMember: this.staffMember, 
+        roles: roles.names(), 
+        partials: this.partials 
+      }); 
+    
+      if( mode == "edit") {
+        // replace the existing row with the form
+        this.$("#staff-"+this.staffMember.cid).replaceWith(staffForm);      
+      } else {
+        // must be adding a new one
+        this.$('#staff-tbody').append(staffForm);
+      }
+    
+      // render publisher reference input field
+      var personField = new DiBB.ReferenceInput( {
+        id: 'person-field',
+        model: this.staffMember, 
+        formViewClass: DiBB.PersonFormModal,
+        refModelClass: DiBB.Person,
+        loader: DiBB.Routes.routes.loadPeople,
+        field_name: 'person_id', 
+        field_title: 'Person Name', 
+        field_value: this.staffMember.get("name"), 
+        field_instructions: 'Select the name of the person as it appears on the item.', 
+        error: false      
+      });
+      personField.render();
+      this.$("#person-field").replaceWith(personField.$el);
+    
+      this.$(".save-staff-button").click( this.onSave );
+      this.$(".cancel-staff-button").click( this.onCancel );    
+
+      // can't add another while this is open
+      this.$(".add-staff-button").attr("disabled", true);
+      
+    }, this ));  
+    
   },
   
   closeForm: function() {

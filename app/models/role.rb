@@ -1,7 +1,7 @@
 class Role < ActiveRecord::Base 
     
 	def self.get_all()
-		roles = Role.all
+		roles = Role.all.order('name')
 		roles.map { |role| role.obj }
 	end
 
