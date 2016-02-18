@@ -14,10 +14,10 @@ DiBB.CitationsTab = Backbone.View.extend({
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var citID = parseInt(deleteButton.attr("data-citid"));
-    var deletedCitation = this.citations.get(citID);
+    var deletedCitation = this.model.citations.get(citID);
 
     if( deletedCitation ) {
-      deletedCitation.attr("disabled", true);  
+      deleteButton.attr("disabled", true);  
       deletedCitation.destroy( { success: _.bind( function(){
         var tableRow = this.$(this.trIDTemplate({id: citID}));
         tableRow.detach();

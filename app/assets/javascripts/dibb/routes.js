@@ -172,7 +172,7 @@ DiBB.Routes = Backbone.Router.extend({
   ////////////////////////////////////////////////////////////////////////
 
   loadCitations: function( biblioID, initView ) {
-    var citations = new DiBB.CitationCollection({ biblioID: biblioID });
+    var citations = new DiBB.CitationCollection( null, { biblioID: biblioID });
     citations.fetch( { success: initView, error: this.onError } );
   },  
   

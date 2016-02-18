@@ -13,7 +13,7 @@ class Biblio < ActiveRecord::Base
 		biblios.map { |biblio| biblio.obj }
 	end
 
-  def staff_json()
+  def staff_json
    self.staffs.map { |staff| staff.obj }.to_json    
   end
   
@@ -21,7 +21,7 @@ class Biblio < ActiveRecord::Base
     merge_many_changes( Staff, :biblio_id, self.staffs, proposed_staff )
   end
   
-  def publication_places_json()
+  def publication_places_json
     self.publication_places.map { |publication_place| publication_place.obj }.to_json    
   end
   
@@ -32,6 +32,10 @@ class Biblio < ActiveRecord::Base
   def publisher_name=( name )
     # if a name is provided, use it to create a new publisher (otherwise, publisher_id links to it)
     self.publisher = Publisher.new({ name: name }) unless name.blank?
+  end
+  
+  def citations_json
+    self.citations.map { |citation| citation.obj }.to_json
   end
 
 	def obj
@@ -58,7 +62,8 @@ class Biblio < ActiveRecord::Base
 			pagination: self.pagination,
 			unnumbered_pages: self.unnumbered_pages,
 			contents: self.contents,
-			category_as_appears: self.category_as_appears
+			category_as_appears: self.category_as_appears,
+      citations_json: self.citations_json
 		}
 	end
   

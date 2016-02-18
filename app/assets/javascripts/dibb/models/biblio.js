@@ -12,11 +12,13 @@ DiBB.Biblio = Backbone.Model.extend({
       var staffJSON = attributes.staff_json;
       var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
       this.staff = new DiBB.StaffMemberCollection( staffObj );
-      this.citations = new DiBB.CitationCollection();
+      var citationsJSON = attributes.citations_json;
+      var citationsObj = ( citationsJSON ) ? JSON.parse(citationsJSON) : null;
+      this.citations = new DiBB.CitationCollection( citationsObj, { biblioID: this.id } );
     } else {
       this.publicationPlaces = new DiBB.PublicationPlaceCollection();
       this.staff = new DiBB.StaffMemberCollection();
-      this.citations = new DiBB.CitationCollection();
+      this.citations = new DiBB.CitationCollection( null, { biblioID: this.id });
     }
 
   },

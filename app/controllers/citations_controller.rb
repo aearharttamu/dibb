@@ -16,6 +16,7 @@ class CitationsController < ApplicationController
   # POST /citations.json
   def create
     @citation = Citation.new(citation_params)
+    @citation.biblio_id = params[:biblio_id]
 
     if @citation.save
       render json: @citation.obj
@@ -50,6 +51,6 @@ class CitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def citation_params
-      params.require(:citation).permit(:id, :title_id, :biblio_id, :full_text, :page_number, :page_number_sequence_id, :originating_page_number_as_appears, :ending_page_number_as_appears, :category_id, :notes)
+      params.require(:citation).permit(:id, :title_id, :full_text, :page_number, :page_number_sequence_id, :originating_page_number_as_appears, :ending_page_number_as_appears, :category_id, :notes)
     end
 end

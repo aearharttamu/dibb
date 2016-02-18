@@ -28,7 +28,7 @@ DiBB.CitationFormView = Backbone.View.extend({
       this.model = this.collection.get(parseInt(options.citationID));
       this.mode = "edit";
     } else {
-      this.model = new DiBB.Citation({ biblioID: this.collection.biblioID });
+      this.model = new DiBB.Citation();
       this.mode = "new";
     }    
 
@@ -59,6 +59,7 @@ DiBB.CitationFormView = Backbone.View.extend({
       DiBB.Routes.routes.navigate("#", {trigger: true});
     }, this);
 
+    this.collection.add( this.model );
     this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError }); 
   },
   
