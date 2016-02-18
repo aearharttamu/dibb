@@ -13,6 +13,8 @@ class Citation < ActiveRecord::Base
     {
       id: self.id,
       title_id: self.title_id,
+      title_name: !self.title.nil? ? self.title.name : 'unknown',
+      category_name: '--',
       full_text: self.full_text,
       page_number: self.page_number,
       page_number_sequence_id: self.page_number_sequence_id,
