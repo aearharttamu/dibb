@@ -56,7 +56,7 @@ DiBB.CitationFormView = Backbone.View.extend({
     });
    
     var onSuccess = _.bind( function(model, response, options) {
-      DiBB.Routes.routes.navigate("#", {trigger: true});
+      window.history.back();
     }, this);
 
     this.collection.add( this.model );
@@ -64,7 +64,7 @@ DiBB.CitationFormView = Backbone.View.extend({
   },
   
   onCancel: function() {
-    DiBB.Routes.routes.navigate("#", {trigger: true});
+    window.history.back();
   },
       
   render: function() {    
