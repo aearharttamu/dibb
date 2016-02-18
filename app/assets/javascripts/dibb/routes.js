@@ -9,6 +9,9 @@ DiBB.Routes = Backbone.Router.extend({
     "publishers" : "publisherList",
     "publishers/new": "publisherNew",
     "publishers/:id/edit": "publisherEdit",
+    "titles" : "titleList",
+    "titles/new": "titleNew",
+    "titles/:id/edit": "titleEdit",
     "people" : "personList",
     "people/new": "personNew",
     "people/:id/edit": "personEdit",
@@ -149,7 +152,7 @@ DiBB.Routes = Backbone.Router.extend({
     
   },
   
-  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////
     
   citationNew: function(biblioID) {
     
@@ -169,8 +172,41 @@ DiBB.Routes = Backbone.Router.extend({
     
   },
   
+  ////////////////////////////////////
+
+  titleList: function() {
+
+    this.loadTitles( _.bind( function(titles) {
+      var titleListView = new DiBB.TitleListView( { collection: titles });
+      titleListView.render();
+    }, this));            
+  },
+  
+  titleNew: function() {
+    
+    this.loadTitles( _.bind( function(titles) {
+      var titleFormView = new DiBB.TitleFormView( { collection: titles } );
+      titleFormView.render();
+    }, this));        
+    
+  },
+
+  titleEdit: function(titleID) {
+    
+    this.loadTitles( _.bind( function(titles) {
+      var titleFormView = new DiBB.TitleFormView( { collection: titles, titleID: titleID } );
+      titleFormView.render();
+    }, this));        
+    
+  },
+  
   ////////////////////////////////////////////////////////////////////////
 
+  loadTitles: function( initView ) {
+    var titles = new DiBB.TitleCollection();
+    titles.fetch( { success: initView, error: this.onError } );
+  },
+  
   loadCitations: function( biblioID, initView ) {
     var citations = new DiBB.CitationCollection( null, { biblioID: biblioID });
     citations.fetch( { success: initView, error: this.onError } );

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
   resources :people, only: [ :index, :show, :update, :create, :destroy ]
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
+  resources :titles, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
     resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 

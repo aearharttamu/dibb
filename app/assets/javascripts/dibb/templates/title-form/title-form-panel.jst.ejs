@@ -1,0 +1,103 @@
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group main-panel">
+      <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+      <div class="fields">
+      	<%= partials.stringInput({ 
+          field_name: "name", 
+          field_title: "Title of Item", 
+          field_value: title.name, 
+          field_instructions: "Enter title of work described in the citation (whether book, chapter, essay, article, part of book, etc.).Give the first title that appears in citation, regardless of whether the citation is a review or not.",
+          error: _.has(validationErrors, 'name') 
+        }) %>
+      </div>       
+    </div>
+  </form>
+</div>
+
+<!-- 
+
+Field: title
+Type: string
+Display Name: Title of Item
+Instructions: Enter title of work described in the citation (whether book, chapter, essay, article, part of book, etc.).Give the first title that appears in citation, regardless of whether the citation is a review or not.
+Required: Yes
+Ref #: 22
+
+Field: is_review
+Type: boolean
+Display Name: Is the citation a review?
+Instructions:
+Notes: Options in dropdown [<no value>, yes, no]
+Required: No
+Ref #: 20
+
+Field: review_full_text
+Type: text
+Display Name: Fields Specific to Reviews
+Instructions: Usually signalled by the phrase “review of,” or a book title as title; citations of reviews are complex and can include multiple authors, titles, and, sometimes, publication information. Reviews may be written for books, articles, events, performances, and other works.
+Notes: Follow the models laid out for editors, publication place, publication date, publisher, title, author, etc., referenced elsewhere. This field only is visible if is_review is set to true.
+Required: No
+Ref #: 26
+
+Field: serial_title
+Type: string
+Display Name: Serial Title
+Instructions: Provide the title of the serial publication.
+Required: No
+Ref #: 24
+
+Field: serial_volume_as_appears
+Type: string
+Display Name: Serial Volume Number
+Instructions: Provide the volume number as it appears on the work, whether in Roman or Arabic numerals.
+Required: No
+Ref #: 24
+
+Field: serial_issue_as_appears
+Type: string
+Display Name: Serial Issue Number
+Instructions: Provide the issue number as it appears on the work, whether in Roman or Arabic numerals.
+Required: No
+Ref #: 24
+
+Field: encompassing_title_id
+Type: belongs_to encompassing_title
+Display Name: Encompassing Title
+Instructions: Some citations will reference parts of items-- articles are parts of magazines/journals/newspapers, chapters are parts of books. Use this field ONLY to identify the title of the larger entity, as listed in the citation.
+Notes: This is a reference field to the encompassing title table.
+Required: No
+Ref #: 23
+
+Field: editors
+Type: has_many people
+Display Name: Editors
+Instructions: Multiple fields are provided for information related to each editor of the work described in the citation. Please add editors in the order they appear in publication. For each editor, first transcribe name as it appears (ex: Azibo III, Reverend Daudi Ajaniya).
+Notes: This is a has_many field. For each entry, there is a reference field to the people table.
+Required: No
+Ref #: 21
+
+Field: authors
+Type: has_many people
+Display Name: Authors
+Instructions: Use procedure described above for editors.
+Notes: This is a has_many field. For each entry, there is a reference field to the people table.
+Required: No
+Ref #: 21
+
+Field: contributors
+Type: has_many people
+Display Name: Contributors
+Instructions: Use procedure described above for editors.
+Notes: This is a has_many field. For each entry, there is a reference field to the people table.
+Required: No
+Ref #: 21
+
+Field: publisher_id
+Type: belongs_to publisher
+Display Name: Publication Information
+Instructions: Enter the publisher name as it appears in the citation.
+Notes: Reference field to the publishers table.
+Required: No
+Ref #: 27 -->
