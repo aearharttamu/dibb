@@ -45,7 +45,6 @@ DiBB.CitationFormView = Backbone.View.extend({
   onSave: function(e) {
 
     this.model.set( {
-      // title_id: this.$('#title_id').val(),
       full_text: this.$('#full_text').val(),
       page_number: this.$('#page_number').val(),
       // page_number_sequence_id: this.$('#page_number_sequence_id').val(),
@@ -54,6 +53,14 @@ DiBB.CitationFormView = Backbone.View.extend({
       // category_id: this.$('#category_id').val(),
       notes: this.$('#notes').val()
     });
+    
+    // if the user created a title and it isn't linked, save it
+    var titleName = this.$('#title_id').val();
+    if( !this.model.get('title_id') && titleName.length > 0 ) {      
+      this.model.set( 'title_name', titleName );      
+    } else {
+      this.model.set( 'title_name', null );      
+    }
    
     var onSuccess = _.bind( function(model, response, options) {
       window.history.back();
@@ -76,6 +83,22 @@ DiBB.CitationFormView = Backbone.View.extend({
       validationErrors: this.validationErrors,
       pageTitle: pageTitle,
     }));
+    
+    // render title reference input field
+    var titleField = new DiBB.ReferenceInput( {
+      id: 'title-field',
+      model: this.model, 
+      formViewClass: DiBB.TitleFormModal,
+      refModelClass: DiBB.Title,
+      loader: DiBB.Routes.routes.loadTitles,
+      field_name: 'title_id', 
+      field_title: 'Title', 
+      field_value: this.model.get("title_name"), 
+      field_instructions: 'Select the name of the title as it appears in the citation.', 
+      error: _.has(this.validationErrors, 'title_id')       
+    });
+    titleField.render();
+    this.$("#title-field").replaceWith(titleField.$el);
         
     $(".dibb-app").html(this.$el);
   }

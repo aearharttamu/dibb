@@ -9,11 +9,19 @@ class Citation < ActiveRecord::Base
 		citations.map { |citation| citation.obj }
 	end
   
+  def title_name
+    !self.title.nil? ? self.title.name : nil
+  end
+  
+  def title_name=( name )
+    self.title = Title.new({ name: name }) unless name.blank?
+  end
+  
   def obj
     {
       id: self.id,
       title_id: self.title_id,
-      title_name: !self.title.nil? ? self.title.name : 'unknown',
+      title_name: self.title_name,
       category_name: '--',
       full_text: self.full_text,
       page_number: self.page_number,
