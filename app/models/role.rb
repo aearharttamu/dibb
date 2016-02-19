@@ -1,4 +1,6 @@
 class Role < ActiveRecord::Base 
+  
+  has_many :staff, dependent: :destroy
     
 	def self.get_all()
 		roles = Role.all.order('name')

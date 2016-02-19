@@ -1,5 +1,7 @@
 class Person < ActiveRecord::Base
    
+  has_many :staff, dependent: :destroy
+    
 	def self.get_all()
 		people = Person.all
 		people.map { |person| person.obj }
