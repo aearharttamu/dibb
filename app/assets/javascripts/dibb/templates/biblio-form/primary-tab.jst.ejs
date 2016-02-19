@@ -1,13 +1,5 @@
 <%= partials.validationErrors({ validationErrors: validationErrors }) %>
 
-<%= partials.stringInput({ 
-  field_name: 'title', 
-  field_title: 'Title', 
-  field_value: biblio.title, 
-  field_instructions: 'Transcribe title as appears on title page.', 
-  error: _.has(validationErrors, 'title') 
-}) %>
-
 <%= partials.textAreaInput({ 
   field_name: 'descriptors', 
   field_title: 'Title Page Descriptors', 

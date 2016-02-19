@@ -19,7 +19,6 @@ DiBB.PrimaryTab = Backbone.View.extend({
   save: function( onSuccessCallback ) {   
                   
     this.model.set( {
-      title: this.$('#title').val(),
       descriptors: this.$('#descriptors').val(),
       date_as_appears: this.$('#date_as_appears').val(),
       year: this.$('#year').val(),
