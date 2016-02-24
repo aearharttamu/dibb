@@ -6,6 +6,7 @@ DiBB.BibliographListView = Backbone.View.extend({
 
 	template: JST['dibb/templates/bibliograph-list-view'],
   trIDTemplate: _.template("#graphid-<%= id %>"),
+  graphNameTemplate: _.template("DiBB <%= getMonth() %>/<%= getDate() %>/<%= getFullYear() %> @ <%= getHours() %>:<%= getMinutes() %> "),
     
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
@@ -43,14 +44,17 @@ DiBB.BibliographListView = Backbone.View.extend({
     this.validationErrors = errors;    
     this.render();
   },
-  
-  onCreateGraph: function() {
     
-    var newGraphDialog = this.$("#new-graph-dialog");
-        
+  onCreateGraph: function() {
+            
     var onSuccess = _.bind(function(model, response, options) {
+      var newGraphDialog = this.$("#new-graph-dialog");
+
+      newGraphDialog.on('hidden.bs.modal', _.bind( function (e) {
+        this.render();
+      }, this) ); 
+      
       newGraphDialog.modal('hide');
-      this.render();
     }, this);
         
     this.model.set( {
@@ -58,16 +62,15 @@ DiBB.BibliographListView = Backbone.View.extend({
     });
     
     this.collection.add(this.model);
-    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });
-            
+    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });            
   },
   
   render: function() {
     
-    var currentTime = new Date();
+    var defaultGraphName = this.graphNameTemplate( new Date() );
     this.$el.html(this.template( {  bibliographs: this.collection.toJSON(), 
                                     graphDashboardURL: this.graphDashboardURL, 
-                                    defaultGraphName: "DiBB Snapshot - "+currentTime.getTime(),
+                                    defaultGraphName: defaultGraphName,
                                     validationErrors: this.validationErrors,
                                     partials: this.partials } ));
     $(".dibb-app").html(this.$el);
