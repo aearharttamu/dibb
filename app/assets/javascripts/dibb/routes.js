@@ -27,8 +27,7 @@ DiBB.Routes = Backbone.Router.extend({
     // global singleton
     DiBB.Routes.routes = this;
     
-    // TODO
-    this.graphDashboardURL = ""; 
+    this.graphDashboardURL = options.neo4jDashboard; 
     
   },
 
@@ -62,7 +61,7 @@ DiBB.Routes = Backbone.Router.extend({
   bibliographList: function() {
     
     this.loadBibliograph( _.bind( function(bibliographs) {
-      var bibliographListView = new DiBB.BibliographListView( { bibliographs: bibliographs, 
+      var bibliographListView = new DiBB.BibliographListView( { collection: bibliographs, 
                                                                 graphDashboardURL: this.graphDashboardURL });
       bibliographListView.render();
     }, this));        

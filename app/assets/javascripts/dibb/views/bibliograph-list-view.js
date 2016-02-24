@@ -18,27 +18,25 @@ DiBB.BibliographListView = Backbone.View.extend({
   },
     
 	initialize: function(options) {    
-    this.bibliographs = options.bibliographs;
     this.graphDashboardURL = options.graphDashboardURL;
+    this.model = new DiBB.Bibliograph();
 
     _.bindAll( this, "onValidationError" );        
-    // this.model.on("invalid", this.onValidationError );
+    this.model.on("invalid", this.onValidationError );
   },
   
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var graphID = parseInt(deleteButton.attr("data-graphid"));
-    var deletedBibliograph = this.bibliographs.get(graphID);
+    var deletedBibliograph = this.collection.get(graphID);
 
     if( deletedBibliograph ) {
-      deleteButton.attr("disabled", true);
+      deleteButton.attr("disabled", true);  
       deletedBibliograph.destroy( { success: _.bind( function(){
         var tableRow = this.$(this.trIDTemplate({id: graphID}));
-        this.dataTable.row(tableRow).remove().draw();
+        tableRow.detach();
       }, this) });
-    }
-    
-    return false;
+    }          
   },
   
   onValidationError: function( model, errors ) {
@@ -50,35 +48,28 @@ DiBB.BibliographListView = Backbone.View.extend({
     
     var newGraphDialog = this.$("#new-graph-dialog");
         
-    var onSuccess = function(model, response, options) {
-      // close dialog and reset it
-      // render table? 
+    var onSuccess = _.bind(function(model, response, options) {
       newGraphDialog.modal('hide');
-         
-    };
-    
-    var onError = function(model, response, options) {
-      // TODO show error messages, stay on dialog.   
-    };
-    
-    this.bibliograph = new DiBB.Bibliograph();
-    
-    this.bibliograph.set( {
+      this.render();
+    }, this);
+        
+    this.model.set( {
       name: this.$('#bilbiograph-name').val()
     });
     
-    this.bibliographs.add(this.bibliograph);
-    this.bibliograph.save(null, { success: onSuccess, error: onError });
+    this.collection.add(this.model);
+    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });
             
   },
   
   render: function() {
-    this.$el.html(this.template( {  bibliographs: this.bibliographs.toJSON(), 
+    
+    var currentTime = new Date();
+    this.$el.html(this.template( {  bibliographs: this.collection.toJSON(), 
                                     graphDashboardURL: this.graphDashboardURL, 
-                                    defaultGraphName: "graph000",
+                                    defaultGraphName: "DiBB Snapshot - "+currentTime.getTime(),
                                     validationErrors: this.validationErrors,
                                     partials: this.partials } ));
-    this.dataTable = this.$('#bibliograph-table').DataTable();
     $(".dibb-app").html(this.$el);
   }
   

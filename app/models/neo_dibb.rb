@@ -13,12 +13,7 @@ class NeoDibb
   def self.root_node
     NeoDibb.find_or_create_by( { version: GRAPH_SCHEMA_VERISON } )
   end
-  
-  def self.run_graph( bibliograph )
-    neo_dibb = NeoDibb.root_node
-    neo_dibb.generate( bibliograph )
-  end  
-    
+      
   def generate( bibliograph )
     
     # TODO what happens if the DB is modified during this process?

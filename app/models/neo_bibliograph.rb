@@ -2,6 +2,8 @@ class NeoBibliograph
   
   include Neo4j::ActiveNode
   
+  property :name, type: String
+  property :created_by, type: String
   property :created_at, type: DateTime
   
   has_many :out, :biblios, type: :CONTAINS, model_class: :NeoBiblio

@@ -17,6 +17,11 @@ class Bibliograph < ActiveRecord::Base
       created_at: self.created_at
     }
   end
+  
+  def create_neo_graph()
+    neo_dibb = NeoDibb.root_node
+    neo_dibb.generate( self )
+  end  
     
   def node_properties
     { 

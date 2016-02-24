@@ -19,6 +19,10 @@ class BibliographsController < ApplicationController
     @bibliograph.user = current_user
 
     if @bibliograph.save
+      
+      # create the Neo4j graph in the background
+      @bibliograph.delay.create_neo_graph()
+      
       render json: @bibliograph.obj
     else
       render json: @bibliograph.errors, status: :unprocessable_entity

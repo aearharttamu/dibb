@@ -22,7 +22,7 @@
             <td><%= bibliograph.created_by %></td>
             <td><%= bibliograph.created_at %></td>
             <td>
-              <a href="#" class="btn delete-button btn-danger btn-sm" data-graphid="<%= bibliograph.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+              <button href="#" class="btn delete-button btn-danger btn-sm" data-graphid="<%= bibliograph.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
             </td>
         </tr>
       <% }); %>
@@ -31,7 +31,7 @@
   
   <div class="actions">
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#new-graph-dialog">Create Graph</button>
-    <a href="<%= graphDashboardURL %>" class="btn btn-default">Open Neo4j Dashboard</a>
+    <a href="<%= graphDashboardURL %>" target="_blank" class="btn btn-default">Open Neo4j Dashboard</a>
   </div>
   
 </div>

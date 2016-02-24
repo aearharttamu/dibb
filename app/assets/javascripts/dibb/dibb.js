@@ -5,7 +5,7 @@ var DiBB = {};
 // application main
 $(document).ready(function() {
   
-  var routes = new DiBB.Routes();
+  var routes = new DiBB.Routes(DiBBSettings);
   Backbone.history.start();
   
 });
