@@ -8,7 +8,8 @@ DiBB.BibliographListView = Backbone.View.extend({
   trIDTemplate: _.template("#graphid-<%= id %>"),
     
 	partials: {
-		stringInput: JST['dibb/templates/common/string-input']
+		stringInput: JST['dibb/templates/common/string-input'],
+    validationErrors: JST['dibb/templates/common/validation-errors']  
 	},
       
   events: {
@@ -19,6 +20,9 @@ DiBB.BibliographListView = Backbone.View.extend({
 	initialize: function(options) {    
     this.bibliographs = options.bibliographs;
     this.graphDashboardURL = options.graphDashboardURL;
+
+    _.bindAll( this, "onValidationError" );        
+    // this.model.on("invalid", this.onValidationError );
   },
   
   onDelete: function(event) {
@@ -35,6 +39,11 @@ DiBB.BibliographListView = Backbone.View.extend({
     }
     
     return false;
+  },
+  
+  onValidationError: function( model, errors ) {
+    this.validationErrors = errors;    
+    this.render();
   },
   
   onCreateGraph: function() {
@@ -67,6 +76,7 @@ DiBB.BibliographListView = Backbone.View.extend({
     this.$el.html(this.template( {  bibliographs: this.bibliographs.toJSON(), 
                                     graphDashboardURL: this.graphDashboardURL, 
                                     defaultGraphName: "graph000",
+                                    validationErrors: this.validationErrors,
                                     partials: this.partials } ));
     this.dataTable = this.$('#bibliograph-table').DataTable();
     $(".dibb-app").html(this.$el);
