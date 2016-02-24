@@ -3,7 +3,7 @@ class Bibliograph < ActiveRecord::Base
   belongs_to :user
   
 	def self.list_all
-		bibliographs = Bibliograph.all
+		bibliographs = Bibliograph.all.order('created_at DESC')
 		bibliographs.map { |bibliograph| bibliograph.obj }
 	end
   

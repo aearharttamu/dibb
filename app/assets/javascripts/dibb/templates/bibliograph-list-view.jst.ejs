@@ -6,8 +6,6 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Number of Nodes</th>
-            <th>Schema Version</th>
             <th>Created By</th>
             <th>Created At</th>
             <th>Actions</th>
@@ -17,8 +15,6 @@
       <% _.each( bibliographs, function( bibliograph ) { %>
         <tr id="graphid-<%= bibliograph.id %>">
             <td><%= bibliograph.name %></td>
-            <td><%= bibliograph.node_count %></td>
-            <td><%= bibliograph.schema_version %></td>
             <td><%= bibliograph.created_by %></td>
             <td><%= bibliograph.created_at %></td>
             <td>
