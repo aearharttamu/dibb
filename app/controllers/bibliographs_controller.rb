@@ -39,15 +39,10 @@ class BibliographsController < ApplicationController
   end
 
   # DELETE /bibliographs/1.json
-  def destroy
-    
+  def destroy    
+    # remove the Neo4j graph in the background
     @bibliograph.delay.remove_neo_graph()
-    
-    if @bibliograph.destroy
-      head :no_content
-    else
-      render json: @bibliograph.errors, status: :not_destroyed
-    end
+    head :no_content
   end
 
   private

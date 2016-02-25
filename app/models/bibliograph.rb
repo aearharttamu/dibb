@@ -24,7 +24,8 @@ class Bibliograph < ActiveRecord::Base
   end  
   
   def remove_neo_graph
-    # TODO
+    # TODO remove the graph, then remove this record
+    self.destroy
   end
   
   def node_properties
