@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   root 'home#index'
   
-  resources :bibliographs, only: [ :index, :show, :update, :create, :destroy ]
+  resources :bibliographs, only: [ :index, :show, :create, :destroy ]
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
   resources :people, only: [ :index, :show, :update, :create, :destroy ]
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]

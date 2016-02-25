@@ -1,5 +1,5 @@
 class BibliographsController < ApplicationController
-  before_action :set_bibliograph, only: [:show, :edit, :update, :destroy]
+  before_action :set_bibliograph, only: [:show, :destroy]
   before_action :authenticate_user!
 
   # GET /bibliographs.json
@@ -23,15 +23,6 @@ class BibliographsController < ApplicationController
       # create the Neo4j graph in the background
       @bibliograph.delay.create_neo_graph()
       
-      render json: @bibliograph.obj
-    else
-      render json: @bibliograph.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /bibliographs/1.json
-  def update
-    if @bibliograph.update(bibliograph_params)
       render json: @bibliograph.obj
     else
       render json: @bibliograph.errors, status: :unprocessable_entity
