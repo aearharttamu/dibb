@@ -12,6 +12,10 @@ DiBB.RoleListView = Backbone.View.extend({
     'click .delete-button': 'onDelete'    
   },
   
+  initialize: function(options) {    
+    this.isAdmin = options.isAdmin;
+  },
+  
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var roleID = parseInt(deleteButton.attr("data-role-id"));
@@ -27,7 +31,7 @@ DiBB.RoleListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { roles: this.collection.toJSON() } ));
+    this.$el.html(this.template( { roles: this.collection.toJSON(), canDelete: this.isAdmin } ));
     $(".dibb-app").html(this.$el);
   }
   

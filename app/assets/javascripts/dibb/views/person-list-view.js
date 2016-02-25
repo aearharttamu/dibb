@@ -14,6 +14,7 @@ DiBB.PersonListView = Backbone.View.extend({
     
 	initialize: function(options) {    
     this.people = options.people;
+    this.isAdmin = options.isAdmin;
   },
   
   onDelete: function(event) {
@@ -31,7 +32,7 @@ DiBB.PersonListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { people: this.people.toJSON() } ));
+    this.$el.html(this.template( { people: this.people.toJSON(), canDelete: this.isAdmin } ));
     $(".dibb-app").html(this.$el);
   }
   

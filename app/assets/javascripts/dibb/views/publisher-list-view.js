@@ -14,6 +14,7 @@ DiBB.PublisherListView = Backbone.View.extend({
     
 	initialize: function(options) {    
     this.publishers = options.publishers;
+    this.isAdmin = options.isAdmin;
   },
   
   onDelete: function(event) {
@@ -31,7 +32,7 @@ DiBB.PublisherListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { publishers: this.publishers.toJSON() } ));
+    this.$el.html(this.template( { publishers: this.publishers.toJSON(), canDelete: this.isAdmin } ));
     $(".dibb-app").html(this.$el);
   }
   

@@ -12,6 +12,10 @@ DiBB.TitleListView = Backbone.View.extend({
     'click .delete-button': 'onDelete'    
   },
   
+  initialize: function(options) {    
+    this.isAdmin = options.isAdmin;
+  },
+  
   onDelete: function(event) {
     var deleteButton = $(event.currentTarget);
     var titleID = parseInt(deleteButton.attr("data-titleid"));
@@ -27,7 +31,7 @@ DiBB.TitleListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { titles: this.collection.toJSON() } ));
+    this.$el.html(this.template( { titles: this.collection.toJSON(), canDelete: this.isAdmin } ));
     $(".dibb-app").html(this.$el);
   }
   
