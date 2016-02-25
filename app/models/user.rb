@@ -10,4 +10,16 @@ class User < ActiveRecord::Base
    self.admin == true
  end
  
+ def self.get_all()
+   users = User.all.order('email')
+	 users.map { |user| user.obj }
+ end
+  
+ def obj
+   {
+     id: self.id,
+     email: self.email,
+     admin: self.admin?
+   }
+ end 
 end

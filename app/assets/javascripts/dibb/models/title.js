@@ -5,7 +5,7 @@ DiBB.Title = Backbone.Model.extend({
   validate: function(attributes, options) {
         
     if( attributes.name == null || attributes.name.length == 0 ) {
-      return { year: "Title cannot be blank." };
+      return { name: "Title cannot be blank." };
     }    
   },
   

@@ -19,7 +19,9 @@ DiBB.Routes = Backbone.Router.extend({
     "roles/new": "roleNew",
     "roles/:id/edit": "roleEdit",
     "biblios/:bibID/citations/new": "citationNew",
-    "biblios/:bibID/citations/:id/edit": "citationEdit"
+    "biblios/:bibID/citations/:id/edit": "citationEdit",
+    "users" : "userList",
+    "users/:id/edit": "userEdit"
   },
     
   initialize: function(options) {
@@ -200,8 +202,32 @@ DiBB.Routes = Backbone.Router.extend({
     
   },
   
+  ////////////////////////////////////
+
+  userList: function() {
+
+    this.loadUsers( _.bind( function(users) {
+      var userListView = new DiBB.UserListView( { collection: users });
+      userListView.render();
+    }, this));            
+  },
+  
+  userEdit: function(userID) {
+    
+    this.loadUsers( _.bind( function(users) {
+      var userFormView = new DiBB.UserFormView( { collection: users, userID: userID } );
+      userFormView.render();
+    }, this));        
+    
+  },
+  
   ////////////////////////////////////////////////////////////////////////
 
+  loadUsers: function( initView ) {
+    var users = new DiBB.UserCollection();
+    users.fetch( { success: initView, error: this.onError } );
+  },
+  
   loadTitles: function( initView ) {
     var titles = new DiBB.TitleCollection();
     titles.fetch( { success: initView, error: this.onError } );

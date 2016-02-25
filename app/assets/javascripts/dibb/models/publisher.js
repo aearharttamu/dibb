@@ -6,7 +6,7 @@ DiBB.Publisher = Backbone.Model.extend({
   validate: function(attributes, options) {
         
     if( attributes.name == null || attributes.name.length == 0 ) {
-      return { year: "Publisher Name cannot be blank." };
+      return { name: "Publisher Name cannot be blank." };
     }    
   },
   

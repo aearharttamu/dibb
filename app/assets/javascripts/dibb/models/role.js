@@ -5,7 +5,7 @@ DiBB.Role = Backbone.Model.extend({
   validate: function(attributes, options) {
         
     if( attributes.name == null || attributes.name.length == 0 ) {
-      return { year: "Role name cannot be blank." };
+      return { name: "Role name cannot be blank." };
     }    
   },
   
