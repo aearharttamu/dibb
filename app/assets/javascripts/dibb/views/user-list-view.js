@@ -9,21 +9,22 @@ DiBB.UserListView = Backbone.View.extend({
   trIDTemplate: _.template("#user-id-<%= id %>"),
   
   events: {
-    'click .delete-button': 'onDelete'    
+    'click .enable-user-button': 'onEnable'    
   },
     
-  onDelete: function(event) {
-    var deleteButton = $(event.currentTarget);
-    var userID = parseInt(deleteButton.attr("data-userid"));
-    var deletedUser = this.collection.get(userID);
+  onEnable: function(event) {
+    var enableButton = $(event.currentTarget);
+    var userID = parseInt(enableButton.attr("data-userid"));
+    var enabledUser = this.collection.get(userID);
+    
+    enabledUser.set( { enabled: true });
+   
+    var onSuccess = _.bind( function(model, response, options) {
+      this.render();
+    }, this);
 
-    if( deletedUser ) {
-      deleteButton.attr("disabled", true);  
-      deletedUser.destroy( { success: _.bind( function(){
-        var tableRow = this.$(this.trIDTemplate({id: userID}));
-        tableRow.detach();
-      }, this) });
-    }          
+    enableButton.attr("disabled", true);  
+    enabledUser.save(null, { success: onSuccess, error: DiBB.Routes.onError }); 
   },
   
   render: function() {

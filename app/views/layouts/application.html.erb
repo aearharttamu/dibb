@@ -13,7 +13,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if user_signed_in? %>
+  <% if user_signed_in? && current_user.enabled? %>
     <%= render partial: 'layouts/header' %>
   <% end %>
   <div class="content">

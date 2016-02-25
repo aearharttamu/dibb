@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
    self.admin == true
  end
  
+ def enabled?
+   self.enabled == true
+ end
+ 
  def self.get_all()
    users = User.all.order('email')
 	 users.map { |user| user.obj }
@@ -20,7 +24,8 @@ class User < ActiveRecord::Base
      id: self.id,
      email: self.email,
      last_sign_in_at: self.last_sign_in_at,
-     admin: self.admin?
+     admin: self.admin?,
+     enabled: self.enabled?
    }
  end 
 end

@@ -31,6 +31,7 @@ DiBB.UserFormView = Backbone.View.extend({
 
     this.model.set( {
       email: this.$('#email').val(),
+      enabled: this.$('#enabled').val(),
       admin: this.$('#admin').val()
     });
    

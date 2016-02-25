@@ -14,10 +14,18 @@
           error: _.has(validationErrors, 'email') 
         }) %>
         <%= partials.dropdownInput({ 
+          field_name: 'enabled', 
+          field_title: 'Enable User?', 
+          field_value: user.enabled, 
+          field_instructions: 'Enabled users are allowed to access DiBB.', 
+          options: booleanValues,
+          error: _.has(validationErrors, 'enabled') 
+        }) %>
+        <%= partials.dropdownInput({ 
           field_name: 'admin', 
           field_title: 'Admin User?', 
           field_value: user.admin, 
-          field_instructions: 'Is this user an admin?', 
+          field_instructions: 'Is this user an admin? Admins can make other admins, delete records, enable users.', 
           options: booleanValues,
           error: _.has(validationErrors, 'admin') 
         }) %>

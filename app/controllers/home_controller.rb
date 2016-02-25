@@ -3,7 +3,11 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render layout: "dibb"
+    if current_user.enabled?
+      render layout: "dibb"
+    else
+      render 'disabled'
+    end
   end
 
 	def test_exception
