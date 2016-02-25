@@ -6,10 +6,14 @@ DiBB.UserListView = Backbone.View.extend({
   id: 'user-list-view',
   className: 'dibb-list-view',  
   
+  partials: {
+    checkMark: JST['dibb/templates/common/check-mark']
+  },
+  
   trIDTemplate: _.template("#user-id-<%= id %>"),
   
-  events: {
-    'click .enable-user-button': 'onEnable'    
+  initialize: function() {
+    _.bindAll(this, "onEnable");    
   },
     
   onEnable: function(event) {
@@ -23,13 +27,13 @@ DiBB.UserListView = Backbone.View.extend({
       this.render();
     }, this);
 
-    enableButton.attr("disabled", true);  
     enabledUser.save(null, { success: onSuccess, error: DiBB.Routes.onError }); 
   },
   
   render: function() {
-    this.$el.html(this.template( { users: this.collection.toJSON() } ));
+    this.$el.html(this.template( { users: this.collection.toJSON(), partials: this.partials } ));
     $(".dibb-app").html(this.$el);
+    $('.enable-user-button').click( this.onEnable );
   }
   
 });
