@@ -15,6 +15,7 @@ DiBB.BiblioSetListView = Backbone.View.extend({
     
 	initialize: function(options) {    
     this.biblioSets = options.biblioSets;
+    this.isAdmin = options.isAdmin;
   },
   
   onDelete: function(event) {
@@ -32,7 +33,7 @@ DiBB.BiblioSetListView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(this.template( { biblio_sets: this.biblioSets.toJSON() } ));
+    this.$el.html(this.template( { biblio_sets: this.biblioSets.toJSON(), canDelete: this.isAdmin } ));
     $(".dibb-app").html(this.$el);
   }
   

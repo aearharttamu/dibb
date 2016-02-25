@@ -1,6 +1,7 @@
 class PublishersController < ApplicationController
   before_action :set_publisher, only: [:show, :update, :destroy]
   before_action :authenticate_user!
+  before_action :admin_only, only: [:destroy]
 
   # GET /publishers.json
   def index

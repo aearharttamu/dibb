@@ -1,6 +1,7 @@
 class BiblioSetsController < ApplicationController
   before_action :set_biblio_set, only: [:show, :update, :destroy]
   before_action :authenticate_user!
+  before_action :admin_only, only: [:destroy]
 
   # GET /biblio_sets.json
   def index

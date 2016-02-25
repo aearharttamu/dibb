@@ -1,7 +1,8 @@
 class BibliosController < ApplicationController
   before_action :set_biblio, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-
+  before_action :admin_only, only: [:destroy]
+  
   # GET /biblios.json
   def index
     @biblios = Biblio.list(params[:biblio_set_id])

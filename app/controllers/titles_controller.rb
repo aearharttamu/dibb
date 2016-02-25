@@ -1,6 +1,7 @@
 class TitlesController < ApplicationController
   before_action :set_title, only: [:show, :update, :destroy]
   before_action :authenticate_user!
+  before_action :admin_only, only: [:destroy]
 
   # GET /titles.json
   def index

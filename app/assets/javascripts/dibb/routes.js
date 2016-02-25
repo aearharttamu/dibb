@@ -35,7 +35,7 @@ DiBB.Routes = Backbone.Router.extend({
   biblioSetList: function() {    
     
     this.loadBiblioSets( _.bind( function(biblioSets) {
-      var biblioSetListView = new DiBB.BiblioSetListView( { biblioSets: biblioSets });
+      var biblioSetListView = new DiBB.BiblioSetListView( { biblioSets: biblioSets, isAdmin: this.isAdmin });
       biblioSetListView.render();
     }, this));        
   },
@@ -73,7 +73,7 @@ DiBB.Routes = Backbone.Router.extend({
   publisherList: function() {
 
     this.loadPublishers( _.bind( function(publishers) {
-      var publisherListView = new DiBB.PublisherListView( { publishers: publishers });
+      var publisherListView = new DiBB.PublisherListView( { publishers: publishers, isAdmin: this.isAdmin });
       publisherListView.render();
     }, this));            
   },
@@ -101,7 +101,7 @@ DiBB.Routes = Backbone.Router.extend({
   personList: function() {
 
     this.loadPeople( _.bind( function(people) {
-      var personListView = new DiBB.PersonListView( { people: people });
+      var personListView = new DiBB.PersonListView( { people: people, isAdmin: this.isAdmin });
       personListView.render();
     }, this));            
   },
@@ -129,7 +129,7 @@ DiBB.Routes = Backbone.Router.extend({
   roleList: function() {
 
     this.loadRoles( _.bind( function(roles) {
-      var roleListView = new DiBB.RoleListView( { collection: roles });
+      var roleListView = new DiBB.RoleListView( { collection: roles, isAdmin: this.isAdmin });
       roleListView.render();
     }, this));            
   },
@@ -177,7 +177,7 @@ DiBB.Routes = Backbone.Router.extend({
   titleList: function() {
 
     this.loadTitles( _.bind( function(titles) {
-      var titleListView = new DiBB.TitleListView( { collection: titles });
+      var titleListView = new DiBB.TitleListView( { collection: titles, isAdmin: this.isAdmin });
       titleListView.render();
     }, this));            
   },

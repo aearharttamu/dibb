@@ -8,7 +8,6 @@
     <thead>
         <tr>
             <th>Title</th>
-            <th>Genre</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,10 +15,11 @@
       <% _.each( biblio_sets, function( biblio_set ) { %>
         <tr id="bibid-<%= biblio_set.id %>">
             <td><a href="#biblio_set/<%= biblio_set.id %>/edit"><%= biblio_set.title %></a></td>
-            <td><%= biblio_set.genre %></td>
             <td>
               <a href="#biblio_set/<%= biblio_set.id %>/edit" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
-              <button href="#" class="btn delete-button btn-danger" data-bibid="<%= biblio_set.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+              <% if( canDelete == true ) { %>
+                <button href="#" class="btn delete-button btn-danger" data-bibid="<%= biblio_set.id %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+              <% } %>
             </td>
         </tr>
       <% }); %>
