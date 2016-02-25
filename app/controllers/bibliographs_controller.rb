@@ -1,6 +1,7 @@
 class BibliographsController < ApplicationController
   before_action :set_bibliograph, only: [:show, :destroy]
   before_action :authenticate_user!
+  before_action :admin_only
 
   # GET /bibliographs.json
   def index

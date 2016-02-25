@@ -5,4 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          
  has_many :bibliographs
+ 
+ def admin?
+   self.admin == true
+ end
+ 
 end

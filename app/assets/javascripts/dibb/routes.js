@@ -28,6 +28,7 @@ DiBB.Routes = Backbone.Router.extend({
     DiBB.Routes.routes = this;
     
     this.graphDashboardURL = options.neo4jDashboard; 
+    this.isAdmin = options.isAdmin; 
     
   },
 
