@@ -18,11 +18,15 @@ class Bibliograph < ActiveRecord::Base
     }
   end
   
-  def create_neo_graph()
+  def create_neo_graph
     neo_dibb = NeoDibb.root_node
     neo_dibb.generate( self )
   end  
-    
+  
+  def remove_neo_graph
+    # TODO
+  end
+  
   def node_properties
     { 
       name: self.name,

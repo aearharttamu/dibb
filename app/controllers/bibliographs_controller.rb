@@ -40,6 +40,9 @@ class BibliographsController < ApplicationController
 
   # DELETE /bibliographs/1.json
   def destroy
+    
+    @bibliograph.delay.remove_neo_graph()
+    
     if @bibliograph.destroy
       head :no_content
     else
