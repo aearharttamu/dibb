@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :people, only: [ :index, :show, :update, :create, :destroy ]
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
   resources :titles, only: [ :index, :show, :update, :create, :destroy ]
-  resources :admin, only: [ :index, :show, :update, :create, :destroy ] 
+  resources :admin, only: [ :index, :show, :update, :create ] 
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
     resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 

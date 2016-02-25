@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
    {
      id: self.id,
      email: self.email,
+     last_sign_in_at: self.last_sign_in_at,
      admin: self.admin?
    }
  end 

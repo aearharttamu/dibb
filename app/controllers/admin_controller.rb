@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :admin_only
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
 
   # GET /users.json
   def index
@@ -31,15 +31,6 @@ class AdminController < ApplicationController
       render json: @user.obj
     else
       render json: @user.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /users/1.json
-  def destroy
-    if @user.destroy
-      head :no_content
-    else
-      render json: @user.errors, status: :not_destroyed
     end
   end
 
