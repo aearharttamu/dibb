@@ -42,7 +42,7 @@ class AdminController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit( :email )
+      params.permit( :email, :admin )
     end
 
 end

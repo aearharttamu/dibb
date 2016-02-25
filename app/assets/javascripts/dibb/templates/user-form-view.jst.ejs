@@ -1,0 +1,32 @@
+<h1>Edit User</h1>
+
+<div class="form-wrapper">
+  <form class="form-horizontal">
+    <div class="form-group main-panel">
+      <%= partials.validationErrors({ validationErrors: validationErrors }) %>
+
+      <div class="fields">
+      	<%= partials.stringInput({ 
+          field_name: "email", 
+          field_title: "Email", 
+          field_value: user.email, 
+          field_instructions: "User's email address, used to log in to DiBB.",
+          error: _.has(validationErrors, 'email') 
+        }) %>
+        <%= partials.dropdownInput({ 
+          field_name: 'admin', 
+          field_title: 'Admin User?', 
+          field_value: user.admin, 
+          field_instructions: 'Is this user an admin?', 
+          options: booleanValues,
+          error: _.has(validationErrors, 'admin') 
+        }) %>
+      </div>       
+    </div>
+  </form>
+</div>
+
+<div class="actions">
+  <button type="button" class="btn btn-primary save-button">Save</button>
+  <button type="button" class="btn btn-default cancel-button">Cancel</button>
+</div>
