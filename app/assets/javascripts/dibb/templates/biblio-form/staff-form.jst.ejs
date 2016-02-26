@@ -1,12 +1,12 @@
 <tr class="edit-staff-form">
-    <td id="person-field"></td>
+    <td><div id="person-field"></div></td>
 		<%= partials.dropdownInputCell({ 
       field_name: "role_id", 
       field_title: "Role", 
       field_value: staffMember.get('role_id'), 
       options: roles
     }) %>
-    <td>
+    <td class="actions">
     <button class="btn save-staff-button btn-primary btn-sm">Add</button>
     <button class="btn cancel-staff-button btn-default btn-sm">Cancel</button>
   </td>

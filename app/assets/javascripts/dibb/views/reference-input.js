@@ -12,9 +12,7 @@ DiBB.ReferenceInput = Backbone.View.extend({
     validationErrors: JST['dibb/templates/common/validation-errors'],
 		staff: JST['dibb/templates/biblio-form/staff']
 	},
-  
-  className: 'reference-input',
-        	
+          	
 	initialize: function(options) {
 
     _.bindAll( this, "onRefEditButton", "onRefModalClose" );
@@ -24,6 +22,12 @@ DiBB.ReferenceInput = Backbone.View.extend({
     this.loader = options.loader;    
     this.fieldID = options.field_name;
     this.cellMode = options.cellMode;
+    
+    // create the element with the correct class name
+    var className = this.cellMode ? 'reference-input-cell' : 'reference-input';
+    var elementTemplate = _.template("<div id=<%= id %> class=<%= className %>></div>");
+    this.setElement(elementTemplate({ id: this.id, className: className }));
+    
     this.formOptions = options;
     this.formOptions.partials = this.partials;
         
@@ -60,7 +64,7 @@ DiBB.ReferenceInput = Backbone.View.extend({
     
     // choose either table based or regular
     var template = this.cellMode ? this.cellTemplate : this.template;
-    this.$el.html( this.template( this.formOptions ) );    
+    this.$el.html( template( this.formOptions ) );    
 
     this.inputField = this.$( "#"+this.fieldID );
     

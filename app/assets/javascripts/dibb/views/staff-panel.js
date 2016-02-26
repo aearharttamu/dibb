@@ -17,17 +17,22 @@ DiBB.StaffPanel = Backbone.View.extend({
   },
   
   initialize: function(options) {
-    _.bindAll( this, "onSave", "onCancel" );
+    _.bindAll( this, "onSave", "onCancel" );    
   },
   
   onSave: function() {
     
-    // this.staffMember.set( 'name', this.$('#name').val() );
-    // this.staffMember.set( 'role', this.$('#role').val() );
+    // if the user created a publisher and it isn't linked, save it
+    var personName = this.$('#person_id').val();
+    if( !this.model.get('person_id') && personName.length > 0 ) {      
+      this.model.set( 'person', personName );      
+    } else {
+      this.model.set( 'person', null );      
+    }    
     
-    // TODO validation staff
+    this.model.set( 'role_id', this.$('#role_id').val() );
     
-    this.collection.add(this.staffMember);
+    this.collection.add(this.model);
     this.closeForm();
     this.render();
   },
@@ -41,42 +46,40 @@ DiBB.StaffPanel = Backbone.View.extend({
     
     DiBB.Routes.routes.loadRoles( _.bind( function(roles) {
 
+      // can't add another while this is open
+      this.$(".add-staff-button").attr("disabled", true);
+
       var staffForm = this.partials.staffForm( { 
-        staffMember: this.staffMember, 
+        staffMember: this.model, 
         roles: roles.names(), 
         partials: this.partials 
       }); 
-    
+
       if( mode == "edit") {
         // replace the existing row with the form
-        this.$("#staff-"+this.staffMember.cid).replaceWith(staffForm);      
+        this.$("#staff-"+this.model.cid).replaceWith(staffForm);      
       } else {
         // must be adding a new one
         this.$('#staff-tbody').append(staffForm);
       }
-    
+        
       // render person reference input field
       var personField = new DiBB.ReferenceInput( {
         id: 'person-field',
-        model: this.staffMember, 
+        model: this.model, 
         formViewClass: DiBB.PersonFormModal,
         refModelClass: DiBB.Person,
         loader: DiBB.Routes.routes.loadPeople,
         field_name: 'person_id', 
-        field_title: '',
-        field_instructions: '',
-        field_value: this.staffMember.get("name"), 
+        field_value: this.model.get("name"), 
         cellMode: true,
         error: false      
       });
       personField.render();
       this.$("#person-field").replaceWith(personField.$el);
-    
+              
       this.$(".save-staff-button").click( this.onSave );
       this.$(".cancel-staff-button").click( this.onCancel );    
-
-      // can't add another while this is open
-      this.$(".add-staff-button").attr("disabled", true);
       
     }, this ));  
     
@@ -88,13 +91,13 @@ DiBB.StaffPanel = Backbone.View.extend({
   },
   
   onAdd: function() {
-    this.staffMember = new DiBB.StaffMember();
+    this.model = new DiBB.StaffMember();
     this.openForm("add");    
   },
   
   onEdit: function(e) {
     var id = $(e.currentTarget).attr('data-staff-cid');
-    this.staffMember = this.collection.get(id);
+    this.model = this.collection.get(id);
     this.openForm("edit");    
   },
   
