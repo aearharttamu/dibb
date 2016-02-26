@@ -50,6 +50,10 @@ DiBB.StaffPanel = Backbone.View.extend({
   
   openForm: function( mode ) {
     
+    this.$(".add-staff-button").attr("disabled", true);  
+    this.$(".edit-staff-button").attr("disabled", true);  
+    this.$(".delete-staff-button").attr("disabled", true);  
+    
     DiBB.Routes.routes.loadRoles( _.bind( function(roles) {
 
       // can't add another while this is open
@@ -94,6 +98,8 @@ DiBB.StaffPanel = Backbone.View.extend({
   closeForm: function() {
     this.$('.edit-staff-form').detach();
     this.$(".add-staff-button").attr("disabled", false);  
+    this.$(".edit-staff-button").attr("disabled", false);  
+    this.$(".delete-staff-button").attr("disabled", false);  
   },
   
   onAdd: function() {
