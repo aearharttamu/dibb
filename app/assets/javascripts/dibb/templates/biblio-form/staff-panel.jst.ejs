@@ -11,7 +11,7 @@
   <tbody id="staff-tbody">
     <% _.each( staff, function( staffMember ) { %>
       <tr id="staff-<%= staffMember.cid %>">
-        <td><%= staffMember.get('name') %></td>
+        <td><%= staffMember.get('person_name') %></td>
         <td><%= staffMember.get('role') %></td>
         <td>
           <button href="#" class="btn edit-staff-button btn-default btn-sm" data-staff-cid="<%= staffMember.cid %>" >Edit</button>

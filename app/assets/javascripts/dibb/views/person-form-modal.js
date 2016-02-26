@@ -46,7 +46,7 @@ DiBB.PersonFormModal = Backbone.View.extend({
 
     // only update the parent form if values are valid and saved
     if( this.validationErrors == null ) {
-      this.onCloseCallback( this.model.get("name"), this.model.id );   
+      this.onCloseCallback( this.model.get("full_name"), this.model.id );   
     }
   },
     

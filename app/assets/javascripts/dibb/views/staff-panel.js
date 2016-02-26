@@ -21,15 +21,21 @@ DiBB.StaffPanel = Backbone.View.extend({
   },
   
   onSave: function() {
-    
-    // if the user created a publisher and it isn't linked, save it
+
+    // if the user created a person and it isn't linked, save it
     var personName = this.$('#person_id').val();
     if( !this.model.get('person_id') && personName.length > 0 ) {      
-      this.model.set( 'person', personName );      
+      this.model.set( 'new_person_name', personName );      
     } else {
-      this.model.set( 'person', null );      
-    }    
+      this.model.set( 'new_person_name', null );      
+    }
     
+    this.model.set( 'person_name', personName );
+    
+    var roleDropdown = this.$("#role_id")[0];
+    var roleName = roleDropdown[roleDropdown.selectedIndex].label;
+    this.model.set( 'role', roleName );
+
     this.model.set( 'role_id', this.$('#role_id').val() );
     
     this.collection.add(this.model);
@@ -62,7 +68,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         // must be adding a new one
         this.$('#staff-tbody').append(staffForm);
       }
-        
+              
       // render person reference input field
       var personField = new DiBB.ReferenceInput( {
         id: 'person-field',
@@ -71,7 +77,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         refModelClass: DiBB.Person,
         loader: DiBB.Routes.routes.loadPeople,
         field_name: 'person_id', 
-        field_value: this.model.get("name"), 
+        field_value: this.model.get("person_name"), 
         cellMode: true,
         error: false      
       });
