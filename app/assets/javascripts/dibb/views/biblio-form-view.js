@@ -36,8 +36,12 @@ DiBB.BiblioFormView = Backbone.View.extend({
   
   onSwitchTab: function( e ) {
     var tabID = $(e.currentTarget).attr('data-tab-id');
-    this.activeTab = tabID;
-    this.render();
+
+    // if save succeeds, switch tabs
+    this.saveForm( _.bind( function() {
+      this.activeTab = tabID;
+      this.render();
+    }, this));
   },
   
   saveForm: function( saveCallback ) {
