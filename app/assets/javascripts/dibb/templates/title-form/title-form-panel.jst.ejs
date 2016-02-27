@@ -13,7 +13,7 @@
         }) %>
       	<%= partials.dropdownInput({ 
           field_name: "is_review", 
-          field_title: "Is the citation a review?", 
+          field_title: "Is this a review?", 
           field_value: title.is_review, 
           field_instructions: "",
           options: booleanValues,
@@ -60,6 +60,15 @@
   </form>
 </div>
 
+<!-- Field: publisher_id
+Type: belongs_to publisher
+Display Name: Publication Information
+Instructions: Enter the publisher name as it appears in the citation.
+Notes: Reference field to the publishers table.
+Required: No
+Ref #: 27 -->
+
+
 <!-- 
 
 Field: encompassing_title_id
@@ -69,35 +78,6 @@ Instructions: Some citations will reference parts of items-- articles are parts 
 Notes: This is a reference field to the encompassing title table.
 Required: No
 Ref #: 23
+-->
 
-Field: editors
-Type: has_many people
-Display Name: Editors
-Instructions: 
-Notes: This is a has_many field. For each entry, there is a reference field to the people table.
-Required: No
-Ref #: 21
 
-Field: authors
-Type: has_many people
-Display Name: Authors
-Instructions: Use procedure described above for editors.
-Notes: This is a has_many field. For each entry, there is a reference field to the people table.
-Required: No
-Ref #: 21
-
-Field: contributors
-Type: has_many people
-Display Name: Contributors
-Instructions: Use procedure described above for editors.
-Notes: This is a has_many field. For each entry, there is a reference field to the people table.
-Required: No
-Ref #: 21
-
-Field: publisher_id
-Type: belongs_to publisher
-Display Name: Publication Information
-Instructions: Enter the publisher name as it appears in the citation.
-Notes: Reference field to the publishers table.
-Required: No
-Ref #: 27 -->
