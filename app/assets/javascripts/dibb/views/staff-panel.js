@@ -17,7 +17,10 @@ DiBB.StaffPanel = Backbone.View.extend({
   },
   
   initialize: function(options) {
-    _.bindAll( this, "onSave", "onCancel" );    
+    _.bindAll( this, "onSave", "onCancel" );   
+    
+    this.title = options.title;
+    this.instructions = options.instructions;     
   },
   
   onSave: function() {
@@ -121,7 +124,11 @@ DiBB.StaffPanel = Backbone.View.extend({
   },
         
   render: function() {      
-    this.$el.html( this.template( { staff: this.collection.models } ) );
+    this.$el.html( this.template( {
+      title: this.title,
+      instructions: this.instructions, 
+      staff: this.collection.models
+    } ) );
   }
   
 });

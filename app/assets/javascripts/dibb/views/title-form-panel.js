@@ -26,7 +26,8 @@ DiBB.TitleFormPanel = Backbone.View.extend({
       review_full_text: this.$('#review_full_text').val(),
       serial_title: this.$('#serial_title').val(),
       serial_volume_as_appears: this.$('#serial_volume_as_appears').val(),
-      serial_issue_as_appears: this.$('#serial_issue_as_appears').val()
+      serial_issue_as_appears: this.$('#serial_issue_as_appears').val(),
+      staff_json: this.model.staff.toJSON()
       // encompassing_title_id: this.$('#encompassing_title_id').val()
     });
     
@@ -51,6 +52,16 @@ DiBB.TitleFormPanel = Backbone.View.extend({
       booleanValues: DiBB.BooleanValues,
       validationErrors: this.validationErrors 
     }) );
+    
+    // render staff panel
+    var staffPanel = new DiBB.StaffPanel({ 
+      collection: this.model.staff, 
+      title:  "Editors, Authors, and Contributors",
+      instructions: "Multiple fields are provided for information related to each contributor to the work. Please add names in the order they appear in publication." 
+    });
+    staffPanel.render();
+    this.$("#"+staffPanel.id).replaceWith(staffPanel.$el);
+    
   }
   
 });

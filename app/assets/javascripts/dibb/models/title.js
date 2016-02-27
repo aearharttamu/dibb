@@ -2,6 +2,16 @@ DiBB.Title = Backbone.Model.extend({
 
   urlTemplate: _.template("/titles/<%= id %>"),
   
+  initialize: function(attributes, options) {
+    
+    if( attributes ) {
+      var staffJSON = attributes.staff_json;
+      var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
+      this.staff = new DiBB.StaffMemberCollection( staffObj );
+    }
+    
+  },
+  
   validate: function(attributes, options) {
         
     if( attributes.name == null || attributes.name.length == 0 ) {

@@ -1,7 +1,10 @@
 class Title < ActiveRecord::Base
   
+  include MergeMany
+  
   belongs_to :publisher
   has_many :citations  
+  has_many :staffs, dependent: :destroy
   
   before_destroy :remove_refs
 	
@@ -9,6 +12,14 @@ class Title < ActiveRecord::Base
 		titles = Title.all
 		titles.map { |title| title.obj }
 	end  
+  
+  def staff_json
+   self.staffs.map { |staff| staff.obj }.to_json    
+  end
+  
+  def staff_json=( proposed_staff )
+    merge_many_changes( Staff, :title_id, self.staffs, proposed_staff )
+  end
   
   def obj
     { 
@@ -19,7 +30,8 @@ class Title < ActiveRecord::Base
       serial_title: self.serial_title,
       serial_volume_as_appears: self.serial_volume_as_appears,
       serial_issue_as_appears: self.serial_issue_as_appears,
-      encompassing_title_id: self.encompassing_title_id    
+      encompassing_title_id: self.encompassing_title_id,
+      staff_json: self.staff_json
     }
   end
 

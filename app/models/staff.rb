@@ -3,6 +3,7 @@ class Staff < ActiveRecord::Base
   belongs_to :biblio
   belongs_to :person
   belongs_to :role
+  belongs_to :title
         
   def new_person_name=( name )
     # if a name is provided, use it to create a new person (otherwise, person_id links to it)

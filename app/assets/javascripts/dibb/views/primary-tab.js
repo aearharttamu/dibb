@@ -78,11 +78,14 @@ DiBB.PrimaryTab = Backbone.View.extend({
     publicationPlacesPanel.render();
     this.$("#"+publicationPlacesPanel.id).replaceWith(publicationPlacesPanel.$el);
 
-    // render staff panel
-    var staffPanel = new DiBB.StaffPanel({ collection: this.model.staff });
+    var staffPanel = new DiBB.StaffPanel({ 
+      collection: this.model.staff, 
+      title:  "Bibliography Staff",
+      instructions: "Use the table below to record the names of editors, etc., designating their roles and including any alternate names provided for contributors with pseudonyms. Click 'New Person' to add an entry." 
+    });  
     staffPanel.render();
     this.$("#"+staffPanel.id).replaceWith(staffPanel.$el);
-  
+    
   }
   
 });

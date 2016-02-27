@@ -51,6 +51,6 @@ class TitlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def title_params
-      params.require(:title).permit( :name, :is_review, :review_full_text, :serial_title, :serial_volume_as_appears, :serial_issue_as_appears, :encompassing_title_id )
+      params.permit( :name, :is_review, :review_full_text, :serial_title, :serial_volume_as_appears, :serial_issue_as_appears, :encompassing_title_id, staff_json: [:id, :person_id, :role_id, :new_person_name ] )
     end
 end
