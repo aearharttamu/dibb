@@ -21,6 +21,7 @@ DiBB.StaffPanel = Backbone.View.extend({
     
     this.title = options.title;
     this.instructions = options.instructions;     
+    this.embedded = options.embedded;
   },
   
   onSave: function() {
@@ -86,6 +87,7 @@ DiBB.StaffPanel = Backbone.View.extend({
         field_name: 'person_id', 
         field_value: this.model.get("person_name"), 
         cellMode: true,
+        embedded: this.embedded,
         error: false      
       });
       personField.render();

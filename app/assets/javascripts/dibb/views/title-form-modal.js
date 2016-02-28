@@ -54,7 +54,7 @@ DiBB.TitleFormModal = Backbone.View.extend({
     this.$el.html( this.template() );
     
     // render panel with form    
-    this.titleFormPanel = new DiBB.TitleFormPanel( { model: this.model });
+    this.titleFormPanel = new DiBB.TitleFormPanel( { model: this.model, embedded: true });
     this.titleFormPanel.render();    
     this.$("#"+this.titleFormPanel.id).replaceWith(this.titleFormPanel.$el);
   }

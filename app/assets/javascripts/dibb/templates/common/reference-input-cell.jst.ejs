@@ -1,4 +1,6 @@
   <input type="text" class="form-control awesomplete" style="background-color: white" id="<%= field_name %>" value="<%= field_value %>">
+  <% if( !embedded ) { %>
   <span>
     <button class="btn btn-sm edit-button btn-default" type="button"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button>
   </span>
+  <% } %>

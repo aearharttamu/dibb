@@ -16,6 +16,7 @@ DiBB.TitleFormPanel = Backbone.View.extend({
 	initialize: function(options) {
     _.bindAll( this, "onValidationError" );        
     this.model.on("invalid", this.onValidationError );    
+    this.embedded = options.embedded;
    },
           
   save: function( onSuccessCallback ) {   
@@ -57,7 +58,8 @@ DiBB.TitleFormPanel = Backbone.View.extend({
     var staffPanel = new DiBB.StaffPanel({ 
       collection: this.model.staff, 
       title:  "Editors, Authors, and Contributors",
-      instructions: "Multiple fields are provided for information related to each contributor to the work. Please add names in the order they appear in publication." 
+      instructions: "Multiple fields are provided for information related to each contributor to the work. Please add names in the order they appear in publication.",
+      embedded: this.embedded 
     });
     staffPanel.render();
     this.$("#"+staffPanel.id).replaceWith(staffPanel.$el);

@@ -30,6 +30,7 @@ DiBB.ReferenceInput = Backbone.View.extend({
     
     this.formOptions = options;
     this.formOptions.partials = this.partials;
+    this.formOptions.embedded = (options.embedded) ? true : false;
         
   },
     

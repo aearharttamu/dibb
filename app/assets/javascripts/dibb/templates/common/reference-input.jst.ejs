@@ -2,9 +2,11 @@
   <label for="<%= field_name %>" class="control-label col-sm-3"><%= field_title %>:</label>
   <div class="col-sm-8 field-wrapper">
       <input type="text" class="form-control awesomplete" style="background-color: white" id="<%= field_name %>" value="<%= field_value %>">
-      <span>
-        <button class="btn btn-sm edit-button btn-default" type="button"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button>
-      </span>
+      <% if( !embedded ) { %>
+        <span>
+          <button class="btn btn-sm edit-button btn-default" type="button"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button>
+        </span>
+      <% } %>
       <div class="instructions"><%= field_instructions %></div>
   </div>
 </div>
