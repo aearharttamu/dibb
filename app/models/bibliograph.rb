@@ -21,6 +21,7 @@ class Bibliograph < ActiveRecord::Base
   def create_neo_graph
     neo_dibb = NeoDibb.root_node
     neo_dibb.generate( self )
+    neo_dibb.save
   end  
   
   def remove_neo_graph

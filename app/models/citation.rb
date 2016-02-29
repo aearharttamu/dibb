@@ -34,7 +34,9 @@ class Citation < ActiveRecord::Base
   end
   
   def node_properties
-    { }
+    { 
+      page_number: self.page_number
+    }
   end
   
 end

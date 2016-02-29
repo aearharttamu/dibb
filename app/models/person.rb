@@ -20,7 +20,6 @@ class Person < ActiveRecord::Base
    
   def node_properties
     { 
-      id: self.id,
       full_name: self.full_name,
       alternative_name: self.alternative_name
     }

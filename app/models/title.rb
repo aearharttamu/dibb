@@ -37,7 +37,6 @@ class Title < ActiveRecord::Base
 
   def node_properties
     { 
-      id: self.id,
       name: self.name,
       serial_title: self.serial_title,
       serial_volume_as_appears: self.serial_volume_as_appears,
