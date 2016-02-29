@@ -36,7 +36,14 @@ class Title < ActiveRecord::Base
   end
 
   def node_properties
-    { }
+    { 
+      id: self.id,
+      name: self.name,
+      serial_title: self.serial_title,
+      serial_volume_as_appears: self.serial_volume_as_appears,
+      serial_issue_as_appears: self.serial_issue_as_appears,
+      is_review: self.is_review
+    }
   end
   
   def remove_refs

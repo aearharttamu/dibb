@@ -1,5 +1,5 @@
 class Role < ActiveRecord::Base 
-  
+    
   has_many :staff, dependent: :destroy
     
 	def self.get_all()
@@ -13,5 +13,12 @@ class Role < ActiveRecord::Base
       name: self.name
 		}
 	end
+  
+  def edge_properties
+    {
+      id: self.id,
+      name: self.name      
+    }
+  end
   
 end

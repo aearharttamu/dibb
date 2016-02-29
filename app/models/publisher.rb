@@ -18,9 +18,11 @@ class Publisher < ActiveRecord::Base
 	end
   
   def node_properties
-    { }
-  end
-  
+    { 
+      id: self.id,
+      name: self.name
+    }
+  end  
   
   def remove_refs
     self.titles.each { |title| 
