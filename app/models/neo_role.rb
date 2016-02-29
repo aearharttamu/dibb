@@ -4,6 +4,4 @@ class NeoRole
   
   property :name, type: String
     
-  self.mapped_label_name = 'Role'
-
 end
