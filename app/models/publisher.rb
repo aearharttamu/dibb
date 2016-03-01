@@ -19,7 +19,6 @@ class Publisher < ActiveRecord::Base
   
   def node_properties
     { 
-      id: self.id,
       name: self.name
     }
   end  
