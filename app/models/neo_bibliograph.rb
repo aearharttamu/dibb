@@ -12,12 +12,12 @@ class NeoBibliograph
       
   def generate
 
-    # neo_people = []
-    # Person.all.each { |person|
-    #   neo_person = NeoPerson.create( person.node_properties )
-    #   neo_people[ neo_person.id ] = neo_person;
-    # }
-    #
+    neo_people = []
+    Person.all.each { |person|
+      neo_person = NeoPerson.create( person.node_properties )
+      neo_people[ neo_person.id ] = neo_person;
+    }
+
     neo_publishers = []
     Publisher.all.each { |publisher|
       neo_publisher = NeoPublisher.create( publisher.node_properties )
@@ -29,19 +29,19 @@ class NeoBibliograph
       neo_title = NeoTitle.create( title.node_properties )
       neo_titles[ title.id ] = neo_title
 
-      # unless title.publisher.nil?
-      #   neo_publisher = neo_publishers[ title.publisher.id ]
-      #   neo_publisher.titles << neo_title
-      # end
+      unless title.publisher.nil?
+        neo_publisher = neo_publishers[ title.publisher.id ]
+        neo_publisher.titles << neo_title
+      end
 
-      # title.staffs.each { |staff|
-      #
-      #   neo_person = neo_people[ staff.person.id ]
-      #   neo_role = NeoRole.create( staff.role.rel_properties )
-      #   neo_role.from = neo_person
-      #   neo_role.to = neo_title
-      #
-      # } unless title.staffs.nil?
+      title.staffs.each { |staff|
+
+        neo_person = neo_people[ staff.person.id ]
+        neo_role = NeoRole.create( staff.role.rel_properties )
+        neo_role.from = neo_person
+        neo_role.to = neo_title
+
+      } unless title.staffs.nil?
     }
  
                               
@@ -62,15 +62,15 @@ class NeoBibliograph
         neo_publisher = neo_publishers[ biblio.publisher.id ]
         neo_publisher.biblios << neo_biblio
       end
-      #
-      # biblio.staffs.each { |staff|
-      #
-      #   neo_person = neo_people[ staff.person.id ]
-      #   neo_role = NeoRole.create( staff.role.rel_properties )
-      #   neo_role.from = neo_person
-      #   neo_role.to = neo_biblio
-      #
-      # } unless biblio.staffs.nil?
+
+      biblio.staffs.each { |staff|
+
+        neo_person = neo_people[ staff.person.id ]
+        neo_role = NeoRole.create( staff.role.rel_properties )
+        neo_role.from = neo_person
+        neo_role.to = neo_biblio
+
+      } unless biblio.staffs.nil?
 
       self.biblios << neo_biblio
     }    
