@@ -6,8 +6,8 @@ class NeoPerson
   property :alternative_name, type: String
 
 
-  has_many :out, :titles, type: :NeoRole, model_class: :NeoTitle
-  has_many :out, :biblios, type: :NeoRole, model_class: :NeoBiblio
+  has_many :out, :titles, rel_class: :NeoRole
+  has_many :out, :biblios, rel_class: :NeoRole
   
   self.mapped_label_name = 'Person'
 

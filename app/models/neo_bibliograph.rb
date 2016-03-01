@@ -15,7 +15,7 @@ class NeoBibliograph
     neo_people = []
     Person.all.each { |person|
       neo_person = NeoPerson.create( person.node_properties )
-      neo_people[ neo_person.id ] = neo_person;
+      neo_people[ person.id ] = neo_person;
     }
 
     neo_publishers = []
@@ -36,10 +36,13 @@ class NeoBibliograph
 
       title.staffs.each { |staff|
 
-        neo_person = neo_people[ staff.person.id ]
-        neo_role = NeoRole.create( staff.role.rel_properties )
-        neo_role.from = neo_person
-        neo_role.to = neo_title
+        unless staff.role.nil? 
+          neo_person = neo_people[ staff.person.id ]
+          neo_role = NeoRole.new( staff.role.rel_properties )
+          neo_role.from_node = neo_person
+          neo_role.to_node = neo_title
+          neo_role.save
+        end
 
       } unless title.staffs.nil?
     }
@@ -65,10 +68,13 @@ class NeoBibliograph
 
       biblio.staffs.each { |staff|
 
-        neo_person = neo_people[ staff.person.id ]
-        neo_role = NeoRole.create( staff.role.rel_properties )
-        neo_role.from = neo_person
-        neo_role.to = neo_biblio
+        unless staff.role.nil? 
+          neo_person = neo_people[ staff.person.id ]
+          neo_role = NeoRole.new( staff.role.rel_properties )
+          neo_role.from_node = neo_person
+          neo_role.to_node = neo_biblio
+          neo_role.save
+        end
 
       } unless biblio.staffs.nil?
 

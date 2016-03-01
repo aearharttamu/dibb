@@ -1,7 +1,7 @@
 class Role < ActiveRecord::Base 
   
   has_many :staff, dependent: :destroy
-    
+  
 	def self.get_all()
 		roles = Role.all.order('name')
 		roles.map { |role| role.obj }
@@ -16,7 +16,7 @@ class Role < ActiveRecord::Base
   
   def rel_properties
     {
-      name: self.name      
+      role: self.name      
     }
   end
   
