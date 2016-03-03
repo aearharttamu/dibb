@@ -8,6 +8,8 @@ DiBB.Title = Backbone.Model.extend({
       var staffJSON = attributes.staff_json;
       var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
       this.staff = new DiBB.StaffMemberCollection( staffObj );
+    } else {
+      this.staff = new DiBB.StaffMemberCollection();
     }
     
   },
