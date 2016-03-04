@@ -69,7 +69,7 @@ class Biblio < ActiveRecord::Base
   
   def node_properties
     { 
-      title: self.title, 
+      title: self.biblio_set.title, 
       item_number: self.item_number,
       provenance: self.provenance,
       date_as_appears: self.date_as_appears,
