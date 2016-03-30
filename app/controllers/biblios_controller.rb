@@ -51,6 +51,6 @@ class BibliosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def biblio_params
-      params.permit(:id, :biblio_set_id, :item_as_appears, :item_number, :title, :descriptors, :date_as_appears, :year, :publisher_id, :publisher_name, :provenance, :pub_number, :size, :binding, :pagination, :unnumbered_pages, :contents, :category_as_appears, publication_places_json: [:id, :city, :state, :country], staff_json: [:id, :person_id, :role_id, :new_person_name ] )
+      params.permit(:id, :biblio_set_id, :item_as_appears, :item_number, :title, :descriptors, :date_as_appears, :year, :publisher_id, :publisher_name, :provenance, :pub_number, :pub_number_type, :size, :binding, :pagination, :unnumbered_pages, :contents, :category_as_appears, publication_places_json: [:id, :city, :state, :country], staff_json: [:id, :person_id, :role_id, :new_person_name ] )
     end
 end

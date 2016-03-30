@@ -16,6 +16,7 @@
 //= require underscore
 //= require backbone
 //= require bootstrap-sprockets
+//= require summernote
 //= require_tree ./lib
 
 //= require_tree ./dibb

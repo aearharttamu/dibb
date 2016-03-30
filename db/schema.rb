@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227142020) do
+ActiveRecord::Schema.define(version: 20160328220856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160227142020) do
     t.string   "category_as_appears"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "pub_number_type"
   end
 
   create_table "citations", force: :cascade do |t|
@@ -66,6 +67,12 @@ ActiveRecord::Schema.define(version: 20160227142020) do
     t.string   "ending_page_number_as_appears"
     t.integer  "category_id"
     t.text     "notes"
+  end
+
+  create_table "currencies", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -83,6 +90,21 @@ ActiveRecord::Schema.define(version: 20160227142020) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "editions", force: :cascade do |t|
+    t.integer  "format_id"
+    t.integer  "currency_id"
+    t.decimal  "price"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "title_id"
+  end
+
+  create_table "formats", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "people", force: :cascade do |t|
     t.datetime "created_at",       null: false

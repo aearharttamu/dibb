@@ -18,6 +18,15 @@ DiBB.Routes = Backbone.Router.extend({
     "roles" : "roleList",
     "roles/new": "roleNew",
     "roles/:id/edit": "roleEdit",
+    "bindings" : "bindingList",
+    "bindings/new": "bindingNew",
+    "bindings/:id/edit": "bindingEdit",
+    "formats" : "formatList",
+    "formats/new": "formatNew",
+    "formats/:id/edit": "formatEdit",
+    "currencies" : "currencyList",
+    "currencies/new": "currencyNew",
+    "currencies/:id/edit": "currencyEdit",
     "biblios/:bibID/citations/new": "citationNew",
     "biblios/:bibID/citations/:id/edit": "citationEdit",
     "users" : "userList",
@@ -153,7 +162,91 @@ DiBB.Routes = Backbone.Router.extend({
     }, this));        
     
   },
-  
+
+  ////////////////////////////////////
+
+  bindingList: function() {
+
+    this.loadBindings( _.bind( function(bindings) {
+      var bindingListView = new DiBB.BindingListView( { collection: bindings, isAdmin: this.isAdmin });
+      bindingListView.render();
+    }, this));
+  },
+
+  bindingNew: function() {
+
+    this.loadBindings( _.bind( function(bindings) {
+      var bindingFormView = new DiBB.BindingFormView( { collection: bindings } );
+      bindingFormView.render();
+    }, this));
+
+  },
+
+  bindingEdit: function(roleID) {
+
+    this.loadBindings( _.bind( function(bindings) {
+      var bindingFormView = new DiBB.BindingFormView( { collection: bindings, roleID: bindingID } );
+      bindingFormView.render();
+    }, this));
+
+  },
+
+  ////////////////////////////////////
+
+  formatList: function() {
+
+    this.loadFormats( _.bind( function(formats) {
+      var formatListView = new DiBB.FormatListView( { collection: formats, isAdmin: this.isAdmin });
+      formatListView.render();
+    }, this));
+  },
+
+  formatNew: function() {
+
+    this.loadFormats( _.bind( function(formats) {
+      var formatFormView = new DiBB.FormatFormView( { collection: formats } );
+      formatFormView.render();
+    }, this));
+
+  },
+
+  formatEdit: function(formatID) {
+
+    this.loadFormats( _.bind( function(formats) {
+      var formatFormView = new DiBB.FormatFormView( { collection: formats, formatID: formatID } );
+      formatFormView.render();
+    }, this));
+
+  },
+
+  ////////////////////////////////////
+
+  currencyList: function() {
+
+    this.loadCurrencies( _.bind( function(currencies) {
+      var currencyListView = new DiBB.CurrencyListView( { collection: currencies, isAdmin: this.isAdmin });
+      currencyListView.render();
+    }, this));
+  },
+
+  currencyNew: function() {
+
+    this.loadCurrencies( _.bind( function(currencies) {
+      var currencyFormView = new DiBB.CurrencyFormView( { collection: currencies } );
+      currencyFormView.render();
+    }, this));
+
+  },
+
+  currencyEdit: function(currencyID) {
+
+    this.loadCurrencies( _.bind( function(currencies) {
+      var currencyFormView = new DiBB.CurrencyFormView( { collection: currencies, currencyID: currencyID } );
+      currencyFormView.render();
+    }, this));
+
+  },
+
   ////////////////////////////////////
     
   citationNew: function(biblioID) {
@@ -242,7 +335,22 @@ DiBB.Routes = Backbone.Router.extend({
     var roles = new DiBB.RoleCollection();
     roles.fetch( { success: initView, error: this.onError } );
   },
-  
+
+  loadBindings: function( initView ) {
+    var bindings = new DiBB.BindingCollection();
+    bindings.fetch( { success: initView, error: this.onError } );
+  },
+
+  loadFormats: function( initView ) {
+    var formats = new DiBB.FormatCollection();
+    formats.fetch( { success: initView, error: this.onError } );
+  },
+
+  loadCurrencies: function( initView ) {
+    var currencies = new DiBB.CurrencyCollection();
+    currencies.fetch( { success: initView, error: this.onError } );
+  },
+
   loadPublishers: function( initView ) {
     var publishers = new DiBB.PublisherCollection();
     publishers.fetch( { success: initView, error: this.onError } );

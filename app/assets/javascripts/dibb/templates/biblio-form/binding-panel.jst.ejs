@@ -1,0 +1,27 @@
+<h4><%= title %></h4>
+<div class="instructions"><%= instructions %></div>
+<table class="table" >
+    <thead>
+    <tr>
+        <th>Format</th>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="bindings-tbody">
+    <% _.each( edition, function( editionMember ) { %>
+    <tr id="binding-<%= editionMember.cid %>">
+        <td><%= editionMember.get('format') %></td>
+        <td><%= editionMember.get('currency') %></td>
+        <td><%= editionMember.get('price') %></td>
+        <td>
+            <button href="#" class="btn edit-binding-button btn-default btn-sm" data-staff-cid="<%= editionMember.cid %>" >Edit</button>
+            <button href="#" class="btn delete-binding-button btn-danger btn-sm" data-staff-cid="<%= editionMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        </td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<button class="btn btn-sm add-binding-button btn-default">New Binding</button>

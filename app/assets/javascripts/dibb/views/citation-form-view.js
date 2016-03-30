@@ -8,7 +8,8 @@ DiBB.CitationFormView = Backbone.View.extend({
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
     numberInput: JST['dibb/templates/common/number-input'],
-		textAreaInput: JST['dibb/templates/common/textarea-input'],	
+		textAreaInput: JST['dibb/templates/common/textarea-input'],
+    richTextInput: JST['dibb/templates/common/richtext-input'],
     validationErrors: JST['dibb/templates/common/validation-errors']  
 	},
   
@@ -45,7 +46,7 @@ DiBB.CitationFormView = Backbone.View.extend({
   onSave: function(e) {
 
     this.model.set( {
-      full_text: this.$('#full_text').val(),
+      full_text: this.$('#summernote').summernote('code'),
       page_number: this.$('#page_number').val(),
       // page_number_sequence_id: this.$('#page_number_sequence_id').val(),
       originating_page_number_as_appears: this.$('#originating_page_number_as_appears').val(),
@@ -99,7 +100,22 @@ DiBB.CitationFormView = Backbone.View.extend({
     });
     titleField.render();
     this.$("#title-field").replaceWith(titleField.$el);
-        
+    this.$("#summernote").summernote({
+      height: 300,
+      minHeight: null,
+      maxHeight: null,
+      focus: true,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']]
+      ]
+    });
+
+    this.$('#summernote').summernote('code',this.model.get("full_text"))
     $(".dibb-app").html(this.$el);
   }
   

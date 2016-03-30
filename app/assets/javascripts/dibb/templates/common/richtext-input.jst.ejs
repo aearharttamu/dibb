@@ -1,0 +1,7 @@
+<div class="row <%= (error) ? 'has-error' : '' %>">
+    <label for="<%= field_name %>" class="control-label col-sm-3"><%= field_title %>:</label>
+    <div class="col-sm-8 field-wrapper" id="<%= field_name %>">
+        <div id="summernote" ></div>
+        <div class="instructions"><%= field_instructions %></div>
+    </div>
+</div>

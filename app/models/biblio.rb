@@ -56,6 +56,7 @@ class Biblio < ActiveRecord::Base
       publication_places_json: self.publication_places_json,
       staff_json: self.staff_json,
 			provenance: self.provenance,
+      pub_number_type: self.pub_number_type,
 			pub_number: self.pub_number,
 			size: self.size,
 			binding: self.binding,
@@ -74,6 +75,7 @@ class Biblio < ActiveRecord::Base
       provenance: self.provenance,
       date_as_appears: self.date_as_appears,
       category_as_appears: self.category_as_appears,
+      pub_number_type: self.pub_number_type,
       pub_number: self.pub_number
     }
   end

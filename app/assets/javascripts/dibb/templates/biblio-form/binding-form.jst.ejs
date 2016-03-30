@@ -1,0 +1,26 @@
+<tr class="edit-binding-form">
+    <%= partials.dropdownInputCell({
+        field_name: "format_id",
+        field_title: "Format",
+        field_value: bindingMember.get('format_id'),
+        options: formats
+    }) %>
+    <%= partials.dropdownInputCell({
+        field_name: "currency_id",
+        field_title: "Currency",
+        field_value: bindingMember.get('currency_id'),
+        options: currencies
+    }) %>
+    <%= partials.inputCell({
+        field_name: "price",
+        field_title: "Price",
+        field_value: bindingMember.get('price'),
+        field_placeholder: "0",
+        options: price
+    }) %>
+
+    <td class="actions">
+        <button class="btn save-binding-button btn-primary btn-sm">OK</button>
+        <button class="btn cancel-binding-button btn-default btn-sm">Cancel</button>
+    </td>
+</tr>

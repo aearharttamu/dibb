@@ -7,9 +7,14 @@ DiBB.Title = Backbone.Model.extend({
     if( attributes ) {
       var staffJSON = attributes.staff_json;
       var staffObj = ( staffJSON ) ? JSON.parse(staffJSON) : null;
+      var bindingJSON = attributes.binding_json;
+      var bindingObj = ( bindingJSON ) ? JSON.parse(bindingJSON) : null;
+
       this.staff = new DiBB.StaffMemberCollection( staffObj );
+      this.binding = new DiBB.BindingCollection( bindingObj );
     } else {
       this.staff = new DiBB.StaffMemberCollection();
+      this.binding = new DiBB.BindingCollection( );
     }
     
   },

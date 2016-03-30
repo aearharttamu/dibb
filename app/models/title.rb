@@ -5,6 +5,7 @@ class Title < ActiveRecord::Base
   belongs_to :publisher
   has_many :citations  
   has_many :staffs, dependent: :destroy
+  has_many :editions, dependent: :destroy
   
   before_destroy :remove_refs
 	
@@ -20,7 +21,15 @@ class Title < ActiveRecord::Base
   def staff_json=( proposed_staff )
     merge_many_changes( Staff, :title_id, self.staffs, proposed_staff )
   end
-  
+
+  def binding_json
+    self.editions.map { |edition| edition.obj }.to_json
+  end
+
+  def binding_json=( bindings )
+    merge_many_changes( Edition, :title_id, self.editions, bindings )
+  end
+
   def obj
     { 
       id: self.id,
@@ -31,7 +40,8 @@ class Title < ActiveRecord::Base
       serial_volume_as_appears: self.serial_volume_as_appears,
       serial_issue_as_appears: self.serial_issue_as_appears,
       encompassing_title_id: self.encompassing_title_id,
-      staff_json: self.staff_json
+      staff_json: self.staff_json,
+      binding_json: self.binding_json
     }
   end
 

@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
   resources :people, only: [ :index, :show, :update, :create, :destroy ]
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
+  resources :bindings, only: [ :index, :show, :update, :create, :destroy ]
+  resources :formats, only: [ :index, :show, :update, :create, :destroy ]
+  resources :currencies, only: [:index, :show, :update, :create, :destroy ]
   resources :titles, only: [ :index, :show, :update, :create, :destroy ]
   resources :admin, only: [ :index, :show, :update, :create ] 
 

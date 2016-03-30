@@ -16,5 +16,8 @@
     "vendor/assets/components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "summernote": "^0.8.1"
+  }
 }

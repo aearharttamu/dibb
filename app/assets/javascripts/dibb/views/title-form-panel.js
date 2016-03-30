@@ -28,7 +28,8 @@ DiBB.TitleFormPanel = Backbone.View.extend({
       serial_title: this.$('#serial_title').val(),
       serial_volume_as_appears: this.$('#serial_volume_as_appears').val(),
       serial_issue_as_appears: this.$('#serial_issue_as_appears').val(),
-      staff_json: this.model.staff.toJSON()
+      staff_json: this.model.staff.toJSON(),
+      binding_json: this.model.binding.toJSON()
       // encompassing_title_id: this.$('#encompassing_title_id').val()
     });
     
@@ -63,7 +64,17 @@ DiBB.TitleFormPanel = Backbone.View.extend({
     });
     staffPanel.render();
     this.$("#"+staffPanel.id).replaceWith(staffPanel.$el);
-    
+
+    // render format panel
+    var bindingPanel = new DiBB.BindingPanel({
+      collection: this.model.binding,
+      title:  "Publishing Formats",
+      instructions: "Some citations specify bindings or formats. Use the dropdown menu to report any specified formats and price if given.",
+      embedded: this.embedded
+    });
+    bindingPanel.render();
+    this.$("#"+bindingPanel.id).replaceWith(bindingPanel.$el);
+
   }
   
 });

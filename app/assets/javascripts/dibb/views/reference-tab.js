@@ -5,7 +5,8 @@ DiBB.ReferenceTab = Backbone.View.extend({
 	partials: {
 		stringInput: JST['dibb/templates/common/string-input'],
 		textAreaInput: JST['dibb/templates/common/textarea-input'],
-    validationErrors: JST['dibb/templates/common/validation-errors']
+        dropdownInput: JST['dibb/templates/common/dropdown-input'],
+        validationErrors: JST['dibb/templates/common/validation-errors']
 	},
   
   id: 'reference-tab-panel',
@@ -20,7 +21,8 @@ DiBB.ReferenceTab = Backbone.View.extend({
                   
     this.model.set( {
       provenance: this.$('#provenance').val(),
-      pub_number: this.$('#pub_number').val()
+      pub_number: this.$('#pub_number').val(),
+      pub_number_type: this.$('#pub_number_type').val()
     });
                   
     var onSuccess = _.bind( function(model, response, options) {
@@ -42,7 +44,8 @@ DiBB.ReferenceTab = Backbone.View.extend({
         
     this.$el.html(this.template( { 
       biblio: this.model.toJSON(), 
-      partials: this.partials, 
+      partials: this.partials,
+      publicationNumberType: DiBB.PublicationNumberType,
       validationErrors: this.validationErrors 
     }));
     

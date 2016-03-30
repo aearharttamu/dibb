@@ -8,12 +8,22 @@
   error: _.has(validationErrors, 'provenance') 
 }) %>
 
-<%= partials.stringInput({ 
+<%= partials.dropdownInput({
+    field_name: 'pub_number_type',
+    field_title: 'Publication Number Type',
+    field_value: biblio.pub_number_type,
+    field_instructions: 'What type of publication number are you referencing? ISSN or ISBN.',
+    options: publicationNumberType,
+    error: _.has(validationErrors, 'pagination')
+}) %>
+
+<%= partials.stringInput({
   field_name: 'pub_number', 
   field_title: 'Publication Number', 
   field_value: biblio.pub_number, 
   field_instructions: 'Consult the item to see whether an ISSN or ISBN is included.', 
   error: _.has(validationErrors, 'pub_number') 
 }) %>
+
 
 <!-- TODO: two steps: first, a dropdown to indicate whether ISSN or ISBN. If ISSN, provide form with eight digits, if ISBN, provide flexibility to enter either 10 or 13 digits. -->
