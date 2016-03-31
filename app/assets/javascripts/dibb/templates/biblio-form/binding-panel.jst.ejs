@@ -16,8 +16,8 @@
         <td><%= editionMember.get('currency') %></td>
         <td><%= editionMember.get('price') %></td>
         <td>
-            <button href="#" class="btn edit-binding-button btn-default btn-sm" data-staff-cid="<%= editionMember.cid %>" >Edit</button>
-            <button href="#" class="btn delete-binding-button btn-danger btn-sm" data-staff-cid="<%= editionMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            <button href="#" class="btn edit-binding-button btn-default btn-sm" data-binding-cid="<%= editionMember.cid %>" >Edit</button>
+            <button href="#" class="btn delete-binding-button btn-danger btn-sm" data-binding-cid="<%= editionMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
         </td>
     </tr>
     <% }); %>
