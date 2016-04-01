@@ -5,6 +5,7 @@ class Biblio < ActiveRecord::Base
   has_many :citations, dependent: :destroy
   has_many :staffs, dependent: :destroy
   has_many :publication_places, dependent: :destroy
+  has_many :page_num_sequences, dependent: :destroy
   belongs_to :biblio_set
   belongs_to :publisher
       
@@ -33,7 +34,15 @@ class Biblio < ActiveRecord::Base
     # if a name is provided, use it to create a new publisher (otherwise, publisher_id links to it)
     self.publisher = Publisher.new({ name: name }) unless name.blank?
   end
-  
+
+  def sequence_json
+    self.page_num_sequences.map { |sequences| sequences.obj }.to_json
+  end
+
+  def sequence_json=( sequence )
+    merge_many_changes( PageNumSequence, :biblio_id, self.page_num_sequences, sequence )
+  end
+
   def citations_json
     self.citations.map { |citation| citation.obj }.to_json
   end
@@ -55,6 +64,7 @@ class Biblio < ActiveRecord::Base
       publisher_name: publisher_name,
       publication_places_json: self.publication_places_json,
       staff_json: self.staff_json,
+      sequence_json: self.sequence_json,
 			provenance: self.provenance,
       pub_number_type: self.pub_number_type,
 			pub_number: self.pub_number,

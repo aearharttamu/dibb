@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
   resources :bindings, only: [ :index, :show, :update, :create, :destroy ]
   resources :formats, only: [ :index, :show, :update, :create, :destroy ]
+  resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
   resources :currencies, only: [:index, :show, :update, :create, :destroy ]
   resources :titles, only: [ :index, :show, :update, :create, :destroy ]
   resources :admin, only: [ :index, :show, :update, :create ] 

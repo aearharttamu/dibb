@@ -1,0 +1,31 @@
+<tr class="edit-sequences-form">
+    <%= partials.inputCell({
+        field_name: "first_page_number_as_appears",
+        field_title: "First Page Number as it Appears",
+        field_value: sequenceMember.get('first_page_number_as_appears'),
+        field_placeholder: ""
+    }) %>
+    <%= partials.inputCell({
+        field_name: "first_page_number",
+        field_title: "First Page Number",
+        field_value: sequenceMember.get('first_page_number'),
+        field_placeholder: "0"
+    }) %>
+    <%= partials.inputCell({
+        field_name: "final_page_number_as_appears",
+        field_title: "Final Page Number as it Appears",
+        field_value: sequenceMember.get('final_page_number_as_appears'),
+        field_placeholder: ""
+    }) %>
+    <%= partials.inputCell({
+        field_name: "final_page_number",
+        field_title: "Final Page Number",
+        field_value: sequenceMember.get('final_page_number'),
+        field_placeholder: "0"
+    }) %>
+
+    <td class="actions">
+        <button class="btn save-sequence-button btn-primary btn-sm">OK</button>
+        <button class="btn cancel-sequence-button btn-default btn-sm">Cancel</button>
+    </td>
+</tr>

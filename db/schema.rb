@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328220856) do
+ActiveRecord::Schema.define(version: 20160330191537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160328220856) do
     t.string   "ending_page_number_as_appears"
     t.integer  "category_id"
     t.text     "notes"
+    t.integer  "page_num_sequence_id"
   end
 
   create_table "currencies", force: :cascade do |t|
@@ -104,6 +105,16 @@ ActiveRecord::Schema.define(version: 20160328220856) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "page_num_sequences", force: :cascade do |t|
+    t.integer  "biblio_id"
+    t.string   "first_page_number_as_appears"
+    t.integer  "first_page_number"
+    t.string   "final_page_number_as_appears"
+    t.integer  "final_page_number"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "people", force: :cascade do |t|

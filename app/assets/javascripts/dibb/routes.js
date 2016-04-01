@@ -27,10 +27,14 @@ DiBB.Routes = Backbone.Router.extend({
     "currencies" : "currencyList",
     "currencies/new": "currencyNew",
     "currencies/:id/edit": "currencyEdit",
+    "page_num_sequences" : "pageNumSequenceList",
+    "page_num_sequences/new": "pageNumSequenceNew",
+    "page_num_sequences/:id/edit": "pageNumSequenceEdit",
     "biblios/:bibID/citations/new": "citationNew",
     "biblios/:bibID/citations/:id/edit": "citationEdit",
     "users" : "userList",
-    "users/:id/edit": "userEdit"
+    "users/:id/edit": "userEdit",
+    "*notFound": "notFound"
   },
     
   initialize: function(options) {
@@ -247,6 +251,34 @@ DiBB.Routes = Backbone.Router.extend({
 
   },
 
+////////////////////////////////////
+
+  pageNumSequenceList: function() {
+
+    this.loadPageNumSequences( _.bind( function(sequences) {
+      var pageNumSequencesListView = new DiBB.PageNumSequencesListView( { collection: sequences, isAdmin: this.isAdmin });
+      pageNumSequencesListView.render();
+    }, this));
+  },
+
+  pageNumSequenceNew: function() {
+
+    this.loadPageNumSequences( _.bind( function(sequences) {
+      var pageNumSequencesFormView = new DiBB.PageNumSequencesFormView( { collection: sequences } );
+      pageNumSequencesFormView.render();
+    }, this));
+
+  },
+
+  pageNumSequenceEdit: function(sequenceID) {
+
+    this.loadPageNumSequences( _.bind( function(sequences) {
+      var pageNumSequencesFormView = new DiBB.PageNumSequencesFormView( { collection: sequences, currencyID: sequenceID } );
+      pageNumSequencesFormView.render();
+    }, this));
+
+  },
+
   ////////////////////////////////////
     
   citationNew: function(biblioID) {
@@ -349,6 +381,11 @@ DiBB.Routes = Backbone.Router.extend({
   loadCurrencies: function( initView ) {
     var currencies = new DiBB.CurrencyCollection();
     currencies.fetch( { success: initView, error: this.onError } );
+  },
+
+  loadPageNumSequences: function( initView ) {
+    var page_num_sequences = new DiBB.PageNumSequenceCollection();
+    page_num_sequences.fetch( { success: initView, error: this.onError } );
   },
 
   loadPublishers: function( initView ) {

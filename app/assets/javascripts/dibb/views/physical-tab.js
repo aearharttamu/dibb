@@ -22,7 +22,8 @@ DiBB.PhysicalTab = Backbone.View.extend({
       size: this.$('#size').val(),
       binding: this.$('#binding').val(),
       pagination: this.$('#pagination').val(),
-      unnumbered_pages: this.$('#unnumbered_pages').val()
+      unnumbered_pages: this.$('#unnumbered_pages').val(),
+      sequence_json: this.model.sequences.toJSON()
     });
                   
     var onSuccess = _.bind( function(model, response, options) {
@@ -49,7 +50,16 @@ DiBB.PhysicalTab = Backbone.View.extend({
       booleanValues: DiBB.BooleanValues,
       validationErrors: this.validationErrors 
     }));
-    
+
+    // render sequence panel
+    var sequencePanel = new DiBB.PageNumSequencePanel({
+      collection: this.model.sequences,
+      title:  "Page Number Sequences",
+      instructions: "Some citations specify bindings or formats. Use the dropdown menu to report any specified formats and price if given.",
+      embedded: this.embedded
+    });
+    sequencePanel.render();
+    this.$("#"+sequencePanel.id).replaceWith(sequencePanel.$el);
   }
   
 });

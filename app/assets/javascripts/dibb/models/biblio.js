@@ -32,10 +32,14 @@ DiBB.Biblio = Backbone.Model.extend({
       var citationsJSON = attributes.citations_json;
       var citationsObj = ( citationsJSON ) ? JSON.parse(citationsJSON) : null;
       this.citations = new DiBB.CitationCollection(citationsObj, {biblioID: this.id});
+      var sequencesJSON = attributes.sequence_json;
+      var sequencesObj = ( sequencesJSON ) ? JSON.parse(sequencesJSON) : null;
+      this.sequences = new DiBB.PageNumSequenceCollection(sequencesObj, {biblioID: this.id});
     } else {
       this.publicationPlaces = new DiBB.PublicationPlaceCollection();
       this.staff = new DiBB.StaffMemberCollection();
       this.citations = new DiBB.CitationCollection(null, {biblioID: this.id});
+      this.sequences = new DiBB.PageNumSequenceCollection(null, {biblioID: this.id});
     }
 
   },

@@ -1,0 +1,29 @@
+<h4><%= title %></h4>
+<div class="instructions"><%= instructions %></div>
+<table class="table" >
+    <thead>
+    <tr>
+        <th>First Page Number as it Appears</th>
+        <th>First Page Number</th>
+        <th>Last Page Number as it Appears</th>
+        <th>Last Page Number</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="sequences-tbody">
+    <% _.each( sequence, function( sequenceMember ) { %>
+    <tr id="sequence-<%= sequenceMember.cid %>">
+        <td><%= sequenceMember.get('first_page_number_as_appears') %></td>
+        <td><%= sequenceMember.get('first_page_number') %></td>
+        <td><%= sequenceMember.get('final_page_number_as_appears') %></td>
+        <td><%= sequenceMember.get('final_page_number') %></td>
+        <td>
+            <button href="#" class="btn edit-sequence-button btn-default btn-sm" data-staff-cid="<%= sequenceMember.cid %>" >Edit</button>
+            <button href="#" class="btn delete-edit-button btn-danger btn-sm" data-staff-cid="<%= sequenceMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        </td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<button class="btn btn-sm add-sequence-button btn-default">New Sequence</button>
