@@ -2,6 +2,8 @@ class Citation < ActiveRecord::Base
   
   belongs_to :biblio
   belongs_to :title
+  belongs_to :page_num_sequence 
+
   
 	def self.get_all(biblio_id)
     biblio = Biblio.find(biblio_id)
@@ -16,7 +18,13 @@ class Citation < ActiveRecord::Base
   def title_name=( name )
     self.title = Title.new({ name: name }) unless name.blank?
   end
-  
+
+  def sequence_json
+    Hash[ PageNumSequence.where("biblio_id = ?", self.biblio_id ).map{
+      |seq| [seq.id, seq.first_page_number_as_appears + '...' + seq.final_page_number_as_appears ]
+    } ]
+  end
+
   def obj
     {
       id: self.id,
@@ -26,6 +34,7 @@ class Citation < ActiveRecord::Base
       full_text: self.full_text,
       page_number: self.page_number,
       page_number_sequence_id: self.page_number_sequence_id,
+      sequence_json: self.sequence_json,
       originating_page_number_as_appears: self.originating_page_number_as_appears,
       ending_page_number_as_appears: self.ending_page_number_as_appears,
       category_id: self.category_id,

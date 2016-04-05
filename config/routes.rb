@@ -10,17 +10,17 @@ Rails.application.routes.draw do
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
   resources :bindings, only: [ :index, :show, :update, :create, :destroy ]
   resources :formats, only: [ :index, :show, :update, :create, :destroy ]
-  resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
   resources :currencies, only: [:index, :show, :update, :create, :destroy ]
   resources :titles, only: [ :index, :show, :update, :create, :destroy ]
-  resources :admin, only: [ :index, :show, :update, :create ] 
+  resources :admin, only: [ :index, :show, :update, :create ]
+  resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
     resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 
   end
   
   resources :biblios, only: [ ] do
-    resources :citations, only: [ :index, :show, :update, :create, :destroy ] 
+    resources :citations, only: [ :index, :show, :update, :create, :destroy ]
   end
 
 	get "test_email" => 'home#test_email'

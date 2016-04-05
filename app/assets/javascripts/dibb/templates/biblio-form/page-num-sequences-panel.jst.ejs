@@ -18,8 +18,8 @@
         <td><%= sequenceMember.get('final_page_number_as_appears') %></td>
         <td><%= sequenceMember.get('final_page_number') %></td>
         <td>
-            <button href="#" class="btn edit-sequence-button btn-default btn-sm" data-staff-cid="<%= sequenceMember.cid %>" >Edit</button>
-            <button href="#" class="btn delete-edit-button btn-danger btn-sm" data-staff-cid="<%= sequenceMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            <button href="#" class="btn edit-sequence-button btn-default btn-sm" data-sequence-cid="<%= sequenceMember.cid %>" >Edit</button>
+            <button href="#" class="btn delete-edit-button btn-danger btn-sm" data-sequence-cid="<%= sequenceMember.cid %>" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
         </td>
     </tr>
     <% }); %>

@@ -1,9 +1,10 @@
 class PageNumSequence < ActiveRecord::Base
   belongs_to :biblio
+  has_one :citation
 
   def self.get_all(biblio_id)
     biblio = Biblio.find(biblio_id)
-    sequences = biblio.sequences
+    sequences = biblio.page_num_sequences
     sequences.map { |sequence| sequence.obj }
   end
 

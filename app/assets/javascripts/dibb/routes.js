@@ -253,9 +253,9 @@ DiBB.Routes = Backbone.Router.extend({
 
 ////////////////////////////////////
 
-  pageNumSequenceList: function() {
+  pageNumSequenceList: function(biblioID) {
 
-    this.loadPageNumSequences( _.bind( function(sequences) {
+    this.loadPageNumSequences( biblioID, _.bind( function(sequences) {
       var pageNumSequencesListView = new DiBB.PageNumSequencesListView( { collection: sequences, isAdmin: this.isAdmin });
       pageNumSequencesListView.render();
     }, this));
@@ -272,7 +272,7 @@ DiBB.Routes = Backbone.Router.extend({
 
   pageNumSequenceEdit: function(sequenceID) {
 
-    this.loadPageNumSequences( _.bind( function(sequences) {
+    this.loadPageNumSequences( sequenceID, _.bind( function(sequences) {
       var pageNumSequencesFormView = new DiBB.PageNumSequencesFormView( { collection: sequences, currencyID: sequenceID } );
       pageNumSequencesFormView.render();
     }, this));
@@ -383,8 +383,8 @@ DiBB.Routes = Backbone.Router.extend({
     currencies.fetch( { success: initView, error: this.onError } );
   },
 
-  loadPageNumSequences: function( initView ) {
-    var page_num_sequences = new DiBB.PageNumSequenceCollection();
+  loadPageNumSequences: function( biblioID, initView ) {
+    var page_num_sequences = new DiBB.PageNumSequenceCollection(null, biblioID);
     page_num_sequences.fetch( { success: initView, error: this.onError } );
   },
 

@@ -11,9 +11,16 @@
           field_name: 'full_text', 
           field_title: 'Full Entry of Citation', 
           field_value: citation.full_text,
-          field_summernote: $('#summernote').summernote({ height: 300, focus: true }),
           field_instructions: 'Enter the citation exactly as it appears, including punctuation (capitalization, marks, underlining, italics, bold, any special characters, symbols, or accents).', 
           error: _.has(validationErrors, 'full_text') 
+        }) %>
+        <%= partials.dropdownInput({
+            field_name: 'page_sequence_id',
+            field_title: 'Page Number Sequence in Bibliography',
+            field_value: citation.page_num_sequence_id,
+            field_instructions: 'Enter the sequence in the bibliography where the citation appears or begins.',
+            options: sequenceObject,
+            error: _.has(validationErrors, 'page_sequence')
         }) %>
         <%= partials.numberInput({ 
           field_name: 'page_number', 

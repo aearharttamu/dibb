@@ -12,7 +12,9 @@ DiBB.PageNumSequencePanel = Backbone.View.extend({
   events: {
     "click .add-sequence-button": "onAdd",
     "click .edit-sequence-button": "onEdit",
-    "click .delete-sequence-button": "onDelete"
+    "click .delete-sequence-button": "onDelete",
+    "change #first_page_number_as_appears": "onFirstNumChange",
+    "change #final_page_number_as_appears": "onFinalNumChange"
   },
 
   initialize: function(options) {
@@ -93,6 +95,32 @@ DiBB.PageNumSequencePanel = Backbone.View.extend({
     var model = this.collection.get(id);
     this.collection.remove(model);
     this.render();
+  },
+
+  onFirstNumChange: function(e) {
+    var str = $(e.currentTarget).val();
+    if ($.isNumeric(str)) {
+      this.$('#first_page_number').val(str);
+    }
+    else {
+      var num = deromanize(str);
+
+      this.$('#first_page_number').val(num);
+    }
+
+  },
+
+  onFinalNumChange: function(e) {
+    var str = $(e.currentTarget).val();
+
+    if ($.isNumeric(str)) {
+      this.$('#final_page_number').val(str);
+    }
+    else {
+      var num = deromanize(str);
+
+      this.$('#final_page_number').val(num);
+    }
   },
 
   render: function() {
