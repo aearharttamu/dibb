@@ -1,0 +1,12 @@
+<div class="row <%= (error) ? 'has-error' : '' %>">
+  <label for="<%= field_name %>" class="control-label col-sm-3"><%= field_title %>:</label>
+  <div class="col-sm-8 field-wrapper">
+  	<select type="text" class="form-control" id="<%= field_name %>">
+  		<option></option>
+  		<% for (var key in options) { %>
+  		<option value="<%= key %>" <%= (options[key] === field_value) ? 'selected="selected"' : ""  %>><%= options[key] %></option>
+  		<% } %>
+  	</select>
+  	<div class="instructions"><%= field_instructions %></div>
+  </div>
+</div>
