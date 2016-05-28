@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(version: 20160330191537) do
     t.datetime "updated_at",                         null: false
     t.text     "full_text"
     t.integer  "page_number"
-    t.integer  "page_number_sequence_id"
     t.string   "originating_page_number_as_appears"
     t.string   "ending_page_number_as_appears"
     t.integer  "category_id"
