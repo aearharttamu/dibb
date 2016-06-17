@@ -18,7 +18,8 @@ DiBB.EditorialTab = Backbone.View.extend({
   save: function( onSuccessCallback ) {   
                   
     this.model.set( {
-      contents: this.$('#contents').val()
+      contents: this.$('#contents').val(),
+      publisher_name: null
     });
                   
     var onSuccess = _.bind( function(model, response, options) {
