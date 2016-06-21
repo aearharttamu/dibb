@@ -15,12 +15,12 @@
           error: _.has(validationErrors, 'full_text') 
         }) %>
         <%= partials.dropdownInput({
-            field_name: 'page_sequence_id',
+            field_name: 'page_num_sequence_id',
             field_title: 'Page Number Sequence in Bibliography',
             field_value: citation.page_num_sequence_id,
             field_instructions: 'Enter the sequence in the bibliography where the citation appears or begins.',
             options: sequenceObject,
-            error: _.has(validationErrors, 'page_sequence')
+            error: _.has(validationErrors, 'page_num_sequence_id')
         }) %>
         <%= partials.numberInput({ 
           field_name: 'page_number', 

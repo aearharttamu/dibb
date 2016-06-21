@@ -51,7 +51,7 @@ class CitationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def citation_params
-      params.permit(:id, :title_id, :title_name, :full_text, :page_number, :page_number_sequence_id, :originating_page_number_as_appears, :ending_page_number_as_appears, :category_id, :notes )
+      params.permit(:id, :title_id, :title_name, :full_text, :page_number, :page_num_sequence_id, :originating_page_number_as_appears, :ending_page_number_as_appears, :category_id, :notes )
     end
 
 end

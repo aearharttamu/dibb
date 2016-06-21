@@ -41,7 +41,7 @@ class Citation < ActiveRecord::Base
       category_name: '--',
       full_text: self.full_text,
       page_number: self.page_number,
-      page_number_sequence_id: self.page_num_sequence_id,
+      page_num_sequence_id: self.page_num_sequence_id,
       sequence_json: self.sequence_json,
       originating_page_number_as_appears: self.originating_page_number_as_appears,
       ending_page_number_as_appears: self.ending_page_number_as_appears,
