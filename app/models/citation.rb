@@ -24,6 +24,14 @@ class Citation < ActiveRecord::Base
       |seq| [seq.id, seq.first_page_number_as_appears + '...' + seq.final_page_number_as_appears ]
     } ]
   end
+  
+  def list_obj
+    {
+      id: self.id,
+      page_number: self.page_number,
+      title_name: self.title_name
+    }
+  end
 
   def obj
     {

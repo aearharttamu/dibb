@@ -51,6 +51,6 @@ class BibliosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def biblio_params
-      params.permit(:id, :biblio_set_id, :item_as_appears, :item_number, :title, :descriptors, :date_as_appears, :year, :publisher_id, :publisher_name, :provenance, :pub_number, :pub_number_type, :size, :binding, :pagination, :unnumbered_pages, :contents, :category_as_appears, publication_places_json: [:id, :city, :state, :country, :biblio_id], staff_json: [:id, :person_id, :role_id, :new_person_name ], sequence_json: [:id, :first_page_number_as_appears, :first_page_number, :final_page_number_as_appears, :final_page_number], citations_json: [:id, :title_id, :title_name, :category_name, :full_text, :page_number, :page_number_sequence_id, :originating_page_number_as_appears, :ending_page_number_as_appears, :category_id, :notes] )
+      params.permit(:id, :biblio_set_id, :item_as_appears, :item_number, :title, :descriptors, :date_as_appears, :year, :publisher_id, :publisher_name, :provenance, :pub_number, :pub_number_type, :size, :binding, :pagination, :unnumbered_pages, :contents, :category_as_appears, publication_places_json: [:id, :city, :state, :country, :biblio_id], staff_json: [:id, :person_id, :role_id, :new_person_name ], sequence_json: [:id, :first_page_number_as_appears, :first_page_number, :final_page_number_as_appears, :final_page_number] )
     end
 end

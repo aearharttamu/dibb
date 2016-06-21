@@ -43,17 +43,10 @@ class Biblio < ActiveRecord::Base
     merge_many_changes( PageNumSequence, :biblio_id, self.page_num_sequences, sequence )
   end
 
-  def citations_json
-    self.citations.map { |citation| citation.obj }.to_json
-  end
-
-  def citations_json=( citation )
-    merge_many_changes( Citation, :biblio_id, self.citations, citation )
-  end
-
   def obj
     
     publisher_name = Publisher.find(self.publisher_id).name unless self.publisher_id.nil?
+    citations_obj = self.citations.map { |citation| citation.list_obj }
     
 		{
 			id: self.id,
@@ -78,7 +71,7 @@ class Biblio < ActiveRecord::Base
 			unnumbered_pages: self.unnumbered_pages,
 			contents: self.contents,
 			category_as_appears: self.category_as_appears,
-      citations_json: self.citations_json
+      citations_json: citations_obj.to_json
 		}
 	end
   
