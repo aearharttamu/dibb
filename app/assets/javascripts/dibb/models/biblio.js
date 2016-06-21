@@ -1,7 +1,8 @@
 DiBB.Biblio = Backbone.Model.extend({
 
   validYear: /(^\d{4}$)/,
-
+  urlRoot: "biblios",
+  
   validPublicationNumber: function () {
 
     // Check for numeric
@@ -76,18 +77,15 @@ DiBB.Biblio = Backbone.Model.extend({
 });
 
 DiBB.BiblioCollection = Backbone.Collection.extend({
-
   model: DiBB.Biblio,
   urlTemplate: _.template("biblio_sets/<%= biblioSetID %>/biblios"),
-
-  initialize: function (models, options) {
-    if (options) {
-      this.biblioSetID = options.biblioSetID;
-    }
+  
+  initialize: function( models, options ) {
+    this.biblioSetID = options.biblioSetID;
   },
-
-  url: function () {
-    return (this.biblioSetID) ? this.urlTemplate({biblioSetID: this.biblioSetID}) : "/noop.js";
+          
+  url: function() {
+    return this.urlTemplate({ biblioSetID: this.biblioSetID });
   }
-
+  
 }); 

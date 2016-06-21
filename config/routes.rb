@@ -16,14 +16,14 @@ Rails.application.routes.draw do
   resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
 
   resources :biblio_sets, only: [ :index, :show, :update, :create, :destroy ] do
-    resources :biblios, only: [ :index, :show, :update, :create, :destroy ] 
+    resources :biblios, only: [ :index ]
   end
   
-  resources :biblios, only: [ ] do
-    resources :citations, only: [ :index, :show, :update, :create, :destroy ]
+  resources :biblios, only: [ :show, :update, :create, :destroy  ] do
+    resources :citations, only: [ :index, :show, :update, :create, :destroy ]     
   end
 
-	get "test_email" => 'home#test_email'
-	get "test_exception" => 'home#test_exception'
+  # get "test_email" => 'home#test_email'
+  # get "test_exception" => 'home#test_exception'
   
 end

@@ -27,8 +27,6 @@ DiBB.EditorialTab = Backbone.View.extend({
       onSuccessCallback(model, response, options);
     }, this);
 
-    this.collection.biblioSetID = this.model.get("biblio_set_id");
-    this.collection.add(this.model);
     this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
   },
   

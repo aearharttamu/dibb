@@ -15,8 +15,8 @@ class BibliosController < ApplicationController
   end
 
   # POST /biblios.json
-  def create
-    @biblio = Biblio.new(biblio_params)
+  def create    
+    @biblio = Biblio.new(biblio_params)    
 
     if @biblio.save
       render json: @biblio.obj

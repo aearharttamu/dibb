@@ -33,14 +33,13 @@ DiBB.PrimaryTab = Backbone.View.extend({
     } else {
       this.model.set( 'publisher_name', null );      
     }
-                  
+
+    // clear validation errors on success
     var onSuccess = _.bind( function(model, response, options) {
       this.validationErrors = null;
       onSuccessCallback(model, response, options);
     }, this);
 
-    this.collection.biblioSetID = this.model.get("biblio_set_id");
-    this.collection.add(this.model);
     this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
   },
   

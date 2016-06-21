@@ -43,12 +43,10 @@ DiBB.Routes = Backbone.Router.extend({
     DiBB.Routes.routes = this;
     
     this.graphDashboardURL = options.neo4jDashboard; 
-    this.isAdmin = options.isAdmin; 
-    
+    this.isAdmin = options.isAdmin;     
   },
 
-  biblioSetList: function() {    
-    
+  biblioSetList: function() {      
     this.loadBiblioSets( _.bind( function(biblioSets) {
       var biblioSetListView = new DiBB.BiblioSetListView( { biblioSets: biblioSets, isAdmin: this.isAdmin });
       biblioSetListView.render();
@@ -56,18 +54,14 @@ DiBB.Routes = Backbone.Router.extend({
   },
   
   biblioSetNew: function() {
-    
-    this.loadBiblioSets( _.bind( function(biblioSets) {
-      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblioSets: biblioSets } );
-      biblioSetFormView.render();
-    }, this));        
-    
+    var biblioSetFormView = new DiBB.BiblioSetFormView();
+    biblioSetFormView.render();
   },
 
-  biblioSetEdit: function(biblioSetID) {
-    
+  biblioSetEdit: function(biblioSetID) {    
     this.loadBiblioSets( _.bind( function(biblioSets) {
-      var biblioSetFormView = new DiBB.BiblioSetFormView( { biblioSets: biblioSets, biblioSetID: biblioSetID } );
+      var biblioSet = biblioSets.get(biblioSetID);
+      var biblioSetFormView = new DiBB.BiblioSetFormView( { model: biblioSet } );
       biblioSetFormView.render();
     }, this));
   },

@@ -26,17 +26,9 @@ DiBB.CitationsTab = Backbone.View.extend({
   },
             
   save: function( onSuccessCallback ) {   
-                  
-    var onSuccess = _.bind( function(model, response, options) {
-      this.validationErrors = null;
-      onSuccessCallback(model, response, options);
-    }, this);
-
-    this.collection.biblioSetID = this.model.get("biblio_set_id");
-    this.collection.add(this.model);
-    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });   
+    // NOOP for this tab
+    onSuccessCallback();
   },
-  
               
   render: function() {        
     this.$el.html(this.template( { citations: this.model.citations.toJSON(), biblio_id: this.model.id } ));

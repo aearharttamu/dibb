@@ -14,16 +14,16 @@
       error: _.has(validationErrors, 'bib-title') 
     }) %>
     
-		<% partials.dropdownInput({ 
+		<%= partials.dropdownInput({ 
       field_name: "bib-genre", 
       field_title: "Genre", 
       field_value: biblioSet.genre, 
-      field_instructions: "", 
-      options: DiBB.Genres,
+      field_instructions: "Select a genre for this biblbiography. Is it a series or a single item?", 
+      options: DiBB.Genres.genres,
       error: _.has(validationErrors, 'bib-genre') 
     }) %>
 		
-    <% partials.stringInput({ 
+    <%= partials.stringInput({ 
       field_name: "bib-other-genre", 
       field_title: "Other Genre", 
       field_value: biblioSet.other_genre, 

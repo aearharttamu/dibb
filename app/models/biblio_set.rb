@@ -13,11 +13,17 @@ class BiblioSet < ActiveRecord::Base
 	end
 
 	def obj
+    
+    # if this is a single item type biblio set, pre-fetch that item
+    biblio = ( self.genre == 'print-monograph'   || 
+               self.genre == 'digital-monograph'    ) ? biblios.first.obj : nil
+    
 		{
 			id: self.id,
 			title: self.title,
 			genre: self.genre,
-			other_genre: self.other_genre
+			other_genre: self.other_genre,
+      biblio: biblio
 		}
 	end
 

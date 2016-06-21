@@ -24,40 +24,44 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
 	},
 	
 	initialize: function(options) {
-    this.biblioSets = options.biblioSets;
     
-    if( options.biblioSetID ) {
-      this.biblioSet = this.biblioSets.get(parseInt(options.biblioSetID));
+    _.bindAll( this, "save" );
+        
+    if( options.model ) {
       this.mode = "edit";
     } else {
-      this.biblioSet = new DiBB.BiblioSet();
+      this.model = new DiBB.BiblioSet();
       this.mode = "new";
     }        
   },
   
   onSave: function(e) {
           
-    this.biblioSet.set( {
-      title: this.$('#bib-title').val(),
-      genre: this.$('#bib-genre').val(),
-      other_genre: this.$('#bib-other-genre').val()
-    });
-    
     // after everything saves successfully, navigate out 
     var onSuccess = function(model, response, options) {
       DiBB.Routes.routes.navigate("/", {trigger: true});    
     };
     
-    this.biblioSets.add(this.biblioSet);
-    this.biblioSet.save(null, { success: _.bind( function() {
-      this.biblioFormView.biblio.set( { biblio_set_id: this.biblioSet.id } );
-      this.biblioFormView.saveForm(onSuccess);    
-    }, this), error: DiBB.Routes.onError });
-    
+    this.save( onSuccess );    
   },
   
   onCancel: function() {
     DiBB.Routes.routes.navigate("/", {trigger: true});
+  },
+  
+  save: function( onSuccess ) {   
+    this.model.set( {
+      title: this.$('#bib-title').val(),
+      genre: this.$('#bib-genre').val(),
+      other_genre: this.$('#bib-other-genre').val()
+    });
+    
+    this.model.save(null, { success: _.bind( function() {
+      // always insure biblio is linked to this set
+      this.biblioFormView.model.set( { biblio_set_id: this.model.id } );
+      this.biblioFormView.saveForm(onSuccess);
+    }, this), error: DiBB.Routes.onError });
+    
   },
   
   render: function() {    
@@ -66,29 +70,39 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     var pageTitle = this.pageTitle[this.mode];
     this.$el.html(this.template( { 
       pageTitle: pageTitle, 
-      biblioSet: this.biblioSet.toJSON(), 
+      biblioSet: this.model.toJSON(), 
       partials: this.partials,
       validationErrors: {} 
     }));
     
-    $(".dibb-app").html(this.$el);
+    // genre determines view layout    
+    var genre = DiBB.Genres.getGenre( this.model.get('genre') );
     
-    var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });
-    
-    // retrieve bilbios for this set and display them
-    biblios.fetch( { success: _.bind( function(biblios) {
-      
-      // TODO this is where we switch based on genre type between different subviews
-      
-      var biblio = biblios.at(0);
-      var firstID = biblio ? biblio.id : null;
-      this.biblioFormView = new DiBB.BiblioFormView( { biblios: biblios, biblioID: firstID, embed: true } );
+    if( genre.list ) {      
+      if( this.mode == 'new' ) {
+        var biblios = new DiBB.BiblioCollection();
+        // TODO init list view         
+        $(".dibb-app").html(this.$el);      
+      } else {
+        // retrieve biblios for this set and display them
+        var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });      
+        biblios.fetch( { success: _.bind( function(biblios) {   
+          // TODO init list view         
+          $(".dibb-app").html(this.$el);      
+        }, this), error: DiBB.Routes.onError } );
+      }
+    } else {
+      if( this.mode == 'new') {
+        this.biblioFormView = new DiBB.BiblioFormView( { biblioSetSave: this.save });             
+      } else {
+        // use pre-fetched biblio 
+        var biblio = new DiBB.Biblio( this.model.get("biblio") );
+        this.biblioFormView = new DiBB.BiblioFormView( { biblioSetSave: this.save, model: biblio } );
+      }
       this.biblioFormView.render();
-            
-      this.$(".biblio-panel").html(this.biblioFormView.$el);
-      
-    }, this), error: DiBB.Routes.onError } );
-                        
+      this.$(".biblio-panel").html(this.biblioFormView.$el);      
+      $(".dibb-app").html(this.$el);      
+    }
   }
   
 });
