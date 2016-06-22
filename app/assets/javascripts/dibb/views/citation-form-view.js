@@ -9,7 +9,7 @@ DiBB.CitationFormView = Backbone.View.extend({
 		stringInput: JST['dibb/templates/common/string-input'],
     numberInput: JST['dibb/templates/common/number-input'],
 		textAreaInput: JST['dibb/templates/common/textarea-input'],
-    dropdownInput: JST['dibb/templates/common/dropdown-input-hash'],
+    dropdownInput: JST['dibb/templates/common/dropdown-input'],
     richTextInput: JST['dibb/templates/common/richtext-input'],
     validationErrors: JST['dibb/templates/common/validation-errors']  
 	},
@@ -49,12 +49,11 @@ DiBB.CitationFormView = Backbone.View.extend({
     this.model.set( {
       full_text: this.$('#summernote').summernote('code'),
       page_number: this.$('#page_number').val(),
-      // page_number_sequence_id: this.$('#page_number_sequence_id').val(),
+      page_num_sequence_id: this.$('#page_num_sequence_id').val(),
       originating_page_number_as_appears: this.$('#originating_page_number_as_appears').val(),
       ending_page_number_as_appears: this.$('#ending_page_number_as_appears').val(),
       // category_id: this.$('#category_id').val(),
       notes: this.$('#notes').val(),
-      page_num_sequence_id: this.$('#page_sequence_id').val() 
     });
     
     // if the user created a title and it isn't linked, save it
@@ -79,11 +78,12 @@ DiBB.CitationFormView = Backbone.View.extend({
       
   render: function() {    
     var pageTitle = this.pageTitle[this.mode];
+    var sequences = JSON.parse(this.model.get("page_num_sequences_json"));
 
     this.$el.html(this.template( {
       citation: this.model.toJSON(),
       partials: this.partials,
-      sequenceObject: this.model.get("sequence_json"),
+      sequences: sequences,
       validationErrors: this.validationErrors,
       pageTitle: pageTitle,
     }));

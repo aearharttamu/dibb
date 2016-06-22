@@ -19,10 +19,10 @@ class Citation < ActiveRecord::Base
     self.title = Title.new({ name: name }) unless name.blank?
   end
 
-  def sequence_json
-    Hash[ PageNumSequence.where("biblio_id = ?", self.biblio_id ).map{
-      |seq| [seq.id, seq.first_page_number_as_appears + '...' + seq.final_page_number_as_appears ]
-    } ]
+  def page_num_sequences_json
+    self.biblio.page_num_sequences.map { |seq|
+      { text: "#{seq.first_page_number_as_appears}...#{seq.final_page_number_as_appears}", value: seq.id }
+    }.to_json   
   end
   
   def list_obj
@@ -42,7 +42,7 @@ class Citation < ActiveRecord::Base
       full_text: self.full_text,
       page_number: self.page_number,
       page_num_sequence_id: self.page_num_sequence_id,
-      sequence_json: self.sequence_json,
+      page_num_sequences_json: self.page_num_sequences_json,
       originating_page_number_as_appears: self.originating_page_number_as_appears,
       ending_page_number_as_appears: self.ending_page_number_as_appears,
       category_id: self.category_id,

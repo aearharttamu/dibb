@@ -19,7 +19,7 @@
             field_title: 'Page Number Sequence in Bibliography',
             field_value: citation.page_num_sequence_id,
             field_instructions: 'Enter the sequence in the bibliography where the citation appears or begins.',
-            options: sequenceObject,
+            options: sequences,
             error: _.has(validationErrors, 'page_num_sequence_id')
         }) %>
         <%= partials.numberInput({ 
