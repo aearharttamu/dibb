@@ -54,7 +54,7 @@ DiBB.PhysicalTab = Backbone.View.extend({
     var sequencePanel = new DiBB.PageNumSequencePanel({
       collection: this.model.sequences,
       title:  "Page Number Sequences",
-      instructions: "Some citations specify bindings or formats. Use the dropdown menu to report any specified formats and price if given.",
+      instructions: "Identify all of the page numbering modes present in the bibliography. For example, it may start with roman numerals than switch to arabic.",
       embedded: this.embedded
     });
     sequencePanel.render();

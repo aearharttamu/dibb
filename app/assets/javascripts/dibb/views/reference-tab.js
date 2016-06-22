@@ -23,9 +23,7 @@ DiBB.ReferenceTab = Backbone.View.extend({
       provenance: this.$('#provenance').val(),
       pub_number: this.$('#pub_number').val(),
       pub_number_type: this.$('#pub_number_type').val(),
-      publication_places_json: this.model.publicationPlaces.toJSON(),
-      publisher_name: null, 
-      staff_json: this.model.staff.toJSON()
+      publisher_name: null
     });
                   
     var onSuccess = _.bind( function(model, response, options) {
