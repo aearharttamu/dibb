@@ -42,6 +42,14 @@ DiBB.BiblioFormView = Backbone.View.extend({
   },
   
   saveForm: function( saveCallback ) {
+
+    // hack: make sure these list stay in sync with JSON being sent to server
+    this.model.set( {
+      publication_places_json: this.model.publicationPlaces.toJSON(),
+      staff_json: this.model.staff.toJSON(),
+      sequence_json: this.model.sequences.toJSON()
+    });
+    
     this.tab.save(saveCallback);    
   },
       

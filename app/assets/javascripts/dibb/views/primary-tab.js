@@ -21,9 +21,7 @@ DiBB.PrimaryTab = Backbone.View.extend({
     this.model.set( {
       descriptors: this.$('#descriptors').val(),
       date_as_appears: this.$('#date_as_appears').val(),
-      year: this.$('#year').val(),
-      publication_places_json: this.model.publicationPlaces.toJSON(),
-      staff_json: this.model.staff.toJSON()
+      year: this.$('#year').val()
     });
 
     // if the user created a publisher and it isn't linked, save it

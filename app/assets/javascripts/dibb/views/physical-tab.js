@@ -23,8 +23,7 @@ DiBB.PhysicalTab = Backbone.View.extend({
       binding: this.$('#binding').val(),
       pagination: this.$('#pagination').val(),
       unnumbered_pages: this.$('#unnumbered_pages').val(),
-      publisher_name: null, 
-      sequence_json: this.model.sequences.toJSON()
+      publisher_name: null
     });
                   
     var onSuccess = _.bind( function(model, response, options) {
