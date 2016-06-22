@@ -12,8 +12,7 @@ class PublicationPlace < ActiveRecord::Base
       id: self.id,
       city: self.city,
       state: self.state,
-      country: self.country,
-      biblio_id: self.biblio_id
+      country: self.country
     }
   end
   
