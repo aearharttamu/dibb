@@ -27,7 +27,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     
     _.bindAll( this, "save" );
         
-    if( options.model ) {
+    if( options && options.model ) {
       this.mode = "edit";
     } else {
       this.model = new DiBB.BiblioSet();
@@ -78,20 +78,20 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
     // genre determines view layout    
     var genre = DiBB.Genres.getGenre( this.model.get('genre') );
     
-    if( genre.list ) {      
-      if( this.mode == 'new' ) {
-        var biblios = new DiBB.BiblioCollection();
-        // TODO init list view         
-        $(".dibb-app").html(this.$el);      
-      } else {
-        // retrieve biblios for this set and display them
-        var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });      
-        biblios.fetch( { success: _.bind( function(biblios) {   
-          // TODO init list view         
-          $(".dibb-app").html(this.$el);      
-        }, this), error: DiBB.Routes.onError } );
-      }
-    } else {
+    // if( genre.list ) {
+    //   if( this.mode == 'new' ) {
+    //     var biblios = new DiBB.BiblioCollection();
+    //     // TODO init list view
+    //     $(".dibb-app").html(this.$el);
+    //   } else {
+    //     // retrieve biblios for this set and display them
+    //     var biblios = new DiBB.BiblioCollection(null, { biblioSetID: this.biblioSet.id });
+    //     biblios.fetch( { success: _.bind( function(biblios) {
+    //       // TODO init list view
+    //       $(".dibb-app").html(this.$el);
+    //     }, this), error: DiBB.Routes.onError } );
+    //   }
+    // } else {
       if( this.mode == 'new') {
         this.biblioFormView = new DiBB.BiblioFormView( { biblioSetSave: this.save });             
       } else {
@@ -102,7 +102,7 @@ DiBB.BiblioSetFormView = Backbone.View.extend({
       this.biblioFormView.render();
       this.$(".biblio-panel").html(this.biblioFormView.$el);      
       $(".dibb-app").html(this.$el);      
-    }
+    // }
   }
   
 });
