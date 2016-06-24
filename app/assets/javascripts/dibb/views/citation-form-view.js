@@ -78,7 +78,8 @@ DiBB.CitationFormView = Backbone.View.extend({
       
   render: function() {    
     var pageTitle = this.pageTitle[this.mode];
-    var sequences = JSON.parse(this.model.get("page_num_sequences_json"));
+    var pageNumSequencesJSON = this.model.get("page_num_sequences_json")
+    var sequences = pageNumSequencesJSON ? JSON.parse(pageNumSequencesJSON) : [];
 
     this.$el.html(this.template( {
       citation: this.model.toJSON(),
