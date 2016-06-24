@@ -16,9 +16,11 @@ class BibliosController < ApplicationController
 
   # POST /biblios.json
   def create    
-    @biblio = Biblio.new(biblio_params)    
+    # hack: give biblio an DB id before adding params to it
+    @biblio = Biblio.new()    
+    @biblio.save
 
-    if @biblio.save
+    if @biblio.update(biblio_params)
       render json: @biblio.obj
     else
       render json: @biblio.errors, status: :unprocessable_entity
