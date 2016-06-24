@@ -56,7 +56,8 @@ DiBB.BiblioFormView = Backbone.View.extend({
   render: function() {      
         
     this.$el.html(this.template( { 
-      activeTab: this.activeTab
+      activeTab: this.activeTab,
+      citationsEnabled: (this.model.id != null)
     }));
   
     // construct selected tab
