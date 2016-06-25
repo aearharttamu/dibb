@@ -12,12 +12,12 @@ class Edition < ActiveRecord::Base
   def obj
     {
         id: self.id,
-        format_id: self.format.id,
-        currency_id: self.currency.id,
+        format_id: self.format ? self.format.id : nil,
+        currency_id: self.currency ? self.currency.id : nil,
         price: self.price,
         title_id: self.title_id,
-        currency: self.currency.name,
-        format: self.format.name
+        currency: self.currency ? self.currency.name : nil,
+        format: self.format ? self.format.name : nil
     }
   end
 
