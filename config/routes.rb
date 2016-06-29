@@ -20,8 +20,11 @@ Rails.application.routes.draw do
   end
   
   resources :biblios, only: [ :show, :update, :create, :destroy  ] do
-    resources :citations, only: [ :index, :show, :update, :create, :destroy ]     
+    resources :citations, only: [ :index, :show, :destroy ]     
+    resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
   end
+
+  resources :citations, only: [ :create, :update ]     
 
   # get "test_email" => 'home#test_email'
   # get "test_exception" => 'home#test_exception'

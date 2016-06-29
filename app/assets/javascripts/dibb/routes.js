@@ -275,22 +275,18 @@ DiBB.Routes = Backbone.Router.extend({
 
   ////////////////////////////////////
     
-  citationNew: function(biblioID) {
-    
-    this.loadCitations( biblioID, _.bind( function(citations) {
-      var citationFormView = new DiBB.CitationFormView( { collection: citations } );
-      citationFormView.render();
-    }, this));        
-    
+  citationNew: function(biblioID) {    
+    var citationFormView = new DiBB.CitationFormView( { biblioID: biblioID } );
+    citationFormView.render();    
   },
 
   citationEdit: function(biblioID,citationID) {
     
     this.loadCitations( biblioID, _.bind( function(citations) {
-      var citationFormView = new DiBB.CitationFormView( { collection: citations, citationID: citationID } );
+      var citation = citations.get(citationID);
+      var citationFormView = new DiBB.CitationFormView( { model: citation } );
       citationFormView.render();
-    }, this));        
-    
+    }, this));            
   },
   
   ////////////////////////////////////
@@ -378,7 +374,7 @@ DiBB.Routes = Backbone.Router.extend({
   },
 
   loadPageNumSequences: function( biblioID, initView ) {
-    var page_num_sequences = new DiBB.PageNumSequenceCollection(null, biblioID);
+    var page_num_sequences = new DiBB.PageNumSequenceCollection(null, { biblioID: biblioID });
     page_num_sequences.fetch( { success: initView, error: this.onError } );
   },
 

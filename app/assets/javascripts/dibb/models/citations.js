@@ -1,4 +1,15 @@
-DiBB.Citation = Backbone.Model.extend({});
+DiBB.Citation = Backbone.Model.extend({
+  
+  urlRoot: "citations",
+  
+  initialize: function( attributes ) {  
+    // if are editing, there should be pre-fetch sequence
+    if( attributes.sequence_json ) {
+      this.sequences = new DiBB.PageNumSequenceCollection( JSON.parse(attributes.sequence_json) );
+    }     
+  }
+  
+});
 
 DiBB.CitationCollection = Backbone.Collection.extend({
   model: DiBB.Citation,
@@ -6,16 +17,6 @@ DiBB.CitationCollection = Backbone.Collection.extend({
           
   initialize: function( models, options ) {
     this.biblioID = options.biblioID;
-
-    if( models ) {
-      var pageSequenceJSON = models.sequence_json;
-      var sequenceObj = ( pageSequenceJSON ) ? JSON.parse(pageSequenceJSON) : null;
-
-      this.sequence = new DiBB.PageNumSequenceCollection( sequenceObj );
-    } else {
-      this.sequence = new DiBB.PageNumSequenceCollection();
-    }
-
   },
     
   url: function() {

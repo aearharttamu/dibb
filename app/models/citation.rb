@@ -45,6 +45,7 @@ class Citation < ActiveRecord::Base
       page_num_sequences_json: self.page_num_sequences_json,
       originating_page_number_as_appears: self.originating_page_number_as_appears,
       ending_page_number_as_appears: self.ending_page_number_as_appears,
+      biblio_id: self.biblio_id,
       category_id: self.category_id,
       notes: self.notes
     }

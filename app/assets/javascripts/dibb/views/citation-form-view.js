@@ -26,12 +26,12 @@ DiBB.CitationFormView = Backbone.View.extend({
     	
 	initialize: function(options) {
         
-    if( options.citationID ) {
-      this.model = this.collection.get(parseInt(options.citationID));
-      this.mode = "edit";
-    } else {
-      this.model = new DiBB.Citation();
+    if( !options.model ) {
+      this.model = new DiBB.Citation({ biblio_id: options.biblioID });
       this.mode = "new";
+    } else {
+      this.model = options.model;
+      this.mode = "edit";
     }    
 
     _.bindAll( this, "onValidationError" );        
@@ -68,7 +68,6 @@ DiBB.CitationFormView = Backbone.View.extend({
       window.history.back();
     }, this);
 
-    this.collection.add( this.model );
     this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError }); 
   },
   
@@ -77,56 +76,62 @@ DiBB.CitationFormView = Backbone.View.extend({
   },
       
   render: function() {    
-    var pageTitle = this.pageTitle[this.mode];
-    var pageNumSequencesJSON = this.model.get("page_num_sequences_json")
-    var sequences = pageNumSequencesJSON ? JSON.parse(pageNumSequencesJSON) : [];
+    
+    var renderNow = _.bind( function() {
+      var pageTitle = this.pageTitle[this.mode];
 
-    this.$el.html(this.template( {
-      citation: this.model.toJSON(),
-      partials: this.partials,
-      sequences: sequences,
-      validationErrors: this.validationErrors,
-      pageTitle: pageTitle,
-    }));
+      this.$el.html(this.template( {
+        citation: this.model.toJSON(),
+        partials: this.partials,
+        sequences: this.model.sequences.sequenceList(),
+        validationErrors: this.validationErrors,
+        pageTitle: pageTitle,
+      }));
 
+      // render title reference input field
+      var titleField = new DiBB.ReferenceInput( {
+        id: 'title-field',
+        model: this.model,
+        formViewClass: DiBB.TitleFormModal,
+        refModelClass: DiBB.Title,
+        loader: DiBB.Routes.routes.loadTitles,
+        field_name: 'title_id',
+        field_title: 'Title',
+        field_value: this.model.get("title_name"),
+        field_instructions: 'Select the name of the title as it appears in the citation.',
+        error: _.has(this.validationErrors, 'title_id')
+      });
+      titleField.render();
 
-    // render title reference input field
-    var titleField = new DiBB.ReferenceInput( {
-      id: 'title-field',
-      model: this.model,
-      formViewClass: DiBB.TitleFormModal,
-      refModelClass: DiBB.Title,
-      loader: DiBB.Routes.routes.loadTitles,
-      field_name: 'title_id',
-      field_title: 'Title',
-      field_value: this.model.get("title_name"),
-      field_instructions: 'Select the name of the title as it appears in the citation.',
-      error: _.has(this.validationErrors, 'title_id')
-    });
-    titleField.render();
+      this.$("#title-field").replaceWith(titleField.$el);
+      this.$("#summernote").summernote({
+        height: 300,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ]
+      });
 
-    this.$("#title-field").replaceWith(titleField.$el);
-    this.$("#summernote").summernote({
-      height: 300,
-      minHeight: null,
-      maxHeight: null,
-      focus: true,
-      toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough', 'superscript', 'subscript']],
-        ['fontsize', ['fontsize']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['height', ['height']]
-      ]
-    });
-
-    this.collection.add(this.model.get("sequence_json"));
-
-
-
-    this.$('#summernote').summernote('code',this.model.get("full_text"))
-    $(".dibb-app").html(this.$el);
+      this.$('#summernote').summernote('code',this.model.get("full_text"))
+      $(".dibb-app").html(this.$el);    
+    }, this);
+    
+    if( this.model.sequences ) {
+      renderNow();
+    } else {
+      // otherwise, go get page sequences first, then render
+      DiBB.Routes.routes.loadPageNumSequences( this.model.get("biblio_id"), _.bind( function( sequences ) {
+        this.model.sequences = sequences;
+        renderNow();
+      }, this ));
+    }
   }
   
 });
