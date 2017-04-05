@@ -30,6 +30,10 @@ class BibliographsController < ApplicationController
     end
   end
 
+  def in_progress
+    render json: { in_progress: DelayedJob.in_progress }
+  end
+
   # DELETE /bibliographs/1.json
   def destroy    
     # remove the Neo4j graph in the background

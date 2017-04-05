@@ -5,6 +5,7 @@
 // Global settings for the app from the server
 var DiBBSettings = {
   neo4jDashboard: '<%= Rails.application.secrets.neo4j['server'] %>',
+  inProgressSpinner: '<%= image_path("in_progress.gif") %>',
   isAdmin: <%= current_user.admin? %>
 };
 

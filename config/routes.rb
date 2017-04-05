@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   root 'home#index'
   
-  resources :bibliographs, only: [ :index, :show, :create, :destroy ]
+  resources :bibliographs, only: [ :index, :show, :create, :destroy ]   
   resources :publishers, only: [ :index, :show, :update, :create, :destroy ]
   resources :people, only: [ :index, :show, :update, :create, :destroy ]
   resources :roles, only: [ :index, :show, :update, :create, :destroy ]
@@ -24,7 +24,10 @@ Rails.application.routes.draw do
     resources :page_num_sequences, only: [ :index, :show, :update, :create, :destroy ]
   end
 
-  resources :citations, only: [ :create, :update ]     
+  resources :citations, only: [ :create, :update ] 
+
+  get "in_progress" => "bibliographs#in_progress"
+      
 
   # get "test_email" => 'home#test_email'
   # get "test_exception" => 'home#test_exception'
