@@ -47,6 +47,8 @@ DiBB.NewGraphDialog = Backbone.View.extend({
   close: function(callback) {
     var newGraphDialog = this.$("#new-graph-dialog");
 
+    if( newGraphDialog.length == 0 ) return;
+
     newGraphDialog.on('hidden.bs.modal', _.bind( function (e) {
       newGraphDialog.detach();
       if( callback ) {

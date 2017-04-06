@@ -45,7 +45,9 @@ DiBB.BibliographListView = Backbone.View.extend({
         // we could have naved away from this view
         var viewVisible = $("#"+this.id).length > 0;
         if( viewVisible ) {
-          this.newGraphDialog.close();
+          if( this.newGraphDialog ) {
+            this.newGraphDialog.close();
+          }
           this.render();        
         } else {
           window.clearTimeout(this.pollTimer); 
