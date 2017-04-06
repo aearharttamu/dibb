@@ -1,6 +1,5 @@
 DiBB.BibliographListView = Backbone.View.extend({
 
-
   id: 'bibliograph-list-view',
   className: 'bibliograph-list',
 
@@ -8,25 +7,16 @@ DiBB.BibliographListView = Backbone.View.extend({
 
 	template: JST['dibb/templates/bibliograph-list-view'],
   trIDTemplate: _.template("#graphid-<%= id %>"),
-  graphNameTemplate: _.template("DiBB <%= getMonth() %>/<%= getDate() %>/<%= getFullYear() %> @ <%= getHours() %>:<%= getMinutes() %> "),
-    
-	partials: {
-		stringInput: JST['dibb/templates/common/string-input'],
-    validationErrors: JST['dibb/templates/common/validation-errors']  
-	},
-      
+          
   events: {
-    'click .create-graph-button': 'onCreateGraph',
+    'click .new-graph-button': 'onNewGraph',
     'click .delete-button': 'onDelete'    
   },
     
 	initialize: function(options) {    
     this.graphDashboardURL = options.graphDashboardURL;
-    this.model = new DiBB.Bibliograph();
     this.rendering = false;
-
-    _.bindAll( this, "onValidationError", "pollProgress" );        
-    this.model.on("invalid", this.onValidationError );
+    _.bindAll( this, "pollProgress" );        
   },
   
   onDelete: function(event) {
@@ -42,31 +32,6 @@ DiBB.BibliographListView = Backbone.View.extend({
       }, this) });
     }          
   },
-  
-  onValidationError: function( model, errors ) {
-    this.validationErrors = errors;    
-    this.render();
-  },
-    
-  onCreateGraph: function() {
-            
-    var onSuccess = _.bind(function(model, response, options) {
-      var newGraphDialog = this.$("#new-graph-dialog");
-
-      newGraphDialog.on('hidden.bs.modal', _.bind( function (e) {
-        this.pollProgress();
-      }, this) ); 
-      
-      newGraphDialog.modal('hide');
-    }, this);
-        
-    this.model.set( {
-      name: this.$('#bilbiograph-name').val()
-    });
-    
-    this.collection.add(this.model);
-    this.model.save(null, { success: onSuccess, error: DiBB.Routes.onError });            
-  },
 
   // check the server to see if the graph rendering is in progress
   pollProgress: function() {  
@@ -76,29 +41,53 @@ DiBB.BibliographListView = Backbone.View.extend({
       var renderStatus = data.in_progress;
 
       if( this.rendering != renderStatus ) {
-        var newGraphDialog = this.$("#new-graph-dialog");
-        newGraphDialog.close();
-        // make sure this view is visible before rendering
-        // close the graph modal if necessary
         this.rendering = renderStatus;
-        this.render();        
+        // we could have naved away from this view
+        var viewVisible = $("#"+this.id).length > 0;
+        if( viewVisible ) {
+          this.newGraphDialog.close();
+          this.render();        
+        } else {
+          window.clearTimeout(this.pollTimer); 
+          this.pollTimer = null;         
+        }
       }
-
     }, this ));
+  },
+
+  startPolling: function() {
+    if( !this.pollTimer ) {
+      this.pollProgress();
+      this.pollTimer = window.setInterval( this.pollProgress, this.pollInterval );            
+    }
+  },
+
+  onNewGraph: function() {
+    var saveCallback = _.bind( function() {
+      this.startPolling();
+    },this);
+
+    var bibliograph = new DiBB.Bibliograph();
+    this.newGraphDialog = new DiBB.NewGraphDialog({ 
+      model: bibliograph, 
+      collection: this.collection, 
+      saveCallback: saveCallback 
+    });
+    this.newGraphDialog.render();
+    this.$('#new-graph-dialog-container').replaceWith(this.newGraphDialog.el);
+    this.newGraphDialog.open();
   },
   
   render: function() {
     
-    var defaultGraphName = this.graphNameTemplate( new Date() );
-    this.$el.html(this.template( {  bibliographs: this.collection.toJSON(), 
-                                    rendering: this.rendering,
-                                    graphDashboardURL: this.graphDashboardURL, 
-                                    defaultGraphName: defaultGraphName,
-                                    validationErrors: this.validationErrors,
-                                    partials: this.partials } ));
-    $(".dibb-app").html(this.$el);
+    this.$el.html(this.template({ 
+      bibliographs: this.collection.toJSON(), 
+      rendering: this.rendering,
+      graphDashboardURL: this.graphDashboardURL
+    }));
 
-    window.setTimeout( this.pollProgress, this.pollInterval );            
+    $(".dibb-app").html(this.$el);
+    this.startPolling();
   }
   
 });
